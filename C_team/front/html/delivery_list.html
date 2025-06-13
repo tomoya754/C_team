@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <title>納品書一覧</title>
+    <link rel="stylesheet" href="../css/delivery_list.css">
+    <script src="../js/delivery_list.js" defer></script>
+    <style>body { font-family: 'Segoe UI', sans-serif; text-align: center; margin: 0; } .menu-icon { position: absolute; left: 20px; top: 20px; cursor: pointer; } .menu-icon div { width: 35px; height: 5px; background: #222; margin: 6px 0; border-radius: 2px; } h1 { margin-top: 80px; font-size: 40px; } .back-link { position: absolute; left: 20px; top: 80px; font-size: 18px; text-decoration: none; color: #222; } </style>
+</head>
+<body>
+    <div class="menu-icon">
+        <div></div><div></div><div></div>
+    </div>
+    <a href="home.html" class="back-link">← HOMEへ戻る</a>
+    <h1>納品書一覧</h1>
+    <div class="delivery-list-container">
+        <div class="delivery-list-search">
+            <input type="text" placeholder="納品書No.、納品内容" id="searchInput">
+            <button id="searchBtn">検索</button>
+            <button id="filterBtn">フィルター</button>
+        </div>
+        <table class="delivery-list-table">
+            <thead>
+                <tr>
+                    <th></th><th>納品書No.</th><th>顧客名</th><th>納品内容</th><th>電話番号</th><th>納品日</th><th>備考</th>
+                </tr>
+            </thead>
+            <tbody id="deliveryTableBody">
+                <tr>
+                    <td><input type="checkbox" checked></td>
+                    <td>0044</td>
+                    <td>大阪情報専門学校</td>
+                    <td><a href="#">この納品をくわしく...</a></td>
+                    <td>06-6974-4611</td>
+                    <td>2025/1/22</td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td><input type="checkbox"></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td><input type="checkbox"></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td><input type="checkbox"></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+            </tbody>
+        </table>
+        <button id="createBtn">新規納品書作成</button>
+        <button id="deleteBtn">納品書削除</button>
+    </div>
+</body>
+</html>
