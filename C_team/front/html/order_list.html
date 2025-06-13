@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <title>注文書一覧</title>
+    <link rel="stylesheet" href="../css/style.css">
+    <style>body { font-family: 'Segoe UI', sans-serif; text-align: center; margin: 0; } .menu-icon { position: absolute; left: 20px; top: 20px; cursor: pointer; } .menu-icon div { width: 35px; height: 5px; background: #222; margin: 6px 0; border-radius: 2px; } h1 { margin-top: 80px; font-size: 40px; } .back-link { position: absolute; left: 20px; top: 80px; font-size: 18px; text-decoration: none; color: #222; } </style>
+</head>
+<body>
+    <div class="menu-icon">
+        <div></div><div></div><div></div>
+    </div>
+    <a href="home.html" class="back-link">← HOMEへ戻る</a>
+    <h1>注文書一覧</h1>
+    <div style="margin: 30px auto; max-width: 900px;">
+        <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 16px;">
+            <input type="text" placeholder="注文書No.、注文内容" style="font-size: 18px; flex: 1; padding: 8px;">
+            <button style="font-size: 18px; padding: 8px 18px;">検索</button>
+            <button style="font-size: 18px; padding: 8px 12px;">フィルター</button>
+        </div>
+        <table border="1" style="width: 100%; border-collapse: collapse; margin-bottom: 20px;">
+            <thead style="background: #eee;">
+                <tr>
+                    <th></th><th>注文書No.</th><th>顧客名</th><th>注文内容</th><th>電話番号</th><th>受注日</th><th>納品日</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><input type="checkbox" checked></td>
+                    <td>0044</td>
+                    <td>大阪情報専門学校</td>
+                    <td><a href="#">この注文をくわしく...</a></td>
+                    <td>06-6974-4611</td>
+                    <td>2025/1/17</td>
+                    <td>2025/1/22</td>
+                </tr>
+                <tr>
+                    <td><input type="checkbox"></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td><input type="checkbox"></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td><input type="checkbox"></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+            </tbody>
+        </table>
+        <button style="font-size: 18px; padding: 10px 30px; margin-right: 20px;">新規注文書作成</button>
+        <button style="font-size: 18px; padding: 10px 30px; background: #e00; color: #fff; border: none;">注文書削除</button>
+    </div>
+</body>
+</html>
