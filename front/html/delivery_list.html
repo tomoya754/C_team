@@ -3,78 +3,87 @@
 <head>
     <meta charset="UTF-8">
     <title>納品書一覧</title>
+    <link rel="stylesheet" href="../css/home.css">
     <link rel="stylesheet" href="../css/delivery_list.css">
-    <script src="../js/delivery_list.js" defer></script>
 </head>
 <body>
-    <div class="menu-icon">
-        <div></div><div></div><div></div>
-    </div>
-    <nav class="side-menu">
+    <!-- ハンバーガーメニューボタン -->
+    <div class="menu-btn" id="menuBtn">&#9776;</div>
+    <!-- サイドバー背景（モーダル用） -->
+    <div class="sidebar-bg" id="sidebarBg"></div>
+    <!-- サイドバー -->
+    <nav class="sidebar" id="sidebar">
+        <span class="sidebar-close" id="sidebarClose">&times;</span>
         <ul>
-            <li><a href="home.html">ホーム</a></li>
-            <li><a href="order_list.html">注文書一覧</a></li>
-            <li><a href="delivery_list.html">納品書一覧</a></li>
-            <li><a href="statistics_list.html">統計情報一覧</a></li>
-            <li><a href="customer_register.html">顧客情報登録</a></li>
+            <li><a href="home.html">・<u>HOME</u></a></li>
+            <li><a href="order_list.html">・注文書一覧</a></li>
+            <li><a href="delivery_list.html">・納品書一覧</a></li>
+            <li><a href="statistics_list.html">・統計情報一覧</a></li>
+            <li><a href="customer_register.html">・顧客情報登録</a></li>
         </ul>
     </nav>
-    <a href="home.html" class="back-link">← HOMEへ戻る</a>
-    <h1>納品書一覧</h1>
-    <div class="delivery-list-container">
-        <div class="delivery-list-search">
-            <input type="text" placeholder="納品書No.、納品内容" id="searchInput">
-            <button id="searchBtn">検索</button>
-            <button id="filterBtn">フィルター</button>
+    <!-- メインコンテンツ -->
+    <div class="main" id="main">
+        <h1 class="orders-title">納品書一覧</h1>
+        <div class="search-toolbar">
+            <div class="search-area">
+                <span class="search-icon">🔍</span>
+                <input type="text" class="search-input" placeholder="納品書No.、納品内容">
+                <button class="filter-btn"><span class="filter-icon">⏷</span></button>
+            </div>
         </div>
-        <table class="delivery-list-table">
-            <thead>
-                <tr>
-                    <th></th><th>納品書No.</th><th>顧客名</th><th>納品内容</th><th>電話番号</th><th>納品日</th><th>備考</th>
-                </tr>
-            </thead>
-            <tbody id="deliveryTableBody">
-                <tr>
-                    <td><input type="checkbox" checked></td>
-                    <td>0044</td>
-                    <td>大阪情報専門学校</td>
-                    <td><a href="#">この納品をくわしく...</a></td>
-                    <td>06-6974-4611</td>
-                    <td>2025/1/22</td>
-                    <td></td>
-                </tr>
-                <tr>
-                    <td><input type="checkbox"></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                </tr>
-                <tr>
-                    <td><input type="checkbox"></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                </tr>
-                <tr>
-                    <td><input type="checkbox"></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                </tr>
-            </tbody>
-        </table>
-        <button id="createBtn">新規納品書作成</button>
-        <button id="deleteBtn">納品書削除</button>
+        <div class="orders-table-area">
+            <table class="orders-table">
+                <thead>
+                    <tr>
+                        <th style="width:32px;"></th>
+                        <th style="width:90px;">納品書No.</th>
+                        <th style="width:160px;">顧客名</th>
+                        <th style="width:180px;">納品内容</th>
+                        <th style="width:120px;">電話番号</th>
+                        <th style="width:100px;">納品日</th>
+                        <th style="width:100px;">納品状態</th>
+                        <th style="width:100px;">リードタイム</th>
+                        <th style="width:80px;">備考</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><input type="checkbox" checked></td>
+                        <td>1001</td>
+                        <td>佐藤花子</td>
+                        <td><a href="#">商品B</a></td>
+                        <td>080-xxxx-xxxx</td>
+                        <td>2025/05/21</td>
+                        <td>納品済み</td>
+                        <td>6日</td>
+                        <td>特になし</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="orders-btns-row">
+            <a href="delivery_form.html" class="btn create">新規納品書作成</a>
+            <button class="btn delete-btn">納品書削除</button>
+        </div>
     </div>
-    <script src="../js/hamburger_menu.js"></script>
+    <script>
+    // サイドバー開閉
+    const menuBtn = document.getElementById('menuBtn');
+    const sidebar = document.getElementById('sidebar');
+    const sidebarBg = document.getElementById('sidebarBg');
+    const sidebarClose = document.getElementById('sidebarClose');
+    function openSidebar() {
+        sidebar.classList.add('open');
+        sidebarBg.classList.add('show');
+    }
+    function closeSidebar() {
+        sidebar.classList.remove('open');
+        sidebarBg.classList.remove('show');
+    }
+    menuBtn.onclick = openSidebar;
+    sidebarClose.onclick = closeSidebar;
+    sidebarBg.onclick = closeSidebar;
+    </script>
 </body>
 </html>

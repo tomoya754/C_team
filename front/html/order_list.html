@@ -3,78 +3,98 @@
 <head>
     <meta charset="UTF-8">
     <title>注文書一覧</title>
-    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="../css/home.css">
     <link rel="stylesheet" href="../css/order_list.css">
 </head>
 <body>
-    <div class="menu-icon">
-        <div></div><div></div><div></div>
-    </div>
-    <nav class="side-menu">
+    <!-- ハンバーガーメニューボタン -->
+    <div class="menu-btn" id="menuBtn">&#9776;</div>
+    <!-- サイドバー背景（モーダル用） -->
+    <div class="sidebar-bg" id="sidebarBg"></div>
+    <!-- サイドバー -->
+    <nav class="sidebar" id="sidebar">
+        <span class="sidebar-close" id="sidebarClose">&times;</span>
         <ul>
-            <li><a href="home.html">ホーム</a></li>
-            <li><a href="order_list.html">注文書一覧</a></li>
-            <li><a href="delivery_list.html">納品書一覧</a></li>
-            <li><a href="statistics_list.html">統計情報一覧</a></li>
-            <li><a href="customer_register.html">顧客情報登録</a></li>
+            <li><a href="home.html">・<u>HOME</u></a></li>
+            <li><a href="order_list.html">・注文書一覧</a></li>
+            <li><a href="delivery_list.html">・納品書一覧</a></li>
+            <li><a href="statistics_list.html">・統計情報一覧</a></li>
+            <li><a href="customer_register.html">・顧客情報登録</a></li>
         </ul>
     </nav>
-    <a href="home.html" class="back-link">← HOMEへ戻る</a>
-    <h1>注文書一覧</h1>
-    <div style="margin: 30px auto; max-width: 900px;">
-        <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 16px;">
-            <input type="text" placeholder="注文書No.、注文内容" style="font-size: 18px; flex: 1; padding: 8px;">
-            <button style="font-size: 18px; padding: 8px 18px;">検索</button>
-            <button style="font-size: 18px; padding: 8px 12px;">フィルター</button>
+    <!-- メインコンテンツ -->
+    <div class="main" id="main">
+        <h1 class="orders-title">注文書一覧</h1>
+        <div class="search-toolbar">
+            <div class="search-area">
+                <span class="search-icon">🔍</span>
+                <input type="text" class="search-input" placeholder="注文書No.、注文内容">
+                <button class="filter-btn"><span class="filter-icon">⏷</span></button>
+            </div>
         </div>
-        <table border="1" style="width: 100%; border-collapse: collapse; margin-bottom: 20px;">
-            <thead style="background: #eee;">
-                <tr>
-                    <th></th><th>注文書No.</th><th>顧客名</th><th>注文内容</th><th>電話番号</th><th>受注日</th><th>納品日</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td><input type="checkbox" checked></td>
-                    <td>0044</td>
-                    <td>大阪情報専門学校</td>
-                    <td><a href="#">この注文をくわしく...</a></td>
-                    <td>06-6974-4611</td>
-                    <td>2025/1/17</td>
-                    <td>2025/1/22</td>
-                </tr>
-                <tr>
-                    <td><input type="checkbox"></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                </tr>
-                <tr>
-                    <td><input type="checkbox"></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                </tr>
-                <tr>
-                    <td><input type="checkbox"></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                </tr>
-            </tbody>
-        </table>
-        <button style="font-size: 18px; padding: 10px 30px; margin-right: 20px;">新規注文書作成</button>
-        <button style="font-size: 18px; padding: 10px 30px; background: #e00; color: #fff; border: none;">注文書削除</button>
+        <div class="orders-table-area">
+            <table class="orders-table">
+                <thead>
+                    <tr>
+                        <th style="width:32px;"></th>
+                        <th style="width:90px;">注文書No.</th>
+                        <th style="width:110px;">顧客ID</th>
+                        <th style="width:160px;">顧客名</th>
+                        <th style="width:180px;">注文内容</th>
+                        <th style="width:120px;">電話番号</th>
+                        <th style="width:100px;">注文日</th>
+                        <th style="width:100px;">納品予定</th>
+                        <th style="width:80px;">備考</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><input type="checkbox" checked></td>
+                        <td>0004</td>
+                        <td>No.25000</td>
+                        <td>大阪情報専門学校</td>
+                        <td><a href="#">この1冊でよくわか...</a></td>
+                        <td>06-6974-4611</td>
+                        <td>2025/1/17</td>
+                        <td>1/22納品予定</td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td><input type="checkbox"></td>
+                        <td>0003</td>
+                        <td>No.25001</td>
+                        <td>北海道情報大学</td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="orders-btns-row">
+            <a href="order_form.html" class="btn create">新規注文書作成</a>
+            <button class="btn delete-btn">注文書削除</button>
+        </div>
     </div>
-    <script src="../js/hamburger_menu.js"></script>
+    <script>
+    // サイドバー開閉
+    const menuBtn = document.getElementById('menuBtn');
+    const sidebar = document.getElementById('sidebar');
+    const sidebarBg = document.getElementById('sidebarBg');
+    const sidebarClose = document.getElementById('sidebarClose');
+    function openSidebar() {
+        sidebar.classList.add('open');
+        sidebarBg.classList.add('show');
+    }
+    function closeSidebar() {
+        sidebar.classList.remove('open');
+        sidebarBg.classList.remove('show');
+    }
+    menuBtn.onclick = openSidebar;
+    sidebarClose.onclick = closeSidebar;
+    sidebarBg.onclick = closeSidebar;
+    </script>
 </body>
 </html>

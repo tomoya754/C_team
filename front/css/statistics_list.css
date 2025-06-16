@@ -18,3 +18,75 @@ h1 { margin-top: 80px; font-size: 40px; }
 .side-menu li { margin: 24px 0; }
 .side-menu a { color: #222; text-decoration: none; font-size: 20px; padding: 8px 24px; display: block; }
 .side-menu a:hover { background: #f0f0f0; }
+/* home.cssのサイドバー・ハンバーガーメニュー部分を反映し統一 */
+.menu-btn {
+    font-size: 36px;
+    cursor: pointer;
+    position: fixed;
+    top: 16px;
+    left: 16px;
+    z-index: 1100;
+    background: #fff;
+    border-radius: 8px;
+    width: 48px;
+    height: 48px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+    border: 1px solid #111;
+    transition: opacity 0.2s;
+}
+.sidebar {
+    width: 300px;
+    min-width: 300px;
+    max-width: 300px;
+    background: #111;
+    color: #fff;
+    padding-top: 40px;
+    position: fixed;
+    top: 0;
+    left: -320px;
+    height: 100%;
+    transition: left 0.3s;
+    z-index: 1000;
+    border-right: 3px solid #fff;
+    box-sizing: border-box;
+    overflow-y: auto;
+}
+.sidebar.open { left: 0; }
+.sidebar-bg {
+    display: none;
+    position: fixed;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: rgba(0,0,0,0.15);
+    z-index: 900;
+}
+.sidebar-bg.show { display: block; }
+.sidebar-close {
+    position: absolute;
+    top: 10px;
+    right: 18px;
+    font-size: 2rem;
+    cursor: pointer;
+    color: #fff;
+}
+.sidebar ul {
+    list-style: none;
+    padding: 0 0 0 24px;
+    margin: 0;
+}
+.sidebar li {
+    margin: 28px 0;
+    font-size: 2rem;
+    text-align: left;
+}
+.sidebar a {
+    color: #fff;
+    text-decoration: underline;
+    font-weight: normal;
+}
+.sidebar a:hover {
+    text-decoration: none;
+    color: #ffd700;
+}
