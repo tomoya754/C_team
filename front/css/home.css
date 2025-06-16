@@ -1,23 +1,170 @@
-body { font-family: 'Segoe UI', sans-serif; text-align: center; margin: 0; }
-.menu-icon { position: absolute; left: 20px; top: 20px; cursor: pointer; }
-.menu-icon div { width: 35px; height: 5px; background: #222; margin: 6px 0; border-radius: 2px; }
-.container { margin-top: 80px; }
-h1 { font-size: 60px; font-weight: bold; margin-bottom: 40px; }
-.btn-grid { display: flex; flex-wrap: wrap; justify-content: center; gap: 40px; }
-.btn-link { display: inline-block; padding: 20px 40px; font-size: 28px; border: 2px solid #222; border-radius: 16px; background: #fff; color: #222; text-decoration: none; transition: background 0.2s, color 0.2s; min-width: 260px; margin: 10px; }
-.btn-link:hover { background: #222; color: #fff; }
-.side-menu {
-    position: fixed;
-    top: 0; left: -250px;
-    width: 220px; height: 100%;
+/* public/css/home.css */
+
+body {
     background: #fff;
-    box-shadow: 2px 0 8px rgba(0,0,0,0.1);
+    margin: 0;
+    font-family: 'Meiryo', 'Arial', sans-serif;
+}
+
+.menu-btn {
+    font-size: 36px;
+    cursor: pointer;
+    position: fixed;
+    top: 16px;
+    left: 16px;
+    z-index: 1100;
+    background: #fff;
+    border-radius: 8px;
+    width: 48px;
+    height: 48px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+    border: 1px solid #111;
+    transition: opacity 0.2s;
+}
+
+.sidebar {
+    width: 300px;
+    min-width: 300px;
+    max-width: 300px;
+    background: #111;
+    color: #fff;
+    padding-top: 40px;
+    position: fixed;
+    top: 0;
+    left: -320px;
+    height: 100%;
     transition: left 0.3s;
     z-index: 1000;
-    padding-top: 60px;
+    border-right: 3px solid #fff;
+    box-sizing: border-box;
+    overflow-y: auto;
 }
-.side-menu.open { left: 0; }
-.side-menu ul { list-style: none; padding: 0; }
-.side-menu li { margin: 24px 0; }
-.side-menu a { color: #222; text-decoration: none; font-size: 20px; padding: 8px 24px; display: block; }
-.side-menu a:hover { background: #f0f0f0; }
+.sidebar.open { left: 0; }
+
+.sidebar-bg {
+    display: none;
+    position: fixed;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: rgba(0,0,0,0.15);
+    z-index: 900;
+}
+.sidebar-bg.show { display: block; }
+
+.sidebar-close {
+    position: absolute;
+    top: 10px;
+    right: 18px;
+    font-size: 2rem;
+    cursor: pointer;
+    color: #fff;
+}
+
+.sidebar ul {
+    list-style: none;
+    padding: 0 0 0 24px;
+    margin: 0;
+}
+.sidebar li {
+    margin: 28px 0;
+    font-size: 2rem;
+    text-align: left;
+}
+.sidebar a {
+    color: #fff;
+    text-decoration: underline;
+    font-weight: normal;
+}
+.sidebar a:hover {
+    text-decoration: underline;
+}
+
+.main {
+    max-width: 900px;
+    margin: 48px auto 0 auto;
+    padding: 40px 32px 64px 32px;
+    background: #fff;
+    border-radius: 18px;
+    box-shadow: 0 4px 24px rgba(0,0,0,0.08);
+    min-height: 60vh;
+}
+
+h1 {
+    text-align: center;
+    font-size: 4rem;
+    margin-bottom: 48px;
+    margin-top: 32px;
+    letter-spacing: 0.1em;
+    font-weight: bold;
+}
+
+.btn-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    justify-items: center;
+    align-items: center;
+    gap: 48px 64px;
+    margin-top: 32px;
+    max-width: 600px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.btn {
+    display: inline-block;
+    width: 260px;
+    min-width: 180px;
+    padding: 24px 0;
+    text-align: center;
+    border: 2px solid #111;
+    border-radius: 16px;
+    text-decoration: none;
+    color: #111;
+    font-size: 2rem;
+    font-weight: normal;
+    background: #fff;
+    margin: 0 16px 32px 16px;
+    transition: background 0.2s, color 0.2s, border-color 0.2s;
+}
+.btn:hover {
+    background: #111;
+    color: #fff;
+    border-color: #333;
+    cursor: pointer;
+}
+
+@media (max-width: 700px) {
+    .sidebar {
+        width: 80vw;
+        min-width: 160px;
+        max-width: 90vw;
+        left: -80vw;
+    }
+    .sidebar.open { left: 0; }
+    .main {
+        max-width: 98vw;
+        padding: 16px 2vw 32px 2vw;
+        border-radius: 0;
+        box-shadow: none;
+        margin: 12px auto 0 auto;
+    }
+    .btn-grid {
+        grid-template-columns: 1fr;
+        gap: 24px 0;
+        max-width: 96vw;
+    }
+    .btn {
+        width: 90vw;
+        font-size: 1.3rem;
+        padding: 18px;
+        border-radius: 10px;
+    }
+    h1 {
+        font-size: 2.2rem;
+        margin-top: 18px;
+        margin-bottom: 24px;
+    }
+    .menu-btn { left: 8px; top: 8px; width: 40px; height: 40px; font-size: 28px; }
+}
