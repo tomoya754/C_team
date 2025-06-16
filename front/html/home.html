@@ -13,6 +13,21 @@
         .btn-grid { display: flex; flex-wrap: wrap; justify-content: center; gap: 40px; }
         .btn-link { display: inline-block; padding: 20px 40px; font-size: 28px; border: 2px solid #222; border-radius: 16px; background: #fff; color: #222; text-decoration: none; transition: background 0.2s, color 0.2s; min-width: 260px; margin: 10px; }
         .btn-link:hover { background: #222; color: #fff; }
+        .side-menu {
+            position: fixed;
+            top: 0; left: -250px;
+            width: 220px; height: 100%;
+            background: #fff;
+            box-shadow: 2px 0 8px rgba(0,0,0,0.1);
+            transition: left 0.3s;
+            z-index: 1000;
+            padding-top: 60px;
+        }
+        .side-menu.open { left: 0; }
+        .side-menu ul { list-style: none; padding: 0; }
+        .side-menu li { margin: 24px 0; }
+        .side-menu a { color: #222; text-decoration: none; font-size: 20px; padding: 8px 24px; display: block; }
+        .side-menu a:hover { background: #f0f0f0; }
     </style>
 </head>
 <body>
@@ -21,6 +36,15 @@
         <div></div>
         <div></div>
     </div>
+    <nav class="side-menu">
+        <ul>
+            <li><a href="home.html">ホーム</a></li>
+            <li><a href="order_list.html">注文書一覧</a></li>
+            <li><a href="delivery_list.html">納品書一覧</a></li>
+            <li><a href="statistics_list.html">統計情報一覧</a></li>
+            <li><a href="customer_register.html">顧客情報登録</a></li>
+        </ul>
+    </nav>
     <div class="container">
         <h1>HOME</h1>
         <div class="btn-grid">
@@ -30,5 +54,6 @@
             <a href="customer_register.html" class="btn-link">顧客情報登録</a>
         </div>
     </div>
+    <script src="../js/hamburger_menu.js"></script>
 </body>
 </html>
