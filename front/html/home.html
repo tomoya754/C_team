@@ -3,32 +3,51 @@
 <head>
     <meta charset="UTF-8">
     <title>HOME</title>
-    <link rel="stylesheet" href="../css/style.css">
-    <style>
-        body { font-family: 'Segoe UI', sans-serif; text-align: center; margin: 0; }
-        .menu-icon { position: absolute; left: 20px; top: 20px; cursor: pointer; }
-        .menu-icon div { width: 35px; height: 5px; background: #222; margin: 6px 0; border-radius: 2px; }
-        .container { margin-top: 80px; }
-        h1 { font-size: 60px; font-weight: bold; margin-bottom: 40px; }
-        .btn-grid { display: flex; flex-wrap: wrap; justify-content: center; gap: 40px; }
-        .btn-link { display: inline-block; padding: 20px 40px; font-size: 28px; border: 2px solid #222; border-radius: 16px; background: #fff; color: #222; text-decoration: none; transition: background 0.2s, color 0.2s; min-width: 260px; margin: 10px; }
-        .btn-link:hover { background: #222; color: #fff; }
-    </style>
+    <link rel="stylesheet" href="../css/home.css">
 </head>
 <body>
-    <div class="menu-icon">
-        <div></div>
-        <div></div>
-        <div></div>
-    </div>
-    <div class="container">
+    <!-- ハンバーガーメニューボタン -->
+    <div class="menu-btn" id="menuBtn">&#9776;</div>
+    <!-- サイドバー背景（モーダル用） -->
+    <div class="sidebar-bg" id="sidebarBg"></div>
+    <!-- サイドバー -->
+    <nav class="sidebar" id="sidebar">
+        <span class="sidebar-close" id="sidebarClose">&times;</span>
+        <ul>
+            <li><a href="home.html">・<u>HOME</u></a></li>
+            <li><a href="order_list.html">・注文書一覧</a></li>
+            <li><a href="delivery_list.html">・納品書一覧</a></li>
+            <li><a href="statistics_list.html">・統計情報一覧</a></li>
+            <li><a href="customer_register.html">・顧客情報登録</a></li>
+        </ul>
+    </nav>
+    <!-- メインコンテンツ -->
+    <div class="main" id="main">
         <h1>HOME</h1>
         <div class="btn-grid">
-            <a href="order_list.html" class="btn-link">注文書一覧</a>
-            <a href="delivery_list.html" class="btn-link">納品書一覧</a>
-            <a href="statistics_list.html" class="btn-link">統計情報一覧</a>
-            <a href="customer_register.html" class="btn-link">顧客情報登録</a>
+            <a class="btn" href="order_list.html">注文書一覧</a>
+            <a class="btn" href="delivery_list.html">納品書一覧</a>
+            <a class="btn" href="statistics_list.html">統計情報一覧</a>
+            <a class="btn" href="customer_register.html">顧客情報登録</a>
         </div>
     </div>
+    <script>
+    // サイドバー開閉
+    const menuBtn = document.getElementById('menuBtn');
+    const sidebar = document.getElementById('sidebar');
+    const sidebarBg = document.getElementById('sidebarBg');
+    const sidebarClose = document.getElementById('sidebarClose');
+    function openSidebar() {
+        sidebar.classList.add('open');
+        sidebarBg.classList.add('show');
+    }
+    function closeSidebar() {
+        sidebar.classList.remove('open');
+        sidebarBg.classList.remove('show');
+    }
+    menuBtn.onclick = openSidebar;
+    sidebarClose.onclick = closeSidebar;
+    sidebarBg.onclick = closeSidebar;
+    </script>
 </body>
 </html>

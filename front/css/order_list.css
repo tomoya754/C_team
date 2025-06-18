@@ -1,0 +1,98 @@
+.main {
+    padding: 32px 40px;
+    max-width: 1100px;
+    margin: 0 auto;
+}
+.orders-title {
+    font-size: 1.6rem;
+    font-weight: bold;
+    margin-bottom: 18px;
+    text-align: left;
+}
+.search-toolbar {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 18px;
+}
+.search-area {
+    display: flex;
+    align-items: center;
+    background: #fff;
+    border: 1.5px solid #aaa;
+    border-radius: 8px;
+    padding: 4px 12px;
+    width: 420px;
+}
+.search-icon {
+    font-size: 1.5em;
+    margin-right: 8px;
+}
+.search-input {
+    border: none;
+    outline: none;
+    font-size: 1.1em;
+    width: 260px;
+    background: transparent;
+}
+.filter-btn {
+    background: #eee;
+    border: none;
+    border-radius: 6px;
+    margin-left: 8px;
+    font-size: 1.4em;
+    cursor: pointer;
+    padding: 2px 8px;
+}
+.orders-table-area {
+    margin-bottom: 18px;
+}
+.orders-table {
+    border-collapse: collapse;
+    width: 100%;
+    background: #fff;
+    margin: 0 auto;
+}
+th, td {
+    border: 1px solid #333;
+    padding: 8px 4px;
+    text-align: center;
+}
+th {
+    background: #eee;
+}
+.orders-table a {
+    color: #007bff;
+    text-decoration: underline;
+}
+.orders-btns-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 18px;
+}
+.btn.create {
+    background: #fff;
+    color: #222;
+    border: 2px solid #222;
+    border-radius: 6px;
+    padding: 8px 32px;
+    font-size: 1.1em;
+    cursor: pointer;
+    margin-right: 8px;
+}
+.btn.delete-btn {
+    background: #e53935;
+    color: #fff;
+    border: none;
+    border-radius: 6px;
+    padding: 8px 32px;
+    font-size: 1.1em;
+    cursor: pointer;
+    margin-left: 8px;
+}
+@media (max-width: 900px) {
+    .main { padding: 12px 2vw; }
+    .orders-table { font-size: 0.9em; }
+    .orders-btns-row { flex-direction: column; gap: 12px; }
+    .btn.create, .btn.delete-btn { width: 100%; }
+}
