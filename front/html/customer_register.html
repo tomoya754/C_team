@@ -3,20 +3,52 @@
 <head>
     <meta charset="UTF-8">
     <title>顧客情報登録</title>
-    <link rel="stylesheet" href="../css/style.css">
-    <style>body { font-family: 'Segoe UI', sans-serif; text-align: center; margin: 0; } .menu-icon { position: absolute; left: 20px; top: 20px; cursor: pointer; } .menu-icon div { width: 35px; height: 5px; background: #222; margin: 6px 0; border-radius: 2px; } h1 { margin-top: 80px; font-size: 40px; } .back-link { position: absolute; left: 20px; top: 80px; font-size: 18px; text-decoration: none; color: #222; } </style>
+    <link rel="stylesheet" href="../css/home.css">
+    <link rel="stylesheet" href="../css/customer_register.css">
 </head>
 <body>
-    <div class="menu-icon">
-        <div></div><div></div><div></div>
+    <!-- ハンバーガーメニューボタン -->
+    <div class="menu-btn" id="menuBtn">&#9776;</div>
+    <!-- サイドバー背景（モーダル用） -->
+    <div class="sidebar-bg" id="sidebarBg"></div>
+    <!-- サイドバー -->
+    <nav class="sidebar" id="sidebar">
+        <span class="sidebar-close" id="sidebarClose">&times;</span>
+        <ul>
+            <li><a href="home.html">・<u>HOME</u></a></li>
+            <li><a href="order_list.html">・注文書一覧</a></li>
+            <li><a href="delivery_list.html">・納品書一覧</a></li>
+            <li><a href="statistics_list.html">・統計情報一覧</a></li>
+            <li><a href="customer_register.html">・顧客情報登録</a></li>
+        </ul>
+    </nav>
+    <!-- メインコンテンツ -->
+    <div class="main" id="main">
+        <h1>顧客情報登録</h1>
+        <form style="margin: 40px auto; max-width: 500px; background: #f9f9f9; padding: 32px; border-radius: 12px; box-shadow: 0 2px 8px #0001;">
+            <label style="font-size: 20px; display: block; margin-bottom: 16px;">Excelファイルを選択してください</label>
+            <input type="file" accept=".xlsx" style="font-size: 18px; margin-bottom: 32px; width: 100%;"><br>
+            <button type="submit" style="font-size: 20px; padding: 10px 40px; margin-right: 20px;">登録</button>
+            <button type="button" onclick="location.href='home.html'" style="font-size: 20px; padding: 10px 40px;">キャンセル</button>
+        </form>
     </div>
-    <a href="home.html" class="back-link">← HOMEへ戻る</a>
-    <h1>顧客情報登録</h1>
-    <form style="margin: 40px auto; max-width: 500px; background: #f9f9f9; padding: 32px; border-radius: 12px; box-shadow: 0 2px 8px #0001;">
-        <label style="font-size: 20px; display: block; margin-bottom: 16px;">Excelファイルを選択してください</label>
-        <input type="file" accept=".xlsx" style="font-size: 18px; margin-bottom: 32px; width: 100%;"><br>
-        <button type="submit" style="font-size: 20px; padding: 10px 40px; margin-right: 20px;">登録</button>
-        <button type="button" onclick="location.href='home.html'" style="font-size: 20px; padding: 10px 40px;">キャンセル</button>
-    </form>
+    <script>
+    // サイドバー開閉
+    const menuBtn = document.getElementById('menuBtn');
+    const sidebar = document.getElementById('sidebar');
+    const sidebarBg = document.getElementById('sidebarBg');
+    const sidebarClose = document.getElementById('sidebarClose');
+    function openSidebar() {
+        sidebar.classList.add('open');
+        sidebarBg.classList.add('show');
+    }
+    function closeSidebar() {
+        sidebar.classList.remove('open');
+        sidebarBg.classList.remove('show');
+    }
+    menuBtn.onclick = openSidebar;
+    sidebarClose.onclick = closeSidebar;
+    sidebarBg.onclick = closeSidebar;
+    </script>
 </body>
 </html>
