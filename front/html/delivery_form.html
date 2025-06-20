@@ -26,10 +26,6 @@
     <div class="main" id="main">
         <!-- A4納品書本体 -->
         <div class="a4-sheet">
-            <div class="form-btns">
-                <button id="saveBtn" type="button">保存</button>
-                <button id="printBtn" type="button">印刷</button>
-            </div>
             <h1 class="order-title">納品書</h1>
             <!-- 宛先・納品情報 -->
             <div class="order-info-row">
@@ -171,9 +167,15 @@
                     <td><input type="text" name="note12"></td>
                 </tr>
             </table>
-            <div class="order-footer">
-                <button class="btn print-btn" onclick="window.print()">印刷</button>
-                <button class="btn back-btn" onclick="location.href='delivery_list.html'">一覧へ戻る</button>
+            <!-- 備考欄 -->
+            <div class="note-area">
+                <label>備考：</label>
+                <textarea rows="3"></textarea>
+            </div>
+            <!-- ボタンエリア -->
+            <div class="btn-area">
+                <button type="submit" class="btn">保存</button>
+                <button type="button" class="btn" onclick="window.print()">印刷</button>
             </div>
         </div>
     </div>
@@ -195,6 +197,5 @@
     sidebarClose.onclick = closeSidebar;
     sidebarBg.onclick = closeSidebar;
     </script>
-    <script src="../js/delivery_form.js"></script>
 </body>
 </html>
