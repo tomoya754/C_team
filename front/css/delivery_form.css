@@ -124,6 +124,24 @@ body {
     font-size: 1.1em;
     cursor: pointer;
 }
+.form-btns {
+    display: flex;
+    gap: 18px;
+    justify-content: flex-end;
+    margin-bottom: 10px;
+}
+.form-btns button {
+    font-size: 18px;
+    padding: 7px 28px;
+    border: 1.5px solid #222;
+    background: #fff;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background 0.2s;
+}
+.form-btns button:hover {
+    background: #f0f0f0;
+}
 @media print {
     body { background: #fff; }
     .a4-sheet { box-shadow: none; padding: 0; }
