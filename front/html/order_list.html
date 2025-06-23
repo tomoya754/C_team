@@ -47,29 +47,8 @@
                         <th style="width:80px;">備考</th>
                     </tr>
                 </thead>
-                <tbody>
-                    <tr>
-                        <td><input type="checkbox" checked></td>
-                        <td>0004</td>
-                        <td>No.25000</td>
-                        <td>大阪情報専門学校</td>
-                        <td><a href="#">この1冊でよくわか...</a></td>
-                        <td>06-6974-4611</td>
-                        <td>2025/1/17</td>
-                        <td>1/22納品予定</td>
-                        <td></td>
-                    </tr>
-                    <tr>
-                        <td><input type="checkbox"></td>
-                        <td>0003</td>
-                        <td>No.25001</td>
-                        <td>北海道情報大学</td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                    </tr>
+                <tbody id="orders-tbody">
+                    <!-- ここにJSで注文データを挿入 -->
                 </tbody>
             </table>
         </div>
@@ -77,24 +56,76 @@
             <a href="order_form.html" class="btn create">新規注文書作成</a>
             <button class="btn delete-btn">注文書削除</button>
         </div>
+        <script>
+        // サイドバー開閉
+        const menuBtn = document.getElementById('menuBtn');
+        const sidebar = document.getElementById('sidebar');
+        const sidebarBg = document.getElementById('sidebarBg');
+        const sidebarClose = document.getElementById('sidebarClose');
+        function openSidebar() {
+            sidebar.classList.add('open');
+            sidebarBg.classList.add('show');
+        }
+        function closeSidebar() {
+            sidebar.classList.remove('open');
+            sidebarBg.classList.remove('show');
+        }
+        menuBtn.onclick = openSidebar;
+        sidebarClose.onclick = closeSidebar;
+        sidebarBg.onclick = closeSidebar;
+
+        // 注文書一覧をAPIから取得して表示
+        fetch('http://localhost:3000/api/orders')
+            .then(res => res.json())
+            .then(data => {
+                const tbody = document.getElementById('orders-tbody');
+                tbody.innerHTML = '';
+                data.forEach(order => {
+                    const tr = document.createElement('tr');
+                    tr.innerHTML = `
+                        <td><input type="checkbox"></td>
+                        <td>${order.orderId}</td>
+                        <td>${order.customerId}</td>
+                        <td>${order.customerName}</td>
+                        <td>${order.orderDetail}</td>
+                        <td>${order.phone}</td>
+                        <td>${order.orderDate}</td>
+                        <td>-</td>
+                        <td>${order.note || ''}</td>
+                    `;
+                    tbody.appendChild(tr);
+                });
+            })
+            .catch(err => {
+                console.error('注文データ取得エラー:', err);
+            });
+
+        // 注文書作成フォーム送信
+        document.getElementById('orderForm').onsubmit = async function(e) {
+          e.preventDefault();
+          const form = e.target;
+          const data = {
+            customerId: form.customerId.value,
+            customerName: form.customerName.value,
+            orderDetail: form.orderDetail.value,
+            orderDate: form.orderDate.value,
+            phone: form.phone.value,
+            note: form.note.value
+          };
+          const res = await fetch('http://localhost:3000/api/orders', {
+            method: 'POST',
+            headers: {'Content-Type': 'application/json'},
+            body: JSON.stringify(data)
+          });
+          if (res.ok) {
+            alert('注文書を登録しました');
+            location.href = 'order_list.html'; // 一覧へ遷移
+          } else {
+            const err = await res.json();
+            alert('エラー: ' + err.error);
+          }
+        };
+        </script>
     </div>
-    <script>
-    // サイドバー開閉
-    const menuBtn = document.getElementById('menuBtn');
-    const sidebar = document.getElementById('sidebar');
-    const sidebarBg = document.getElementById('sidebarBg');
-    const sidebarClose = document.getElementById('sidebarClose');
-    function openSidebar() {
-        sidebar.classList.add('open');
-        sidebarBg.classList.add('show');
-    }
-    function closeSidebar() {
-        sidebar.classList.remove('open');
-        sidebarBg.classList.remove('show');
-    }
-    menuBtn.onclick = openSidebar;
-    sidebarClose.onclick = closeSidebar;
-    sidebarBg.onclick = closeSidebar;
-    </script>
 </body>
 </html>

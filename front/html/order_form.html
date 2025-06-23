@@ -97,7 +97,7 @@
             </div>
             <!-- ボタンエリア -->
             <div class="btn-area">
-                <button type="submit" class="btn">保存</button>
+                <button type="button" class="btn" id="saveBtn">保存</button>
                 <button type="button" class="btn" onclick="window.print()">印刷</button>
             </div>
         </div>
@@ -119,6 +119,45 @@
     menuBtn.onclick = openSidebar;
     sidebarClose.onclick = closeSidebar;
     sidebarBg.onclick = closeSidebar;
+
+    // 保存ボタンでAPIに注文書を登録
+    document.getElementById('saveBtn').onclick = async function() {
+        // 必要な値を取得（例：顧客ID・顧客名・注文内容・注文日・電話番号・備考）
+        // ※input要素のclassやnameに応じて適宜修正してください
+        const customerId = document.querySelector('input[placeholder="宛先名"]').value || '未設定';
+        const customerName = document.querySelector('input[placeholder="会社名"]').value || '未設定';
+        const orderDetail = document.querySelector('input[name^="item"]').value || '未設定';
+        const orderDate = document.querySelector('input[type="date"]').value || '';
+        const phone = document.querySelector('input[placeholder="電話番号"]').value || '';
+        const note = document.querySelector('.note-area textarea').value || '';
+
+        // バリデーション
+        if (!customerId || !customerName || !orderDetail || !orderDate) {
+            alert('必須項目が不足しています');
+            return;
+        }
+
+        // APIへPOST
+        const res = await fetch('http://localhost:3000/api/orders', {
+            method: 'POST',
+            headers: {'Content-Type': 'application/json'},
+            body: JSON.stringify({
+                customerId,
+                customerName,
+                orderDetail,
+                orderDate,
+                phone,
+                note
+            })
+        });
+        if (res.ok) {
+            alert('注文書を登録しました');
+            location.href = 'order_list.html'; // 一覧へ遷移
+        } else {
+            const err = await res.json();
+            alert('エラー: ' + err.error);
+        }
+    };
     </script>
 </body>
 </html>
