@@ -100,30 +100,29 @@
                 console.error('注文データ取得エラー:', err);
             });
 
-        // 注文書作成フォーム送信
-        document.getElementById('orderForm').onsubmit = async function(e) {
-          e.preventDefault();
-          const form = e.target;
-          const data = {
-            customerId: form.customerId.value,
-            customerName: form.customerName.value,
-            orderDetail: form.orderDetail.value,
-            orderDate: form.orderDate.value,
-            phone: form.phone.value,
-            note: form.note.value
-          };
-          const res = await fetch('http://localhost:3000/api/orders', {
-            method: 'POST',
-            headers: {'Content-Type': 'application/json'},
-            body: JSON.stringify(data)
-          });
-          if (res.ok) {
-            alert('注文書を登録しました');
-            location.href = 'order_list.html'; // 一覧へ遷移
-          } else {
-            const err = await res.json();
-            alert('エラー: ' + err.error);
-          }
+        // 保存ボタンでAPIに注文書を登録
+        document.getElementById('saveBtn').onclick = async function() {
+            // ...入力値の取得...
+            // ...バリデーション...
+            const res = await fetch('http://localhost:3000/api/orders', {
+                method: 'POST',
+                headers: {'Content-Type': 'application/json'},
+                body: JSON.stringify({
+                    customerId,
+                    customerName,
+                    orderDetail,
+                    orderDate,
+                    phone,
+                    note
+                })
+            });
+            if (res.ok) {
+                alert('注文書を登録しました');
+                location.href = 'order_list.html'; // 一覧へ遷移
+            } else {
+                const err = await res.json();
+                alert('エラー: ' + err.error);
+            }
         };
         </script>
     </div>
