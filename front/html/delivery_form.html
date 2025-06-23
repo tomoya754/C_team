@@ -26,37 +26,49 @@
     <div class="main" id="main">
         <!-- A4納品書本体 -->
         <div class="a4-sheet">
-            <h1 class="order-title">納品書</h1>
-            <!-- 宛先・納品情報 -->
-            <div class="order-info-row">
-                <div class="order-to">
-                    <div class="order-to-name"><input type="text" class="input-line" placeholder="宛先名"></div>
-                    <div class="order-to-etc"><input type="text" class="input-line" placeholder="御中"></div>
-                </div>
-                <div class="order-meta">
-                    <div>納品書No.：<input type="text" class="input-meta" placeholder="XXXXXXX"></div>
-                    <div>納品日：<input type="date" class="input-meta"></div>
-                </div>
-            </div>
-            <div class="order-message">下記の通り、納品致します。</div>
-            <!-- 納品先住所・合計金額 -->
-            <div class="order-address-row">
-                <div class="order-address">
-                    <div>納品先：</div>
-                    <div>
-                        〒<input type="text" class="input-meta" style="width:80px;" placeholder="郵便番号"><br>
-                        <input type="text" class="input-meta" style="width:220px;" placeholder="住所"><br>
-                        <input type="text" class="input-meta" style="width:120px;" placeholder="会社名"><br>
-                        TEL：<input type="text" class="input-meta" style="width:120px;" placeholder="電話番号"><br>
-                        FAX：<input type="text" class="input-meta" style="width:120px;" placeholder="FAX"><br>
-                        担当者：<input type="text" class="input-meta" style="width:120px;" placeholder="担当者名">
+            <h1 class="order-title" style="text-align:center;letter-spacing:0.3em;font-size:2.1em;margin-bottom:32px;">納品書</h1>
+            <div style="display:flex;flex-direction:row;justify-content:space-between;align-items:flex-start;gap:40px;">
+                <!-- 左側：顧客情報 -->
+                <div style="flex:1;min-width:340px;max-width:420px;">
+                    <div style="margin-bottom:12px;display:flex;align-items:flex-end;gap:8px;">
+                        <span style="font-size:1.15em;line-height:1.2;white-space:nowrap;">お客様ID：</span>
+                        <div style="position:relative;flex:1;display:flex;align-items:flex-end;">
+                            <input type="text" class="input-meta" style="width:170px;border:none;border-bottom:2px solid #222;font-size:1.15em;vertical-align:bottom;padding:2px 4px 2px 4px;">
+                            <button type="button" style="position:absolute;right:-2px;top:0;padding:2px 18px;font-size:1.1em;border:2px solid #222;background:#f7f7f7;">検索</button>
+                        </div>
+                    </div>
+                    <div style="margin-bottom:8px;">
+                        <input type="text" class="input-meta" style="width:220px;font-size:1.3em;text-align:center;border:none;background:transparent;letter-spacing:0.3em;" placeholder="○○○○○○○○○○"> 様
+                    </div>
+                    <div style="margin-bottom:8px;color:#666;font-size:0.95em;">（お客様住所）</div>
+                    <div style="margin-bottom:32px;">
+                        <textarea class="input-meta" style="width:100%;height:38px;resize:none;border:none;border-bottom:1px dotted #888;"></textarea>
+                    </div>
+                    <div style="border-bottom:1px dotted #888;height:18px;margin-bottom:32px;"></div>
+                    <div style="display:flex;align-items:center;margin-top:32px;">
+                        <span style="font-size:1.1em;">合計金額：</span>
+                        <span style="font-size:2em;color:#222;font-weight:bold;margin:0 12px;">￥<span id="totalAmount">0</span></span>
+                        <span style="font-size:1em;color:#666;">(税込)</span>
                     </div>
                 </div>
-                <div class="order-total">
-                    <div>合計金額：</div>
-                    <div>
-                        <input type="number" class="input-total" placeholder="0"> 円（税込）
+                <!-- 右側：発注情報 -->
+                <div style="flex:1;min-width:320px;max-width:400px;">
+                    <div style="display:flex;justify-content:space-between;margin-bottom:8px;">
+                        <span style="font-size:1.1em;">納品No.</span>
+                        <input type="text" class="input-meta" style="width:160px;text-align:right;border:none;font-size:1.1em;" placeholder="XXXXXXXXXX">
                     </div>
+                    <div style="display:flex;justify-content:space-between;margin-bottom:18px;">
+                        <span style="font-size:1.1em;">納品日：</span>
+                        <input type="date" class="input-meta" style="width:160px;text-align:right;border:none;font-size:1.1em;">
+                    </div>
+                    <div style="font-weight:bold;font-size:1.1em;margin-bottom:2px;">緑橋書店</div>
+                    <div style="margin-bottom:2px;">〒537-0022</div>
+                    <div style="margin-bottom:2px;">大阪府大阪市東成区</div>
+                    <div style="margin-bottom:2px;">中本１丁目５－２１</div>
+                    <div style="margin-bottom:2px;">TEL：00-0000-0000</div>
+                    <div style="margin-bottom:2px;">FAX：00-0000-0000</div>
+                    <div style="margin-bottom:2px;">E-Mail xxxxxxxxxxxxxxxxxxxxxxxx</div>
+                    <div style="margin-bottom:2px;">担当者 ○○○○○</div>
                 </div>
             </div>
             <!-- 納品明細テーブル -->
@@ -67,16 +79,13 @@
                     <th>数量</th>
                     <th>単価</th>
                     <th>金額</th>
-                    <th>備考</th>
                 </tr>
-                <!-- 12行分の入力欄を用意 -->
                 <tr>
                     <td>1</td>
                     <td><input type="text" name="item1"></td>
                     <td><input type="number" name="qty1"></td>
                     <td><input type="number" name="price1"></td>
                     <td><input type="number" name="amount1"></td>
-                    <td><input type="text" name="note1"></td>
                 </tr>
                 <tr>
                     <td>2</td>
@@ -84,7 +93,6 @@
                     <td><input type="number" name="qty2"></td>
                     <td><input type="number" name="price2"></td>
                     <td><input type="number" name="amount2"></td>
-                    <td><input type="text" name="note2"></td>
                 </tr>
                 <tr>
                     <td>3</td>
@@ -92,7 +100,6 @@
                     <td><input type="number" name="qty3"></td>
                     <td><input type="number" name="price3"></td>
                     <td><input type="number" name="amount3"></td>
-                    <td><input type="text" name="note3"></td>
                 </tr>
                 <tr>
                     <td>4</td>
@@ -100,7 +107,6 @@
                     <td><input type="number" name="qty4"></td>
                     <td><input type="number" name="price4"></td>
                     <td><input type="number" name="amount4"></td>
-                    <td><input type="text" name="note4"></td>
                 </tr>
                 <tr>
                     <td>5</td>
@@ -108,7 +114,6 @@
                     <td><input type="number" name="qty5"></td>
                     <td><input type="number" name="price5"></td>
                     <td><input type="number" name="amount5"></td>
-                    <td><input type="text" name="note5"></td>
                 </tr>
                 <tr>
                     <td>6</td>
@@ -116,7 +121,6 @@
                     <td><input type="number" name="qty6"></td>
                     <td><input type="number" name="price6"></td>
                     <td><input type="number" name="amount6"></td>
-                    <td><input type="text" name="note6"></td>
                 </tr>
                 <tr>
                     <td>7</td>
@@ -124,7 +128,6 @@
                     <td><input type="number" name="qty7"></td>
                     <td><input type="number" name="price7"></td>
                     <td><input type="number" name="amount7"></td>
-                    <td><input type="text" name="note7"></td>
                 </tr>
                 <tr>
                     <td>8</td>
@@ -132,7 +135,6 @@
                     <td><input type="number" name="qty8"></td>
                     <td><input type="number" name="price8"></td>
                     <td><input type="number" name="amount8"></td>
-                    <td><input type="text" name="note8"></td>
                 </tr>
                 <tr>
                     <td>9</td>
@@ -140,7 +142,6 @@
                     <td><input type="number" name="qty9"></td>
                     <td><input type="number" name="price9"></td>
                     <td><input type="number" name="amount9"></td>
-                    <td><input type="text" name="note9"></td>
                 </tr>
                 <tr>
                     <td>10</td>
@@ -148,7 +149,6 @@
                     <td><input type="number" name="qty10"></td>
                     <td><input type="number" name="price10"></td>
                     <td><input type="number" name="amount10"></td>
-                    <td><input type="text" name="note10"></td>
                 </tr>
                 <tr>
                     <td>11</td>
@@ -156,7 +156,6 @@
                     <td><input type="number" name="qty11"></td>
                     <td><input type="number" name="price11"></td>
                     <td><input type="number" name="amount11"></td>
-                    <td><input type="text" name="note11"></td>
                 </tr>
                 <tr>
                     <td>12</td>
@@ -164,14 +163,8 @@
                     <td><input type="number" name="qty12"></td>
                     <td><input type="number" name="price12"></td>
                     <td><input type="number" name="amount12"></td>
-                    <td><input type="text" name="note12"></td>
                 </tr>
             </table>
-            <!-- 備考欄 -->
-            <div class="note-area">
-                <label>備考：</label>
-                <textarea rows="3"></textarea>
-            </div>
             <!-- ボタンエリア -->
             <div class="btn-area">
                 <button type="submit" class="btn" id="saveBtn">保存</button>
