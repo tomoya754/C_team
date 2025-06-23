@@ -1,4 +1,4 @@
-// 仮の納品書データ
+// 納品データ
 const deliveries = [
   {
     deliveryId: 1,
