@@ -5,10 +5,13 @@ document.addEventListener('DOMContentLoaded', function() {
     // 保存ボタン
     const saveBtn = document.getElementById('saveBtn');
     if (saveBtn) {
-        saveBtn.addEventListener('click', function() {
+        saveBtn.addEventListener('click', function(e) {
+            e.preventDefault();
             const formData = getDeliveryFormData();
             localStorage.setItem('deliveryFormData', JSON.stringify(formData));
-            alert('納品書の内容を保存しました。');
+            const name = document.querySelector('.order-to-name input')?.value || '';
+            alert(`納品書（${name || '無名'}）保存しました`);
+            window.location.href = 'delivery_list.html';
         });
     }
     // 読み込み（自動）
