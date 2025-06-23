@@ -1,4 +1,4 @@
-// 仮の注文書データ
+// 注文データ
 const orders = [
   {
     orderId: 1,
