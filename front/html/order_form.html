@@ -103,7 +103,7 @@
         </div>
     </div>
     <script>
-    // サイドバー開閉
+    // サイドバー開閉機能
     const menuBtn = document.getElementById('menuBtn');
     const sidebar = document.getElementById('sidebar');
     const sidebarBg = document.getElementById('sidebarBg');
@@ -122,8 +122,7 @@
 
     // 保存ボタンでAPIに注文書を登録
     document.getElementById('saveBtn').onclick = async function() {
-        // 必要な値を取得（例：顧客ID・顧客名・注文内容・注文日・電話番号・備考）
-        // ※input要素のclassやnameに応じて適宜修正してください
+        // 入力値の取得
         const customerId = document.querySelector('input[placeholder="宛先名"]').value || '未設定';
         const customerName = document.querySelector('input[placeholder="会社名"]').value || '未設定';
         const orderDetail = document.querySelector('input[name^="item"]').value || '未設定';
@@ -131,13 +130,13 @@
         const phone = document.querySelector('input[placeholder="電話番号"]').value || '';
         const note = document.querySelector('.note-area textarea').value || '';
 
-        // バリデーション
+        // 必須項目のバリデーション
         if (!customerId || !customerName || !orderDetail || !orderDate) {
             alert('必須項目が不足しています');
             return;
         }
 
-        // APIへPOST
+        // APIへ注文書データをPOST送信
         const res = await fetch('http://localhost:3000/api/orders', {
             method: 'POST',
             headers: {'Content-Type': 'application/json'},
@@ -152,7 +151,8 @@
         });
         if (res.ok) {
             alert('注文書を登録しました');
-            location.href = 'order_list.html'; // 一覧へ遷移
+            // 登録後、一覧画面へ遷移
+            location.href = 'order_list.html';
         } else {
             const err = await res.json();
             alert('エラー: ' + err.error);
