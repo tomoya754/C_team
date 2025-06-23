@@ -100,32 +100,46 @@ body {
     background: transparent;
     outline: none;
 }
-.order-footer {
+.note-area {
+    margin: 18px 0;
+}
+.note-area textarea {
+    width: 100%;
+    font-size: 1rem;
+    border: 1px solid #aaa;
+    border-radius: 4px;
+    padding: 6px;
+    resize: vertical;
+}
+.btn-area {
     display: flex;
-    justify-content: flex-end;
-    gap: 16px;
-    margin-top: 18px;
+    justify-content: center;
+    gap: 60px;
+    margin-top: 30px;
 }
-.btn.print-btn {
-    background: #4CAF50;
-    color: #fff;
-    border: none;
-    border-radius: 6px;
-    padding: 8px 32px;
-    font-size: 1.1em;
-    cursor: pointer;
-}
-.btn.back-btn {
+.btn {
+    font-size: 2rem;
+    padding: 10px 48px;
+    border-radius: 12px;
+    border: 2px solid #333;
     background: #fff;
-    color: #222;
-    border: 2px solid #222;
-    border-radius: 6px;
-    padding: 8px 32px;
-    font-size: 1.1em;
     cursor: pointer;
+    transition: background 0.2s;
+}
+.btn:hover {
+    background: #f0f0f0;
 }
 @media print {
-    body { background: #fff; }
-    .a4-sheet { box-shadow: none; padding: 0; }
-    .menu-btn, .sidebar, .sidebar-bg, .sidebar-close, .order-footer { display: none !important; }
+    body {
+        background: none;
+        padding: 0;
+    }
+    .a4-sheet {
+        box-shadow: none;
+        margin: 0;
+        width: 210mm;
+        min-height: 297mm;
+        padding: 20mm 15mm 15mm 15mm;
+    }
+    .btn-area { display: none; }
 }
