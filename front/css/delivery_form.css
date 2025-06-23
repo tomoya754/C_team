@@ -100,10 +100,6 @@ body {
     background: transparent;
     outline: none;
 }
-.order-table .right {
-    text-align: right;
-    background: #f8f8f8;
-}
 .note-area {
     margin: 18px 0;
 }

@@ -90,3 +90,89 @@ h1 { margin-top: 80px; font-size: 40px; }
     text-decoration: none;
     color: #ffd700;
 }
+.statistics-search-area {
+    margin: 30px auto;
+    max-width: 1000px;
+}
+.search-bar-group {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 12px;
+}
+.search-icon {
+    font-size: 26px;
+    margin-right: 4px;
+    margin-left: 8px;
+}
+.search-input {
+    font-size: 18px;
+    flex: 1;
+    padding: 8px 12px;
+    border: 1.5px solid #222;
+    border-radius: 4px;
+    min-width: 260px;
+    max-width: 340px;
+}
+.search-btn {
+    font-size: 18px;
+    padding: 8px 18px;
+    border: 1.5px solid #222;
+    background: #fff;
+    border-radius: 4px;
+    cursor: pointer;
+    margin-left: 4px;
+}
+.select-group {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    margin-left: 8px;
+}
+.sort-key, .sort-order {
+    font-size: 17px;
+    padding: 7px 18px 7px 8px;
+    border: 1.5px solid #222;
+    border-radius: 4px;
+    background: #fff;
+    appearance: none;
+    min-width: 90px;
+    margin-right: 2px;
+}
+.sort-order { min-width: 70px; }
+.statistics-table-wrap {
+    border: 2px solid #222;
+    border-radius: 4px;
+    overflow-x: auto;
+    overflow-y: auto;
+    max-height: 380px;
+    background: #fff;
+}
+.statistics-list-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 17px;
+    background: #fff;
+}
+.statistics-list-table th, .statistics-list-table td {
+    border: 1.2px solid #222;
+    padding: 7px 8px;
+    text-align: center;
+    min-width: 90px;
+}
+.statistics-list-table th {
+    background: #f8f8f8;
+    font-weight: bold;
+}
+.statistics-list-table td {
+    height: 38px;
+}
+/* スクロールバー調整 */
+.statistics-table-wrap::-webkit-scrollbar {
+    width: 10px;
+    background: #eee;
+}
+.statistics-table-wrap::-webkit-scrollbar-thumb {
+    background: #bbb;
+    border-radius: 5px;
+}
