@@ -70,7 +70,7 @@
                     <th>備考</th>
                 </tr>
                 <tr>
-                    <td>{{ $i }}</td>
+                    <td><input type="text" name="item{{ $i }}"></td>
                     <td><input type="text" name="item{{ $i }}"></td>
                     <td><input type="number" name="qty{{ $i }}"></td>
                     <td><input type="number" name="price{{ $i }}"></td>
@@ -102,6 +102,7 @@
             </div>
         </div>
     </div>
+    <script src="../js/order_form.js"></script>
     <script>
     // サイドバー開閉
     const menuBtn = document.getElementById('menuBtn');
