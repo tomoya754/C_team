@@ -6,7 +6,6 @@ const router = express.Router();
 const { aggregateStatistics } = require('../controllers/statisticsController');
 
 // 統計情報一覧API
-// GETリクエストで /api/statistics にアクセスされたときに実行
 router.get('/', (req, res) => {
   // 集計した統計情報データを取得
   const statistics = aggregateStatistics();
