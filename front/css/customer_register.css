@@ -1,92 +1,145 @@
-body { font-family: 'Segoe UI', sans-serif; text-align: center; margin: 0; }
-.menu-icon { position: absolute; left: 20px; top: 20px; cursor: pointer; }
-.menu-icon div { width: 35px; height: 5px; background: #222; margin: 6px 0; border-radius: 2px; }
-h1 { margin-top: 80px; font-size: 40px; }
-.back-link { position: absolute; left: 20px; top: 80px; font-size: 18px; text-decoration: none; color: #222; }
-.side-menu {
-    position: fixed;
-    top: 0; left: -250px;
-    width: 220px; height: 100%;
-    background: #fff;
-    box-shadow: 2px 0 8px rgba(0,0,0,0.1);
-    transition: left 0.3s;
-    z-index: 1000;
-    padding-top: 60px;
-}
-.side-menu.open { left: 0; }
-.side-menu ul { list-style: none; padding: 0; }
-.side-menu li { margin: 24px 0; }
-.side-menu a { color: #222; text-decoration: none; font-size: 20px; padding: 8px 24px; display: block; }
-.side-menu a:hover { background: #f0f0f0; }
-/* home.cssのサイドバー・ハンバーガーメニュー部分を反映し統一 */
-.menu-btn {
-    font-size: 36px;
-    cursor: pointer;
-    position: fixed;
-    top: 16px;
-    left: 16px;
-    z-index: 1100;
-    background: #fff;
-    border-radius: 8px;
-    width: 48px;
-    height: 48px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.08);
-    border: 1px solid #111;
-    transition: opacity 0.2s;
-}
-.sidebar {
-    width: 300px;
-    min-width: 300px;
-    max-width: 300px;
-    background: #111;
-    color: #fff;
-    padding-top: 40px;
-    position: fixed;
-    top: 0;
-    left: -320px;
-    height: 100%;
-    transition: left 0.3s;
-    z-index: 1000;
-    border-right: 3px solid #fff;
-    box-sizing: border-box;
-    overflow-y: auto;
-}
-.sidebar.open { left: 0; }
-.sidebar-bg {
-    display: none;
-    position: fixed;
-    top: 0; left: 0; right: 0; bottom: 0;
-    background: rgba(0,0,0,0.15);
-    z-index: 900;
-}
-.sidebar-bg.show { display: block; }
-.sidebar-close {
-    position: absolute;
-    top: 10px;
-    right: 18px;
-    font-size: 2rem;
-    cursor: pointer;
-    color: #fff;
-}
-.sidebar ul {
-    list-style: none;
-    padding: 0 0 0 24px;
+/* customer_register.css */
+
+body {
+    font-family: 'Inter', sans-serif;
+    text-align: center;
     margin: 0;
+    background-color: #f5f7fa; /* 明るい背景色 */
 }
-.sidebar li {
-    margin: 28px 0;
-    font-size: 2rem;
-    text-align: left;
+
+/* メインコンテンツのスタイリング */
+.main {
+    padding: 32px 40px;
+    max-width: 1100px; /* 最大幅を設定 */
+    margin: 0 auto; /* 中央寄せ */
+    background: #fff; /* 背景色 */
+    border-radius: 18px; /* 角丸 */
+    box-shadow: 0 4px 24px rgba(0,0,0,0.08); /* 影 */
+    min-height: 60vh; /* 最小高さを設定 */
+    margin-top: 48px; /* 上部のマージン */
 }
-.sidebar a {
-    color: #fff;
-    text-decoration: underline;
-    font-weight: normal;
+
+h1 {
+    text-align: center;
+    font-size: 2.5rem; /* 大きなタイトル */
+    margin-bottom: 30px; /* マージンを調整 */
+    margin-top: 20px;
+    letter-spacing: 0.1em;
+    font-weight: bold;
+    color: #333; /* タイトル色 */
+    border-bottom: 2px solid #eee; /* 下線を追加 */
+    padding-bottom: 10px;
 }
-.sidebar a:hover {
-    text-decoration: none;
-    color: #ffd700;
+
+form {
+    margin: 40px auto;
+    max-width: 500px;
+    background: #f9f9f9;
+    padding: 32px;
+    border-radius: 12px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+    border: 1px solid #eee; /* フォームの境界線を追加 */
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* フォーム要素を中央寄せ */
+}
+
+label {
+    font-size: 1.25rem; /* ラベルのフォントサイズを大きく */
+    display: block;
+    margin-bottom: 20px; /* マージンを増やす */
+    color: #555; /* ラベルの色 */
+    font-weight: 500;
+}
+
+input[type="file"] {
+    font-size: 1.1rem; /* ファイル入力のフォントサイズを調整 */
+    margin-bottom: 32px;
+    width: 100%;
+    padding: 10px; /* パディングを追加 */
+    border: 1px solid #ccc; /* 境界線を追加 */
+    border-radius: 8px; /* 角丸を調整 */
+    background-color: #fff; /* 背景色 */
+    box-shadow: inset 0 1px 3px rgba(0,0,0,0.05); /* 内部の影 */
+    transition: border-color 0.3s ease;
+}
+
+input[type="file"]:focus {
+    border-color: #667eea; /* フォーカス時の境界線色 */
+    outline: none;
+}
+
+button[type="submit"],
+button[type="button"] {
+    font-size: 1.25rem; /* ボタンのフォントサイズを調整 */
+    padding: 12px 45px; /* パディングを調整 */
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.3s ease; /* 全てのプロパティにトランジション */
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1); /* ボタンに影 */
+    margin: 10px 10px; /* ボタン間のマージンを調整 */
+    min-width: 150px;
+}
+
+button[type="submit"] {
+    background-color: #4CAF50; /* 緑色の背景 */
+    border: 1px solid #4CAF50; /* 緑色の境界線 */
+    color: white;
+}
+
+button[type="submit"]:hover {
+    background-color: #45a049; /* ホバーで少し暗く */
+    border-color: #45a049;
+    transform: translateY(-2px); /* 少し上に移動 */
+    box-shadow: 0 4px 8px rgba(0,0,0,0.15); /* 影を強調 */
+}
+
+button[type="button"] {
+    background-color: #f44336; /* キャンセルボタンは赤色 */
+    border: 1px solid #f44336;
+    color: white;
+}
+
+button[type="button"]:hover {
+    background-color: #da190b; /* ホバーで少し暗く */
+    border-color: #da190b;
+    transform: translateY(-2px); /* 少し上に移動 */
+    box-shadow: 0 4px 8px rgba(0,0,0,0.15); /* 影を強調 */
+}
+
+/* home.cssのサイドバー・ハンバーガーメニュー部分を反映し統一 */
+/* この部分はsidebar.cssに集約されているため、ここでは記述しない */
+
+/* レスポンシブ対応 */
+@media (max-width: 768px) {
+    .main {
+        padding: 20px 20px;
+        margin-top: 20px;
+        border-radius: 0;
+        box-shadow: none;
+    }
+    h1 {
+        font-size: 2rem; /* モバイルでのタイトルサイズ */
+        margin-bottom: 25px;
+    }
+    form {
+        padding: 25px;
+        margin: 20px auto;
+    }
+    label {
+        font-size: 1.1rem;
+        margin-bottom: 15px;
+    }
+    input[type="file"] {
+        font-size: 1rem;
+        padding: 8px;
+        margin-bottom: 25px;
+    }
+    button[type="submit"],
+    button[type="button"] {
+        width: 100%;
+        margin: 8px 0;
+        font-size: 1.1rem;
+        padding: 10px 30px;
+    }
 }
