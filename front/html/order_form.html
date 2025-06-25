@@ -15,7 +15,9 @@
     <nav class="sidebar" id="sidebar">
         <span class="sidebar-close" id="sidebarClose">&times;</span>
         <ul>
-            <li><a href="/html/home.html">・<u>HOME</u></a></li>
+
+            <li><a href="/">・<u>HOME</u></a></li>
+
             <li><a href="/html/order_list.html">・注文書一覧</a></li>
             <li><a href="/html/delivery_list.html">・納品書一覧</a></li>
             <li><a href="/html/statistics_list.html">・統計情報一覧</a></li>
@@ -178,14 +180,14 @@
                 <textarea class="input-meta" style="width:90%;height:40px;resize:none;"></textarea>
             </div>
             <div class="btn-area">
-                <button type="submit" class="btn">保存</button>
+                <button type="button" class="btn" id="saveBtn">保存</button>
                 <button type="button" class="btn" onclick="window.print()">印刷</button>
             </div>
         </div>
     </div>
     <script src="../js/order_form.js"></script>
     <script>
-    // サイドバー開閉
+    // サイドバー開閉機能
     const menuBtn = document.getElementById('menuBtn');
     const sidebar = document.getElementById('sidebar');
     const sidebarBg = document.getElementById('sidebarBg');
@@ -201,6 +203,45 @@
     menuBtn.onclick = openSidebar;
     sidebarClose.onclick = closeSidebar;
     sidebarBg.onclick = closeSidebar;
+
+    // 保存ボタンでAPIに注文書を登録
+    document.getElementById('saveBtn').onclick = async function() {
+        // 入力値の取得
+        const customerId = document.querySelector('input[placeholder="宛先名"]').value || '未設定';
+        const customerName = document.querySelector('input[placeholder="会社名"]').value || '未設定';
+        const orderDetail = document.querySelector('input[name^="item"]').value || '未設定';
+        const orderDate = document.querySelector('input[type="date"]').value || '';
+        const phone = document.querySelector('input[placeholder="電話番号"]').value || '';
+        const note = document.querySelector('.note-area textarea').value || '';
+
+        // 必須項目のバリデーション
+        if (!customerId || !customerName || !orderDetail || !orderDate) {
+            alert('必須項目が不足しています');
+            return;
+        }
+
+        // APIへ注文書データをPOST送信
+        const res = await fetch('http://localhost:3000/api/orders', {
+            method: 'POST',
+            headers: {'Content-Type': 'application/json'},
+            body: JSON.stringify({
+                customerId,
+                customerName,
+                orderDetail,
+                orderDate,
+                phone,
+                note
+            })
+        });
+        if (res.ok) {
+            alert('注文書を登録しました');
+            // 登録後、一覧画面へ遷移
+            location.href = 'order_list.html';
+        } else {
+            const err = await res.json();
+            alert('エラー: ' + err.error);
+        }
+    };
     </script>
 </body>
 </html>
