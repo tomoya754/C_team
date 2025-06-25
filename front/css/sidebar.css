@@ -1,4 +1,6 @@
-/* サイドバー・ハンバーガーメニュー共通CSS */
+/* sidebar.css */
+
+/* ハンバーガーメニューボタン */
 .menu-btn {
     font-size: 36px;
     cursor: pointer;
@@ -17,6 +19,8 @@
     border: 1px solid #111;
     transition: opacity 0.2s;
 }
+
+/* サイドバー */
 .sidebar {
     width: 300px;
     min-width: 300px;
@@ -26,31 +30,50 @@
     padding-top: 40px;
     position: fixed;
     top: 0;
-    left: -320px;
+    left: -320px; /* 初期状態で非表示 */
     height: 100%;
-    transition: left 0.3s;
+    transition: left 0.3s ease-in-out; /* スムーズなトランジション */
     z-index: 1000;
     border-right: 3px solid #fff;
     box-sizing: border-box;
     overflow-y: auto;
+    box-shadow: 2px 0 10px rgba(0,0,0,0.2); /* 影を追加 */
 }
-.sidebar.open { left: 0; }
+.sidebar.open {
+    left: 0; /* 開いた状態 */
+}
+
+/* サイドバー背景（モーダル用） */
 .sidebar-bg {
     display: none;
     position: fixed;
-    top: 0; left: 0; right: 0; bottom: 0;
-    background: rgba(0,0,0,0.15);
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0,0,0,0.4); /* 暗いオーバーレイ */
     z-index: 900;
+    cursor: pointer;
 }
-.sidebar-bg.show { display: block; }
+.sidebar-bg.show {
+    display: block;
+}
+
+/* サイドバーを閉じるボタン */
 .sidebar-close {
     position: absolute;
     top: 10px;
     right: 18px;
-    font-size: 2rem;
+    font-size: 2.5rem; /* 大きな閉じるボタン */
     cursor: pointer;
     color: #fff;
+    transition: color 0.2s;
 }
+.sidebar-close:hover {
+    color: #ff4d4d; /* ホバーで赤色に */
+}
+
+/* サイドバーメニューリスト */
 .sidebar ul {
     list-style: none;
     padding: 0 0 0 24px;
@@ -58,15 +81,51 @@
 }
 .sidebar li {
     margin: 28px 0;
-    font-size: 2rem;
+    font-size: 1.8rem; /* フォントサイズを調整 */
     text-align: left;
 }
 .sidebar a {
     color: #fff;
-    text-decoration: underline;
+    text-decoration: none; /* 下線をなくす */
     font-weight: normal;
+    padding: 8px 12px; /* クリックしやすいようにパディング */
+    display: block; /* クリック領域を広げる */
+    border-radius: 6px; /* 角丸 */
+    transition: background 0.2s, color 0.2s;
 }
 .sidebar a:hover {
-    text-decoration: none;
-    color: #ffd700;
+    background: #333; /* ホバーで背景色 */
+    color: #ffd700; /* ホバーで金色に */
+    text-decoration: underline; /* ホバーで下線 */
+}
+.sidebar a u {
+    text-decoration: none; /* HOMEのデフォルト下線をなくす */
+}
+
+/* レスポンシブ対応 */
+@media (max-width: 768px) {
+    .menu-btn {
+        left: 8px;
+        top: 8px;
+        width: 40px;
+        height: 40px;
+        font-size: 28px;
+    }
+    .sidebar {
+        width: 75vw; /* 画面幅に合わせて調整 */
+        min-width: unset;
+        max-width: 90vw;
+        left: -80vw; /* 画面幅に合わせて調整 */
+    }
+    .sidebar.open {
+        left: 0;
+    }
+    .sidebar-close {
+        font-size: 2rem;
+        right: 12px;
+    }
+    .sidebar li {
+        font-size: 1.5rem;
+        margin: 20px 0;
+    }
 }
