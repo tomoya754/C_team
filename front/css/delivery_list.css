@@ -191,6 +191,35 @@ body {
     box-shadow: 0 4px 8px rgba(0,0,0,0.15);
 }
 
+.delivery-btns-row {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    width: 600px;
+    max-width: 600px;
+    min-width: 600px;
+    margin: 40px auto 0 auto;
+    position: static;
+    left: unset;
+    transform: unset;
+    gap: 0;
+}
+
+.delivery-btns-row .btn {
+    width: 260px;
+    min-width: 240px;
+    max-width: 260px;
+    font-size: 1.3rem;
+    padding: 18px 0;
+    border-radius: 12px;
+    font-weight: bold;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.10);
+    letter-spacing: 0.08em;
+    margin: 0;
+    text-align: center;
+}
+
 /* レスポンシブ対応 */
 @media (max-width: 900px) {
     .main { padding: 20px 20px; }
@@ -208,4 +237,18 @@ body {
     .filter-btn { margin-left: 0; margin-top: 5px; }
     .orders-table { font-size: 0.75em; min-width: 500px; }
     .orders-btns-row { gap: 8px; }
+    .delivery-btns-row {
+        width: 100%;
+        min-width: unset;
+        max-width: unset;
+        flex-direction: column;
+        gap: 16px;
+    }
+    .delivery-btns-row .btn {
+        width: 100%;
+        min-width: 120px;
+        max-width: unset;
+        font-size: 1rem;
+        padding: 12px 0;
+    }
 }
