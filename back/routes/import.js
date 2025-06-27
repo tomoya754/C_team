@@ -27,16 +27,18 @@ router.post('/upload-customers', upload.single('file'), async (req, res) => {
         // MySQLに保存
         const conn = await db.getConnection();
         for (const customer of customers) {
-          // カラム名はCSVのヘッダーとDBのカラムに合わせて修正してください
           await conn.query(
-            'INSERT INTO customers (customerId, customerName, address, phone, email, note) VALUES (?, ?, ?, ?, ?, ?)',
+            'INSERT INTO customers (customerId, shopName, customerName, staffName, address, phone, deliveryCondition, note, registeredAt) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)',
             [
               customer.customerId || null,
+              customer.shopName || null,
               customer.customerName || null,
+              customer.staffName || null,
               customer.address || null,
               customer.phone || null,
-              customer.email || null,
-              customer.note || null
+              customer.deliveryCondition || null,
+              customer.note || null,
+              customer.registeredAt || null
             ]
           );
         }
