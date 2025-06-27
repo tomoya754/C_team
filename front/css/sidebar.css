@@ -1,72 +1,247 @@
-/* サイドバー・ハンバーガーメニュー共通CSS */
+/* sidebar.css */
+
+/* ハンバーガーメニューボタン */
 .menu-btn {
+    font-family: 'Inter', sans-serif; /* フォントの統一 */
     font-size: 36px;
     cursor: pointer;
     position: fixed;
-    top: 16px;
-    left: 16px;
-    z-index: 1100;
-    background: #fff;
-    border-radius: 8px;
-    width: 48px;
-    height: 48px;
+    top: 20px; /* home.htmlのインラインスタイルと合わせる */
+    left: 20px; /* home.htmlのインラインスタイルと合わせる */
+    z-index: 1001; /* home.htmlのインラインスタイルと合わせる */
+    background: #ffffff; /* 白い背景 */
+    border-radius: 16px; /* 少し大きめの角丸で柔らかな印象に */
+    width: 56px; /* 幅を少し大きく */
+    height: 56px; /* 高さを少し大きく */
     display: flex;
     align-items: center;
     justify-content: center;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.08);
-    border: 1px solid #111;
-    transition: opacity 0.2s;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1); /* 統一感を意識した柔らかな影 */
+    border: 1px solid #e0e0e0; /* 薄いボーダー */
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); /* より標準的でスムーズなトランジション */
+    color: #4a4a4a; /* デフォルトの色を少し濃く */
 }
+
+/* ホバー時のスタイル */
+.menu-btn:hover {
+    background: #f5f5f5; /* ホバーでさらに明るいグレー */
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15); /* ホバーで影を強調 */
+    transform: translateY(-2px); /* 少し上に浮き上がるエフェクト */
+    color: #222222; /* ホバーで色を濃く */
+    border-color: #d0d0d0; /* ホバーでボーダーを少し濃く */
+}
+
+/* サイドバーが開いているときにハンバーガーメニューを非表示にする */
+.sidebar.open + .sidebar-bg + .menu-btn {
+    display: none;
+}
+/* sidebar.css内でmenu-btnを常に表示（デフォルト）*/
+.menu-btn {
+    display: block;
+}
+
+
+/* サイドバー */
 .sidebar {
+    font-family: 'Inter', sans-serif; /* フォントの統一 */
     width: 300px;
     min-width: 300px;
     max-width: 300px;
-    background: #111;
-    color: #fff;
-    padding-top: 40px;
+    background: linear-gradient(135deg, #2c3e50 0%, #34495e 100%); /* 暗めのグラデーション背景 */
+    color: #ecf0f1; /* 明るいテキスト色 */
+    padding-top: 70px; /* パディングを増やす */
     position: fixed;
     top: 0;
-    left: -320px;
+    left: -320px; /* 初期状態で非表示 */
     height: 100%;
-    transition: left 0.3s;
+    transition: left 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55); /* バウンドするようなトランジション */
     z-index: 1000;
-    border-right: 3px solid #fff;
+    border-right: 5px solid #3498db; /* アクセントカラーの太いボーダー */
     box-sizing: border-box;
     overflow-y: auto;
+    box-shadow: 2px 0 20px rgba(0, 0, 0, 0.4); /* 強めの影 */
 }
-.sidebar.open { left: 0; }
+.sidebar.open {
+    left: 0; /* 開いた状態 */
+}
+
+/* サイドバー背景（モーダル用） */
 .sidebar-bg {
     display: none;
     position: fixed;
-    top: 0; left: 0; right: 0; bottom: 0;
-    background: rgba(0,0,0,0.15);
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0,0,0,0.7); /* より濃いオーバーレイ */
     z-index: 900;
-}
-.sidebar-bg.show { display: block; }
-.sidebar-close {
-    position: absolute;
-    top: 10px;
-    right: 18px;
-    font-size: 2rem;
     cursor: pointer;
-    color: #fff;
+    backdrop-filter: blur(3px); /* 背景をさらにぼかす */
+    transition: opacity 0.4s ease;
 }
+.sidebar-bg.show {
+    display: block;
+    opacity: 1;
+}
+/* sidebar-bgの初期opacityを0に設定し、トランジションのために使用 */
+.sidebar-bg:not(.show) {
+    opacity: 0;
+}
+
+
+/* サイドバーを閉じるボタン */
+.sidebar-close {
+    font-family: 'Inter', sans-serif; /* フォントの統一 */
+    position: fixed; /* home.htmlのインラインスタイルと合わせる */
+    top: 20px; /* home.htmlのインラインスタイルと合わせる */
+    left: 20px; /* home.htmlのインラインスタイルと合わせる */
+    z-index: 1002; /* home.htmlのインラインスタイルと合わせる */
+    font-size: 2.8rem; /* 大きな閉じるボタン */
+    cursor: pointer;
+    color: #e74c3c; /* 閉じるボタンの強調色 */
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); /* スムーズで少し弾むようなトランジション */
+    background: #ffffff; /* 白い背景 */
+    border-radius: 16px; /* 少し大きめの角丸 */
+    width: 56px; /* 幅を少し大きく */
+    height: 56px; /* 高さを少し大きく */
+    display: flex; /* 中央寄せ用 */
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1); /* 統一感を意識した柔らかな影 */
+    border: 1px solid #e0e0e0; /* 薄いボーダー */
+}
+
+/* デフォルトでは非表示 */
+.sidebar-close {
+    display: none;
+}
+/* サイドバーが開いているときに閉じるボタンを表示する */
+.sidebar.open .sidebar-close {
+    display: flex; /* flexを使用して中央揃えに */
+}
+
+.sidebar-close:hover {
+    color: #c0392b; /* ホバーで赤色を濃く */
+    background: #f5f5f5; /* ホバーで背景を明るく */
+    transform: rotate(90deg) scale(1.05); /* ホバーで回転＋少し拡大エフェクト */
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15); /* ホバーで影を強調 */
+    border-color: #d0d0d0; /* ホバーでボーダーを少し濃く */
+}
+
+/* サイドバーメニューリスト */
 .sidebar ul {
     list-style: none;
-    padding: 0 0 0 24px;
+    padding: 0 0 0 35px; /* 左パディングを増やす */
     margin: 0;
 }
 .sidebar li {
-    margin: 28px 0;
-    font-size: 2rem;
+    margin: 25px 0; /* マージンを調整 */
+    font-size: 1.7rem; /* フォントサイズを調整 */
     text-align: left;
 }
 .sidebar a {
-    color: #fff;
-    text-decoration: underline;
-    font-weight: normal;
+    color: #ecf0f1; /* 明るいテキスト色 */
+    text-decoration: none; /* 下線をなくす */
+    font-weight: 500; /* 少し太く */
+    padding: 12px 18px; /* クリックしやすいようにパディングを増やす */
+    display: block; /* クリック領域を広げる */
+    border-radius: 10px; /* 角丸を少し大きく */
+    transition: all 0.3s ease-in-out; /* 全てのプロパティにスムーズなトランジション */
+    position: relative;
+    overflow: hidden; /* ホバーエフェクト用 */
 }
 .sidebar a:hover {
-    text-decoration: none;
-    color: #ffd700;
+    background: rgba(255, 255, 255, 0.15); /* ホバーで透明な白背景を濃く */
+    color: #3498db; /* ホバーでアクセントカラー */
+    transform: translateX(5px); /* 少し右にスライド */
+    text-decoration: none; /* ホバーで下線なし */
+}
+/* アクティブなリンクのスタイル */
+.sidebar a[href="home.html"] {
+    background: rgba(52, 152, 219, 0.25); /* HOMEリンクの背景色を濃く */
+    color: #3498db; /* HOMEリンクの色 */
+    font-weight: bold;
+}
+.sidebar a u {
+    text-decoration: none; /* HOMEのデフォルト下線をなくす */
+}
+.sidebar a::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    height: 70%; /* 線を長く */
+    width: 5px; /* 線を太く */
+    background-color: #3498db; /* アクティブなリンクの左側に線 */
+    border-radius: 3px; /* 線の角丸 */
+    opacity: 0;
+    transition: opacity 0.3s ease, transform 0.3s ease;
+}
+.sidebar a:hover::before,
+.sidebar a[href="home.html"]::before {
+    opacity: 1;
+    transform: translateY(-50%) translateX(0);
+}
+
+
+/* スクロールバーのカスタマイズ (WebKit/Blink browsers) */
+.sidebar::-webkit-scrollbar {
+    width: 8px;
+}
+.sidebar::-webkit-scrollbar-track {
+    background: #3a506b; /* スクロールバーのトラック色 */
+    border-radius: 10px;
+}
+.sidebar::-webkit-scrollbar-thumb {
+    background: #5c7c9c; /* スクロールバーのサム色 */
+    border-radius: 10px;
+    border: 2px solid #3a506b; /* トラックとサムの間に境界線 */
+}
+.sidebar::-webkit-scrollbar-thumb:hover {
+    background: #7a9cc2;
+}
+
+
+/* レスポンシブ対応 */
+@media (max-width: 768px) {
+    .menu-btn {
+        left: 8px;
+        top: 8px;
+        width: 48px; /* モバイルで少し小さく */
+        height: 48px;
+        font-size: 32px;
+        border-radius: 12px;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    }
+    .sidebar-close { /* モバイルでの×ボタンの位置とサイズを調整 */
+        left: 8px;
+        top: 8px;
+        width: 48px;
+        height: 48px;
+        font-size: 32px;
+        border-radius: 12px;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    }
+    .sidebar {
+        width: 85vw; /* 画面幅に合わせて調整 */
+        min-width: unset;
+        max-width: 90vw;
+        left: -90vw; /* 画面幅に合わせて調整 */
+        padding-top: 60px;
+        border-right: 4px solid #3498db;
+    }
+    .sidebar.open {
+        left: 0;
+    }
+    .sidebar ul {
+        padding-left: 25px;
+    }
+    .sidebar li {
+        font-size: 1.4rem;
+        margin: 20px 0;
+    }
+    .sidebar a {
+        padding: 10px 15px;
+    }
 }
