@@ -19,53 +19,31 @@ app.get('/', (req, res) => {
   res.sendFile(path.join(__dirname, '../front/html/home.html'));
 });
 
-// 仮の注文書データを外部ファイルから読み込み
-const orders = require('./models/orders');
-// 仮の納品書データを外部ファイルから読み込み
-const deliveries = require('./models/deliveries');
+// ルーターの読み込み
 const statisticsRouter = require('./routes/statistics');
-
-// 注文書一覧API
-app.get('/api/orders', (req, res) => {
-  try {
-    res.json(orders);
-  } catch (err) {
-    res.status(500).json({ error: '注文書一覧の取得に失敗しました' });
-  }
-});
-
-// 納品書一覧API
-app.get('/api/deliveries', (req, res) => {
-  try {
-    res.json(deliveries);
-  } catch (err) {
-    res.status(500).json({ error: '納品書一覧の取得に失敗しました' });
-  }
-});
-
-// 新しい注文書を作成するAPI
-app.post('/api/orders', (req, res) => {
-  try {
-    // リクエストボディから注文データを取得
-    const newOrder = req.body;
-    // 必須項目のバリデーション（例：customerId, customerName, orderDetail, orderDate）
-    if (!newOrder.customerId || !newOrder.customerName || !newOrder.orderDetail || !newOrder.orderDate) {
-      return res.status(400).json({ error: '必須項目が不足しています' });
-    }
-    // 注文IDを自動採番（orders配列の最大ID+1）
-    newOrder.orderId = orders.length > 0 ? Math.max(...orders.map(o => o.orderId)) + 1 : 1;
-    // 配列に追加
-    orders.push(newOrder);
-    // 完了レスポンス
-    res.status(201).json(newOrder);
-  } catch (err) {
-    res.status(500).json({ error: '注文書の作成に失敗しました' });
-  }
-});
+const deliveriesRouter = require('./routes/deliveries');
+const ordersRouter = require('./routes/orders');
 
 app.use('/api/statistics', statisticsRouter);
+app.use('/api/deliveries', deliveriesRouter);
+app.use('/api/orders', ordersRouter);
 
 // サーバー起動
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);
 });
+
+
+/*CSV形式のエクセルデータをデータベースに反映するシステムを作るには、以下のような流れが一般的です。
+
+フロントでCSVファイルをアップロード
+バックエンドでCSVを受け取り、パース
+パースしたデータをデータベースに保存
+まずはバックエンド側で「CSVファイルを受け取り、データベース（今回はファイルベースやメモリ配列でも可）に反映するAPI」を実装します。
+Node.js / Expressでよく使うCSVパーサーは csv - parse や papaparse、ファイルアップロードには multer などがあります。
+
+まず必要なパッケージをインストールします。
+
+この後、routes / import.js などにアップロードAPIを実装し、server.js でルーティングします。
+実装を進めてもよろしいですか？
+（データベースは何を想定しますか？なければ一旦メモリ配列やJSONファイル保存で進めます）*/
