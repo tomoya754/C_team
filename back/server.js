@@ -23,10 +23,12 @@ app.get('/', (req, res) => {
 const statisticsRouter = require('./routes/statistics');
 const deliveriesRouter = require('./routes/deliveries');
 const ordersRouter = require('./routes/orders');
+const importRouter = require('./routes/import');
 
 app.use('/api/statistics', statisticsRouter);
 app.use('/api/deliveries', deliveriesRouter);
 app.use('/api/orders', ordersRouter);
+app.use('/api/import', importRouter);
 
 // サーバー起動
 app.listen(PORT, () => {
@@ -39,6 +41,7 @@ app.listen(PORT, () => {
 フロントでCSVファイルをアップロード
 バックエンドでCSVを受け取り、パース
 パースしたデータをデータベースに保存
+
 まずはバックエンド側で「CSVファイルを受け取り、データベース（今回はファイルベースやメモリ配列でも可）に反映するAPI」を実装します。
 Node.js / Expressでよく使うCSVパーサーは csv - parse や papaparse、ファイルアップロードには multer などがあります。
 
