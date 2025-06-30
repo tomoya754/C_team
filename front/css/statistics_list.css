@@ -1,178 +1,187 @@
-body { font-family: 'Segoe UI', sans-serif; text-align: center; margin: 0; }
-.menu-icon { position: absolute; left: 20px; top: 20px; cursor: pointer; }
-.menu-icon div { width: 35px; height: 5px; background: #222; margin: 6px 0; border-radius: 2px; }
-h1 { margin-top: 80px; font-size: 40px; }
-.back-link { position: absolute; left: 20px; top: 80px; font-size: 18px; text-decoration: none; color: #222; }
-.side-menu {
-    position: fixed;
-    top: 0; left: -250px;
-    width: 220px; height: 100%;
-    background: #fff;
-    box-shadow: 2px 0 8px rgba(0,0,0,0.1);
-    transition: left 0.3s;
-    z-index: 1000;
-    padding-top: 60px;
+/* statistics_list.css */
+
+body {
+    font-family: 'Inter', sans-serif;
+    background-color: #f5f7fa; /* 明るい背景色 */
 }
-.side-menu.open { left: 0; }
-.side-menu ul { list-style: none; padding: 0; }
-.side-menu li { margin: 24px 0; }
-.side-menu a { color: #222; text-decoration: none; font-size: 20px; padding: 8px 24px; display: block; }
-.side-menu a:hover { background: #f0f0f0; }
-/* home.cssのサイドバー・ハンバーガーメニュー部分を反映し統一 */
-.menu-btn {
-    font-size: 36px;
-    cursor: pointer;
-    position: fixed;
-    top: 16px;
-    left: 16px;
-    z-index: 1100;
-    background: #fff;
-    border-radius: 8px;
-    width: 48px;
-    height: 48px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.08);
-    border: 1px solid #111;
-    transition: opacity 0.2s;
+
+/* メインコンテンツのスタイリング */
+.main {
+    padding: 32px 40px;
+    max-width: 1100px; /* 最大幅を設定 */
+    margin: 0 auto; /* 中央寄せ */
+    background: #fff; /* 背景色 */
+    border-radius: 18px; /* 角丸 */
+    box-shadow: 0 4px 24px rgba(0,0,0,0.08); /* 影 */
+    min-height: 60vh; /* 最小高さを設定 */
+    margin-top: 48px; /* 上部のマージン */
 }
-.sidebar {
-    width: 300px;
-    min-width: 300px;
-    max-width: 300px;
-    background: #111;
-    color: #fff;
-    padding-top: 40px;
-    position: fixed;
-    top: 0;
-    left: -320px;
-    height: 100%;
-    transition: left 0.3s;
-    z-index: 1000;
-    border-right: 3px solid #fff;
-    box-sizing: border-box;
-    overflow-y: auto;
+
+h1 {
+    text-align: center;
+    font-size: 2.5rem; /* 大きなタイトル */
+    margin-bottom: 25px; /* マージンを増やす */
+    margin-top: 20px;
+    letter-spacing: 0.1em;
+    font-weight: bold;
+    color: #333;
+    border-bottom: 2px solid #eee; /* 下線を追加 */
+    padding-bottom: 10px;
 }
-.sidebar.open { left: 0; }
-.sidebar-bg {
-    display: none;
-    position: fixed;
-    top: 0; left: 0; right: 0; bottom: 0;
-    background: rgba(0,0,0,0.15);
-    z-index: 900;
-}
-.sidebar-bg.show { display: block; }
-.sidebar-close {
-    position: absolute;
-    top: 10px;
-    right: 18px;
-    font-size: 2rem;
-    cursor: pointer;
-    color: #fff;
-}
-.sidebar ul {
-    list-style: none;
-    padding: 0 0 0 24px;
-    margin: 0;
-}
-.sidebar li {
-    margin: 28px 0;
-    font-size: 2rem;
-    text-align: left;
-}
-.sidebar a {
-    color: #fff;
-    text-decoration: underline;
-    font-weight: normal;
-}
-.sidebar a:hover {
-    text-decoration: none;
-    color: #ffd700;
-}
+
 .statistics-search-area {
     margin: 30px auto;
     max-width: 1000px;
+    padding: 15px;
+    background: #fff;
+    border-radius: 10px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+    border: 1px solid #eee;
 }
+
 .search-bar-group {
     display: flex;
     align-items: center;
-    gap: 8px;
-    margin-bottom: 12px;
+    gap: 10px; /* ギャップを調整 */
+    margin-bottom: 20px; /* マージンを増やす */
+    flex-wrap: wrap; /* レスポンシブ対応 */
+    justify-content: center;
 }
+
 .search-icon {
-    font-size: 26px;
-    margin-right: 4px;
-    margin-left: 8px;
+    font-size: 1.5em; /* アイコンサイズ */
+    color: #777;
+    margin-right: 5px;
 }
+
 .search-input {
-    font-size: 18px;
+    font-size: 1.05em; /* フォントサイズ */
     flex: 1;
-    padding: 8px 12px;
-    border: 1.5px solid #222;
-    border-radius: 4px;
-    min-width: 260px;
-    max-width: 340px;
+    padding: 10px 15px; /* パディングを調整 */
+    border: 1px solid #ccc; /* 境界線の色 */
+    border-radius: 25px; /* 角丸を強調 */
+    min-width: 200px; /* 最小幅 */
+    max-width: 380px; /* 最大幅 */
+    box-shadow: inset 0 1px 3px rgba(0,0,0,0.05); /* 内部の影 */
 }
+
 .search-btn {
-    font-size: 18px;
-    padding: 8px 18px;
-    border: 1.5px solid #222;
-    background: #fff;
-    border-radius: 4px;
+    font-size: 1.1em; /* フォントサイズ */
+    padding: 10px 25px; /* パディングを調整 */
+    border: 1px solid #4CAF50; /* 緑色の境界線 */
+    background-color: #4CAF50; /* 緑色の背景 */
+    color: white;
+    border-radius: 25px; /* 角丸を強調 */
     cursor: pointer;
-    margin-left: 4px;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
 }
+
+.search-btn:hover {
+    background-color: #45a049;
+    transform: translateY(-1px);
+}
+
 .select-group {
     display: flex;
     align-items: center;
-    gap: 4px;
-    margin-left: 8px;
+    gap: 8px; /* ギャップを調整 */
+    margin-left: 10px; /* 左マージン */
+    flex-wrap: wrap;
+    justify-content: center;
 }
+
 .sort-key, .sort-order {
-    font-size: 17px;
-    padding: 7px 18px 7px 8px;
-    border: 1.5px solid #222;
-    border-radius: 4px;
+    font-size: 1em; /* フォントサイズ */
+    padding: 8px 20px 8px 10px; /* パディングを調整 */
+    border: 1px solid #ccc;
+    border-radius: 25px; /* 角丸を強調 */
     background: #fff;
-    appearance: none;
-    min-width: 90px;
-    margin-right: 2px;
+    appearance: none; /* デフォルトの矢印を非表示 */
+    min-width: 120px; /* 最小幅 */
+    cursor: pointer;
+    background-image: url('data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%20256%20256%22%3E%3Cpath%20fill%3D%22%23666%22%20d%3D%22M128%20192L48%20112h160z%22%2F%3E%3C%2Fsvg%3E'); /* カスタム矢印アイコン */
+    background-repeat: no-repeat;
+    background-position: right 10px center;
+    background-size: 16px;
 }
-.sort-order { min-width: 70px; }
+
+.sort-order { min-width: 100px; }
+
 .statistics-table-wrap {
-    border: 2px solid #222;
-    border-radius: 4px;
-    overflow-x: auto;
-    overflow-y: auto;
-    max-height: 380px;
+    border: 1px solid #ddd; /* 境界線の色 */
+    border-radius: 10px; /* 角丸 */
+    overflow-x: auto; /* 横スクロール */
+    overflow-y: auto; /* 縦スクロール */
+    max-height: 450px; /* 最大高さを設定 */
     background: #fff;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.05); /* 影 */
 }
+
 .statistics-list-table {
     width: 100%;
     border-collapse: collapse;
-    font-size: 17px;
+    font-size: 0.95em; /* フォントサイズ */
     background: #fff;
+    min-width: 700px; /* 小さい画面での最小幅 */
 }
+
 .statistics-list-table th, .statistics-list-table td {
-    border: 1.2px solid #222;
-    padding: 7px 8px;
+    border: 1px solid #eee; /* 薄い境界線 */
+    padding: 10px 12px; /* パディングを調整 */
     text-align: center;
-    min-width: 90px;
+    vertical-align: middle;
 }
+
 .statistics-list-table th {
-    background: #f8f8f8;
+    background: #f8f8f8; /* ヘッダーの背景色 */
     font-weight: bold;
+    color: #555;
+    position: sticky; /* ヘッダーを固定 */
+    top: 0;
+    z-index: 1;
 }
-.statistics-list-table td {
-    height: 38px;
+
+.statistics-list-table tbody tr:nth-child(even) {
+    background-color: #fcfcfc; /* 偶数行の背景色 */
 }
+
+.statistics-list-table tbody tr:hover {
+    background-color: #f0f8ff; /* ホバー時の背景色 */
+}
+
 /* スクロールバー調整 */
 .statistics-table-wrap::-webkit-scrollbar {
-    width: 10px;
-    background: #eee;
+    width: 8px;
+    height: 8px;
+    background: #f1f1f1;
 }
+
 .statistics-table-wrap::-webkit-scrollbar-thumb {
-    background: #bbb;
-    border-radius: 5px;
+    background: #c0c0c0;
+    border-radius: 4px;
+}
+
+.statistics-table-wrap::-webkit-scrollbar-thumb:hover {
+    background: #a0a0a0;
+}
+
+/* レスポンシブ対応 */
+@media (max-width: 900px) {
+    .main { padding: 20px 20px; }
+    h1 { font-size: 2.2rem; }
+    .statistics-search-area { padding: 10px; }
+    .search-bar-group { flex-direction: column; align-items: stretch; gap: 8px; }
+    .search-input, .search-btn, .sort-key, .sort-order {
+        width: 100%;
+        max-width: none;
+        margin-left: 0;
+    }
+    .select-group { flex-direction: column; align-items: stretch; gap: 8px; margin-left: 0; }
+    .statistics-list-table { font-size: 0.8em; min-width: 500px; }
+    .statistics-list-table th, .statistics-list-table td { padding: 8px 6px; }
+}
+@media (max-width: 700px) {
+    .main { padding: 15px 10px; margin-top: 15px; }
+    h1 { font-size: 2rem; margin-bottom: 20px; }
 }

@@ -8,16 +8,14 @@
 </head>
 <body>
     <!-- ハンバーガーメニューボタン -->
-    <div class="menu-btn" id="menuBtn">&#9776;</div>
+    <div class="menu-btn" id="menuBtn" style="display:block; position:fixed; top:20px; left:20px; z-index:1001;">&#9776;</div>
     <!-- サイドバー背景（モーダル用） -->
     <div class="sidebar-bg" id="sidebarBg"></div>
     <!-- サイドバー -->
     <nav class="sidebar" id="sidebar">
-        <span class="sidebar-close" id="sidebarClose">&times;</span>
+        <span class="sidebar-close" id="sidebarClose" style="display:none; position:fixed; top:20px; left:20px; z-index:1002; font-size:2em; cursor:pointer;">&times;</span>
         <ul>
-
             <li><a href="/">・<u>HOME</u></a></li>
-
             <li><a href="/html/order_list.html">・注文書一覧</a></li>
             <li><a href="/html/delivery_list.html">・納品書一覧</a></li>
             <li><a href="/html/statistics_list.html">・統計情報一覧</a></li>
@@ -27,12 +25,18 @@
     <!-- メインコンテンツ -->
     <div class="main" id="main">
         <h1 class="orders-title">納品書一覧</h1>
-        <div class="search-toolbar">
-            <div class="search-area">
-                <span class="search-icon">🔍</span>
-                <input type="text" class="search-input" placeholder="納品書No.、納品内容">
-                <button class="filter-btn"><span class="filter-icon">⏷</span></button>
+        <div class="search-toolbar" style="display:flex; align-items:center; gap:10px; margin-bottom:30px;">
+            <div class="search-area" style="flex:1; display:flex; align-items:center; max-width:420px; border:1.5px solid #222; border-radius:6px; background:#fff; padding:2px 10px;">
+                <span class="search-icon" style="font-size:1.5em; color:#222; margin-right:8px;">&#128269;</span>
+                <input type="text" class="search-input" placeholder="納品書No.、納品内容" style="border:none; outline:none; font-size:1.1em; width:100%; background:transparent; padding:6px 0; color:#222;">
             </div>
+            <button class="search-btn btn" style="font-size:1.1em; padding:7px 24px; border-radius:6px; border:1.5px solid #222; background:#eee; font-weight:bold; margin-left:0;">検索</button>
+            <select class="store-select" style="font-size:1.1em; padding:7px 16px; border-radius:6px; border:1.5px solid #222; background:#fff; font-weight:bold; min-width:90px;">
+                <option>全店舗</option>
+                <option>緑橋本店</option>
+                <option>深江橋店</option>
+                <option>今里店</option>
+            </select>
         </div>
         <div class="orders-table-area">
             <table class="orders-table">
@@ -63,7 +67,7 @@
             </table>
         </div>
         <div class="orders-btns-row">
-            <a href="html/delivery_form.html" class="btn create">新規納品書作成</a>
+            <a href="/html/delivery_form.html" class="btn create">新規納品書作成</a>
             <button class="btn delete-btn">納品書削除</button>
         </div>
     </div>
@@ -76,14 +80,46 @@
     function openSidebar() {
         sidebar.classList.add('open');
         sidebarBg.classList.add('show');
+        menuBtn.style.display = 'none';
+        sidebarClose.style.display = 'block';
     }
     function closeSidebar() {
         sidebar.classList.remove('open');
         sidebarBg.classList.remove('show');
+        menuBtn.style.display = 'block';
+        sidebarClose.style.display = 'none';
     }
     menuBtn.onclick = openSidebar;
     sidebarClose.onclick = closeSidebar;
     sidebarBg.onclick = closeSidebar;
+
+    window.onload = function() {
+      // APIから納品書一覧データを取得
+      fetch('http://localhost:3000/api/deliveries')
+        .then(res => res.json())
+        .then(data => {
+          const tbody = document.querySelector('.orders-table tbody');
+          tbody.innerHTML = ''; // 既存行をクリア
+          data.forEach(delivery => {
+            const tr = document.createElement('tr');
+            tr.innerHTML = `
+              <td>${delivery.deliveryNo}</td>
+              <td>${delivery.customerName}</td>
+              <td><a href="#">${delivery.deliveryDetail}</a></td>
+              <td>${delivery.phone}</td>
+              <td>${delivery.deliveryDate}</td>
+              <td>${delivery.status}</td>
+              <td>${delivery.leadTime}</td>
+              <td>${delivery.note || ''}</td>
+            `;
+            tbody.appendChild(tr);
+          });
+        })
+        .catch(err => {
+          alert('データ取得エラー');
+          console.error(err);
+        });
+    };
     </script>
 </body>
 </html>

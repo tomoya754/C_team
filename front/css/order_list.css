@@ -1,98 +1,249 @@
+/* order_list.css */
+
+body {
+    font-family: 'Inter', sans-serif;
+    background-color: #f5f7fa; /* 明るい背景色 */
+}
+
+/* メインコンテンツのスタイリング */
 .main {
     padding: 32px 40px;
-    max-width: 1100px;
-    margin: 0 auto;
+    max-width: 1100px; /* 最大幅を設定 */
+    margin: 0 auto; /* 中央寄せ */
+    background: #fff; /* 背景色 */
+    border-radius: 18px; /* 角丸 */
+    box-shadow: 0 4px 24px rgba(0,0,0,0.08); /* 影 */
+    min-height: 60vh; /* 最小高さを設定 */
+    margin-top: 48px; /* 上部のマージン */
 }
+
 .orders-title {
-    font-size: 1.6rem;
+    font-size: 2.5rem; /* タイトルを大きく */
     font-weight: bold;
-    margin-bottom: 18px;
-    text-align: left;
+    margin-bottom: 25px; /* マージンを増やす */
+    text-align: center; /* 中央寄せ */
+    color: #333;
+    border-bottom: 2px solid #eee; /* 下線を追加 */
+    padding-bottom: 10px;
 }
+
 .search-toolbar {
     display: flex;
-    justify-content: center;
-    margin-bottom: 18px;
+    justify-content: center; /* 中央寄せ */
+    align-items: center;
+    margin-bottom: 30px; /* マージンを増やす */
+    gap: 15px; /* アイテム間のギャップ */
 }
+
 .search-area {
     display: flex;
     align-items: center;
     background: #fff;
-    border: 1.5px solid #aaa;
-    border-radius: 8px;
-    padding: 4px 12px;
-    width: 420px;
+    border: 1px solid #ccc; /* 細い境界線 */
+    border-radius: 25px; /* 角丸を強調 */
+    padding: 8px 18px; /* パディングを調整 */
+    width: 100%;
+    max-width: 500px; /* 最大幅を設定 */
+    box-shadow: 0 2px 8px rgba(0,0,0,0.05); /* 影 */
 }
+
 .search-icon {
-    font-size: 1.5em;
-    margin-right: 8px;
+    font-size: 1.3em; /* アイコンサイズ */
+    margin-right: 10px;
+    color: #777;
 }
+
 .search-input {
     border: none;
     outline: none;
-    font-size: 1.1em;
-    width: 260px;
+    font-size: 1.05em; /* フォントサイズ */
+    width: calc(100% - 70px); /* アイコンとボタンの幅を考慮 */
     background: transparent;
+    padding: 2px 0;
+    color: #333;
 }
+
 .filter-btn {
-    background: #eee;
+    background: #e0e0e0; /* フィルタボタンの背景色 */
     border: none;
-    border-radius: 6px;
+    border-radius: 50%; /* 円形 */
     margin-left: 8px;
-    font-size: 1.4em;
+    font-size: 1.2em; /* フォントサイズ */
     cursor: pointer;
-    padding: 2px 8px;
+    padding: 8px 12px; /* パディングを調整 */
+    transition: background 0.3s ease, transform 0.2s ease;
 }
+
+.filter-btn:hover {
+    background: #c0c0c0;
+    transform: scale(1.05);
+}
+
 .orders-table-area {
-    margin-bottom: 18px;
+    overflow-x: auto; /* テーブルがはみ出る場合にスクロール */
+    margin-bottom: 25px;
+    border: 1px solid #ddd; /* テーブルエリアの境界線 */
+    border-radius: 10px; /* 角丸 */
+    box-shadow: 0 2px 10px rgba(0,0,0,0.05); /* 影 */
 }
+
 .orders-table {
     border-collapse: collapse;
     width: 100%;
+    min-width: 800px; /* 小さい画面での最小幅 */
     background: #fff;
     margin: 0 auto;
 }
-th, td {
-    border: 1px solid #333;
-    padding: 8px 4px;
+
+.orders-table th, .orders-table td {
+    border: 1px solid #eee; /* 薄い境界線 */
+    padding: 12px 8px; /* パディングを増やす */
     text-align: center;
+    vertical-align: middle; /* セルの内容を中央に */
 }
-th {
-    background: #eee;
+
+.orders-table th {
+    background: #f8f8f8; /* ヘッダーの背景色 */
+    font-weight: bold;
+    color: #555;
+    font-size: 0.95em;
 }
+
+.orders-table tbody tr:nth-child(even) {
+    background-color: #fcfcfc; /* 偶数行の背景色 */
+}
+
+.orders-table tbody tr:hover {
+    background-color: #f0f8ff; /* ホバー時の背景色 */
+    cursor: pointer;
+}
+
 .orders-table a {
     color: #007bff;
-    text-decoration: underline;
+    text-decoration: none; /* 下線をなくす */
+    font-weight: bold;
+    transition: color 0.3s ease;
 }
+
+.orders-table a:hover {
+    color: #0056b3;
+    text-decoration: underline; /* ホバーで下線 */
+}
+
+/* テーブルヘッダーの幅をCSSで指定 */
+.orders-table th:nth-child(1) { width: 90px; } /* 注文書No. */
+.orders-table th:nth-child(2) { width: 110px; } /* 顧客ID */
+.orders-table th:nth-child(3) { width: 160px; } /* 顧客名 */
+.orders-table th:nth-child(4) { width: 180px; } /* 注文内容 */
+.orders-table th:nth-child(5) { width: 120px; } /* 電話番号 */
+.orders-table th:nth-child(6) { width: 100px; } /* 注文日 */
+.orders-table th:nth-child(7) { width: 100px; } /* 納品予定 */
+.orders-table th:nth-child(8) { width: 80px; } /* 備考 */
+
 .orders-btns-row {
     display: flex;
+    flex-direction: row;
     justify-content: space-between;
     align-items: center;
-    margin-top: 18px;
+    width: 600px;
+    max-width: 600px;
+    min-width: 600px;
+    margin: 40px auto 0 auto;
+    position: static;
+    left: unset;
+    transform: unset;
+    gap: 0;
 }
+
+.orders-btns-row .btn {
+    width: 260px;
+    min-width: 240px;
+    max-width: 260px;
+    font-size: 1.3rem;
+    padding: 18px 0;
+    border-radius: 12px;
+    font-weight: bold;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.10);
+    letter-spacing: 0.08em;
+    margin: 0;
+    text-align: center;
+}
+
+.btn {
+    padding: 12px 35px; /* パディングを調整 */
+    font-size: 1.1em;
+    border-radius: 8px; /* 角丸を調整 */
+    border: 2px solid;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    text-decoration: none; /* aタグの下線をなくす */
+    display: inline-block; /* aタグをボタンのように表示 */
+    text-align: center;
+}
+
 .btn.create {
-    background: #fff;
-    color: #222;
-    border: 2px solid #222;
-    border-radius: 6px;
-    padding: 8px 32px;
-    font-size: 1.1em;
-    cursor: pointer;
-    margin-right: 8px;
-}
-.btn.delete-btn {
-    background: #e53935;
+    background: #28a745; /* 緑色のボタン */
     color: #fff;
-    border: none;
-    border-radius: 6px;
-    padding: 8px 32px;
-    font-size: 1.1em;
-    cursor: pointer;
-    margin-left: 8px;
+    border-color: #28a745;
 }
+
+.btn.create:hover {
+    background: #218838;
+    border-color: #218838;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+}
+
+.btn.delete-btn {
+    background: #dc3545; /* 赤色のボタン */
+    color: #fff;
+    border-color: #dc3545;
+}
+
+.btn.delete-btn:hover {
+    background: #c82333;
+    border-color: #c82333;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+}
+
+/* レスポンシブ対応 */
 @media (max-width: 900px) {
-    .main { padding: 12px 2vw; }
-    .orders-table { font-size: 0.9em; }
-    .orders-btns-row { flex-direction: column; gap: 12px; }
-    .btn.create, .btn.delete-btn { width: 100%; }
+    .main { padding: 20px 20px; }
+    .orders-table { font-size: 0.85em; min-width: 600px;}
+    .orders-table th, .orders-table td { padding: 8px 4px; }
+    .orders-btns-row { flex-direction: column; gap: 10px; }
+    .btn.create, .btn.delete-btn { width: 90%; margin: 0 auto; }
+}
+@media (max-width: 700px) {
+    .main { padding: 15px 10px; margin-top: 15px; }
+    .orders-title { font-size: 2rem; margin-bottom: 20px; }
+    .search-toolbar { flex-direction: column; gap: 10px; align-items: stretch; }
+    .search-area { width: 100%; max-width: none; padding: 6px 12px; }
+    .search-input { width: calc(100% - 60px); }
+    .filter-btn { margin-left: 0; margin-top: 5px; }
+    .orders-table { font-size: 0.75em; min-width: 500px; }
+    .orders-btns-row {
+        width: 100%;
+        min-width: unset;
+        max-width: unset;
+        flex-direction: column;
+        gap: 16px;
+        left: 0;
+        transform: none;
+    }
+}
+@media (max-width: 600px) {
+    .orders-btns-row {
+        flex-direction: column;
+        gap: 16px;
+    }
+    .orders-btns-row .btn {
+        width: 100%;
+        min-width: 120px;
+        max-width: unset;
+        font-size: 1rem;
+        padding: 12px 0;
+    }
 }
