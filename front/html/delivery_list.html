@@ -103,13 +103,13 @@
           data.forEach(delivery => {
             const tr = document.createElement('tr');
             tr.innerHTML = `
-              <td>${delivery.deliveryNo}</td>
+              <td>${delivery.deliveryId}</td>
               <td>${delivery.customerName}</td>
-              <td><a href="#">${delivery.deliveryDetail}</a></td>
+              <td><a href="#">${delivery.orderDetail}</a></td>
               <td>${delivery.phone}</td>
               <td>${delivery.deliveryDate}</td>
-              <td>${delivery.status}</td>
-              <td>${delivery.leadTime}</td>
+              <td>${delivery.deliveryStatus}</td>
+              <td></td>
               <td>${delivery.note || ''}</td>
             `;
             tbody.appendChild(tr);
