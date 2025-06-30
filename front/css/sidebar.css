@@ -13,7 +13,7 @@
     border-radius: 16px; /* 少し大きめの角丸で柔らかな印象に */
     width: 56px; /* 幅を少し大きく */
     height: 56px; /* 高さを少し大きく */
-    display: flex;
+    display: none; /* デフォルトでは非表示 */
     align-items: center;
     justify-content: center;
     box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1); /* 統一感を意識した柔らかな影 */
@@ -35,11 +35,6 @@
 .sidebar.open + .sidebar-bg + .menu-btn {
     display: none;
 }
-/* sidebar.css内でmenu-btnを常に表示（デフォルト）*/
-.menu-btn {
-    display: block;
-}
-
 
 /* サイドバー */
 .sidebar {
@@ -104,7 +99,7 @@
     border-radius: 16px; /* 少し大きめの角丸 */
     width: 56px; /* 幅を少し大きく */
     height: 56px; /* 高さを少し大きく */
-    display: flex; /* 中央寄せ用 */
+    display: none; /* デフォルトでは非表示 */
     align-items: center;
     justify-content: center;
     box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1); /* 統一感を意識した柔らかな影 */
