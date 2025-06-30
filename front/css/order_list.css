@@ -2,7 +2,9 @@
 
 body {
     font-family: 'Inter', sans-serif;
-    background-color: #f5f7fa; /* 明るい背景色 */
+    text-align: center;
+    margin: 0;
+    background-color: #f5f7fa;
 }
 
 /* メインコンテンツのスタイリング */
@@ -15,6 +17,18 @@ body {
     box-shadow: 0 4px 24px rgba(0,0,0,0.08); /* 影 */
     min-height: 60vh; /* 最小高さを設定 */
     margin-top: 48px; /* 上部のマージン */
+}
+
+h1 {
+    text-align: center;
+    font-size: 2.5rem;
+    margin-bottom: 30px;
+    margin-top: 20px;
+    letter-spacing: 0.1em;
+    font-weight: bold;
+    color: #333;
+    border-bottom: 2px solid #eee;
+    padding-bottom: 10px;
 }
 
 .orders-title {
