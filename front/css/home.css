@@ -1,75 +1,76 @@
 /* home.css */
 
 body {
-    background: #f5f7fa; /* 明るい背景色 */
-    margin: 0;
     font-family: 'Inter', sans-serif;
+    text-align: center;
+    margin: 0;
+    background-color: #f5f7fa;
 }
 
-/* .menu-btn, .sidebar, .sidebar-bg, .sidebar-close, .sidebar ul, .sidebar li, .sidebar a はsidebar.cssで管理されます */
-
-/* メインコンテンツのスタイリング */
 .main {
-    max-width: 900px;
-    margin: 48px auto 0 auto;
-    padding: 40px 32px 64px 32px;
+    padding: 32px 40px;
+    max-width: 1100px;
+    margin: 0 auto;
     background: #fff;
     border-radius: 18px;
     box-shadow: 0 4px 24px rgba(0,0,0,0.08);
     min-height: 60vh;
+    margin-top: 48px;
 }
 
 h1 {
     text-align: center;
-    font-size: 4rem;
-    margin-bottom: 48px;
-    margin-top: 32px;
+    font-size: 2.5rem;
+    margin-bottom: 30px;
+    margin-top: 20px;
     letter-spacing: 0.1em;
     font-weight: bold;
     color: #333;
+    border-bottom: 2px solid #eee;
+    padding-bottom: 10px;
 }
 
 .btn-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); /* 自動調整グリッド */
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
     justify-items: center;
     align-items: center;
-    gap: 40px; /* ギャップを調整 */
+    gap: 40px;
     margin-top: 32px;
-    max-width: 900px; /* グリッドの最大幅 */
+    max-width: 900px;
     margin-left: auto;
     margin-right: auto;
-    padding: 20px; /* パディングを追加 */
+    padding: 20px;
 }
 
 .btn {
-    display: flex; /* flexboxで中央寄せ */
+    display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
     width: 100%;
-    max-width: 300px; /* ボタンの最大幅 */
-    height: 180px; /* ボタンの高さを固定 */
+    max-width: 300px;
+    height: 180px;
     text-align: center;
-    border: 2px solid #555; /* 境界線の色を調整 */
-    border-radius: 20px; /* 角丸を強調 */
+    border: 2px solid #555;
+    border-radius: 20px;
     text-decoration: none;
-    color: #333; /* 文字色を調整 */
-    font-size: 1.8rem; /* フォントサイズを調整 */
-    font-weight: 600; /* 少し太く */
+    color: #333;
+    font-size: 1.8rem;
+    font-weight: 600;
     background: #fff;
-    transition: all 0.3s ease; /* 全てのプロパティにトランジション */
-    box-shadow: 0 5px 15px rgba(0,0,0,0.1); /* 影を強調 */
-    position: relative; /* アイコン配置用 */
-    overflow: hidden; /* 角丸に合わせて内容を隠す */
+    transition: all 0.3s ease;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+    position: relative;
+    overflow: hidden;
 }
 
 .btn:hover {
-    background: #667eea; /* ホバーで背景色を変更 (TailwindのIndigo-500に近い色) */
+    background: #667eea;
     color: #fff;
     border-color: #667eea;
-    transform: translateY(-5px); /* 少し上に移動 */
-    box-shadow: 0 8px 20px rgba(0,0,0,0.2); /* 影を強調 */
+    transform: translateY(-5px);
+    box-shadow: 0 8px 20px rgba(0,0,0,0.2);
 }
 
 .btn::before {
@@ -88,30 +89,16 @@ h1 {
     opacity: 1;
 }
 
-.btn-icon {
-    font-size: 3.5rem; /* アイコンサイズ */
-    margin-bottom: 10px;
-    color: #999; /* デフォルトアイコン色 */
-    transition: color 0.3s ease;
-}
-
-.btn:hover .btn-icon {
-    color: #fff; /* ホバーでアイコン色を白に */
-}
-
-/* 各ボタンに固有のアイコン色を設定 (例) */
-.btn[href="order_list.html"] .btn-icon { color: #f9a825; /* オレンジ */ }
-.btn[href="delivery_list.html"] .btn-icon { color: #42a5f5; /* 青 */ }
-.btn[href="statistics_list.html"] .btn-icon { color: #ef5350; /* 赤 */ }
-.btn[href="customer_register.html"] .btn-icon { color: #66bb6a; /* 緑 */ }
-
-@media (max-width: 700px) {
+@media (max-width: 768px) {
     .main {
-        max-width: 98vw;
-        padding: 16px 2vw 32px 2vw;
+        padding: 20px 20px;
+        margin-top: 20px;
         border-radius: 0;
         box-shadow: none;
-        margin: 12px auto 0 auto;
+    }
+    h1 {
+        font-size: 2rem;
+        margin-bottom: 25px;
     }
     .btn-grid {
         grid-template-columns: 1fr;
@@ -124,14 +111,6 @@ h1 {
         font-size: 1.3rem;
         padding: 18px;
         border-radius: 10px;
-        height: 120px; /* モバイルでのボタン高さ */
-    }
-    .btn-icon {
-        font-size: 3rem; /* モバイルでのアイコンサイズ */
-    }
-    h1 {
-        font-size: 2.2rem;
-        margin-top: 18px;
-        margin-bottom: 24px;
+        height: 120px;
     }
 }
