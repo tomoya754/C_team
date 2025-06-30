@@ -25,59 +25,127 @@
     <!-- メインコンテンツ -->
     <div class="main" id="main">
         <h1>統計情報一覧</h1>
-        <div class="statistics-search-area">
-            <div class="search-bar-group">
-                <span class="search-icon">🔍</span>
-                <input type="text" class="search-input" placeholder="顧客ID、顧客名">
-                <button class="search-btn">確定</button>
-                <div class="select-group">
-                    <select class="sort-key">
-                        <option>累計売上</option>
-                        <option>リードタイム</option>
-                        <option>購入回数</option>
-                    </select>
-                    <select class="sort-order">
-                        <option>昇順</option>
-                        <option>降順</option>
-                    </select>
-                </div>
+        <div class="statistics-search-area" style="display:flex; align-items:center; gap:10px; margin-bottom:30px;">
+            <div class="search-area" style="flex:1; display:flex; align-items:center; max-width:420px; border:1.5px solid #222; border-radius:6px; background:#fff; padding:2px 10px;">
+                <span class="search-icon" style="font-size:1.5em; color:#222; margin-right:8px;">&#128269;</span>
+                <input type="text" class="search-input" placeholder="顧客ID、顧客名" style="border:none; outline:none; font-size:1.1em; width:100%; background:transparent; padding:6px 0; color:#222;">
             </div>
-            <div class="statistics-table-wrap">
-                <table class="statistics-list-table">
-                    <thead>
-                        <tr>
-                            <th>顧客ID</th><th>顧客名</th><th>住所</th><th>累計売上額</th><th>平均リードタイム</th><th>購入回数</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td>No.25001</td>
-                            <td>大阪情報専門学校</td>
-                            <td>大阪府大阪市東成区<br>中本5-5-21</td>
-                            <td>￥15,000</td>
-                            <td>6日</td>
-                            <td>1回</td>
-                        </tr>
-                        <tr><td></td><td></td><td></td><td></td><td></td><td></td></tr>
-                        <tr><td></td><td></td><td></td><td></td><td></td><td></td></tr>
-                        <tr><td></td><td></td><td></td><td></td><td></td><td></td></tr>
-                        <tr><td></td><td></td><td></td><td></td><td></td><td></td></tr>
-                        <tr><td></td><td></td><td></td><td></td><td></td><td></td></tr>
-                        <tr><td></td><td></td><td></td><td></td><td></td><td></td></tr>
-                        <tr><td></td><td></td><td></td><td></td><td></td><td></td></tr>
-                        <tr><td></td><td></td><td></td><td></td><td></td><td></td></tr>
-                        <tr><td></td><td></td><td></td><td></td><td></td><td></td></tr>
-                        <tr><td></td><td></td><td></td><td></td><td></td><td></td></tr>
-                        <tr><td></td><td></td><td></td><td></td><td></td><td></td></tr>
-                        <tr><td></td><td></td><td></td><td></td><td></td><td></td></tr>
-                        <tr><td></td><td></td><td></td><td></td><td></td><td></td></tr>
-                        <tr><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+            <button class="search-btn btn" style="font-size:1.1em; padding:7px 24px; border-radius:6px; border:1.5px solid #222; background:#eee; font-weight:bold; margin-left:0;">検索</button>
+            <select class="store-select" style="font-size:1.1em; padding:7px 16px; border-radius:6px; border:1.5px solid #222; background:#fff; font-weight:bold; min-width:90px;">
+                <option>全店舗</option>
+                <option>緑橋本店</option>
+                <option>深江橋店</option>
+                <option>今里店</option>
+            </select>
+            <select class="sort-key" style="font-size:1.1em; padding:7px 16px; border-radius:6px; border:1.5px solid #222; background:#fff; font-weight:bold; min-width:90px;">
+                <option>累計売上</option>
+                <option>リードタイム</option>
+                <option>購入回数</option>
+            </select>
+            <select class="sort-order" style="font-size:1.1em; padding:7px 16px; border-radius:6px; border:1.5px solid #222; background:#fff; font-weight:bold; min-width:70px;">
+                <option>昇順</option>
+                <option>降順</option>
+            </select>
+        </div>
+        <div class="statistics-table-wrap">
+            <table class="statistics-list-table">
+                <thead>
+                    <tr>
+                        <th>顧客ID</th><th>顧客名</th><th>住所</th><th>累計売上額</th><th>平均リードタイム</th><th>購入回数</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>No.25001</td>
+                        <td>大阪情報専門学校</td>
+                        <td>大阪府大阪市東成区<br>中本5-5-21</td>
+                        <td>￥15,000</td>
+                        <td>6日</td>
+                        <td>1回</td>
+                    </tr>
+                    <tr><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+                    <tr><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+                    <tr><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+                    <tr><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+                    <tr><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+                    <tr><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+                    <tr><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+                    <tr><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+                    <tr><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+                    <tr><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+                    <tr><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+                    <tr><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+                    <tr><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+                    <tr><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+                    <tr><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+           
                         <tr><td></td><td></td><td></td><td></td><td></td><td></td></tr>
                         <tr><td></td><td></td><td></td><td></td><td></td><td></td></tr>
                         <tr><td></td><td></td><td></td><td></td><td></td><td></td></tr>
                     </tbody>
                 </table>
+=======
+        <div class="statistics-search-area" style="display:flex; align-items:center; gap:10px; margin-bottom:30px;">
+            <div class="search-area" style="flex:1; display:flex; align-items:center; max-width:420px; border:1.5px solid #222; border-radius:6px; background:#fff; padding:2px 10px;">
+                <span class="search-icon" style="font-size:1.5em; color:#222; margin-right:8px;">&#128269;</span>
+                <input type="text" class="search-input" placeholder="顧客ID、顧客名" style="border:none; outline:none; font-size:1.1em; width:100%; background:transparent; padding:6px 0; color:#222;">
+>>>>>>> 02fd243a9bf62b02f8e77574b57461a009bfb1d8
             </div>
+            <button class="search-btn btn" style="font-size:1.1em; padding:7px 24px; border-radius:6px; border:1.5px solid #222; background:#eee; font-weight:bold; margin-left:0;">検索</button>
+            <select class="store-select" style="font-size:1.1em; padding:7px 16px; border-radius:6px; border:1.5px solid #222; background:#fff; font-weight:bold; min-width:90px;">
+                <option>全店舗</option>
+                <option>緑橋本店</option>
+                <option>深江橋店</option>
+                <option>今里店</option>
+            </select>
+            <select class="sort-key" style="font-size:1.1em; padding:7px 16px; border-radius:6px; border:1.5px solid #222; background:#fff; font-weight:bold; min-width:90px;">
+                <option>累計売上</option>
+                <option>リードタイム</option>
+                <option>購入回数</option>
+            </select>
+            <select class="sort-order" style="font-size:1.1em; padding:7px 16px; border-radius:6px; border:1.5px solid #222; background:#fff; font-weight:bold; min-width:70px;">
+                <option>昇順</option>
+                <option>降順</option>
+            </select>
+        </div>
+        <div class="statistics-table-wrap">
+            <table class="statistics-list-table">
+                <thead>
+                    <tr>
+                        <th>顧客ID</th><th>顧客名</th><th>住所</th><th>累計売上額</th><th>平均リードタイム</th><th>購入回数</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>No.25001</td>
+                        <td>大阪情報専門学校</td>
+                        <td>大阪府大阪市東成区<br>中本5-5-21</td>
+                        <td>￥15,000</td>
+                        <td>6日</td>
+                        <td>1回</td>
+                    </tr>
+                    <tr><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+                    <tr><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+                    <tr><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+                    <tr><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+                    <tr><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+                    <tr><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+                    <tr><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+                    <tr><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+                    <tr><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+                    <tr><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+                    <tr><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+                    <tr><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+                    <tr><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+                    <tr><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+                    <tr><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+                    <tr><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+                    <tr><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+                    <tr><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+                    <tr><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+                    <tr><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+                </tbody>
+            </table>
         </div>
     </div>
     <script>
