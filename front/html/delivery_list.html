@@ -92,6 +92,34 @@
     menuBtn.onclick = openSidebar;
     sidebarClose.onclick = closeSidebar;
     sidebarBg.onclick = closeSidebar;
+
+    window.onload = function() {
+      // APIから納品書一覧データを取得
+      fetch('http://localhost:3000/api/deliveries')
+        .then(res => res.json())
+        .then(data => {
+          const tbody = document.querySelector('.orders-table tbody');
+          tbody.innerHTML = ''; // 既存行をクリア
+          data.forEach(delivery => {
+            const tr = document.createElement('tr');
+            tr.innerHTML = `
+              <td>${delivery.deliveryNo}</td>
+              <td>${delivery.customerName}</td>
+              <td><a href="#">${delivery.deliveryDetail}</a></td>
+              <td>${delivery.phone}</td>
+              <td>${delivery.deliveryDate}</td>
+              <td>${delivery.status}</td>
+              <td>${delivery.leadTime}</td>
+              <td>${delivery.note || ''}</td>
+            `;
+            tbody.appendChild(tr);
+          });
+        })
+        .catch(err => {
+          alert('データ取得エラー');
+          console.error(err);
+        });
+    };
     </script>
 </body>
 </html>
