@@ -14,8 +14,8 @@ body {
     background: #fff;
     border-radius: 18px;
     box-shadow: 0 4px 24px rgba(0,0,0,0.08);
-    min-height: 60vh;
-    margin-top: 48px;
+    min-height: 40vh; /* 60vh→40vhに変更 */
+    margin-top: 16px; /* 48px→16pxに変更 */
 }
 
 h1 {
