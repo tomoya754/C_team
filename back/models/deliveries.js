@@ -29,7 +29,87 @@ const deliveries = [
     deliveryDate: '2025-06-17',
     deliveryStatus: '納品済',
     note: '不在時は連絡'
-  }
+  },
+  {
+    deliveryId: 4,
+    customerId: 'C001',
+    c,stomerName: '山田太郎',
+    orderDetail: 'りんご 5個',
+    phone: '090-1111-2222',
+    deliveryDate: '2025-06-19',
+    deliveryStatus: '未納品',
+    note: '置き配希望'
+  },
+  {
+    deliveryId: 5,
+    customerId: 'C001',
+    c,stomerName: '山田太郎',
+    orderDetail: 'りんご 5個',
+    phone: '090-1111-2222',
+    deliveryDate: '2025-06-19',
+    deliveryStatus: '未納品',
+    note: '置き配希望'
+  },
+  {
+    deliveryId: 6,
+    customerId: 'C001',
+    c,stomerName: '山田太郎',
+    orderDetail: 'りんご 5個',
+    phone: '090-1111-2222',
+    deliveryDate: '2025-06-19',
+    deliveryStatus: '未納品',
+    note: '置き配希望'
+  },
+  {
+    deliveryId: 7,
+    customerId: 'C001',
+    c,stomerName: '山田太郎',
+    orderDetail: 'りんご 5個',
+    phone: '090-1111-2222',
+    deliveryDate: '2025-06-19',
+    deliveryStatus: '未納品',
+    note: '置き配希望'
+  },
+  {
+    deliveryId: 8,
+    customerId: 'C001',
+    c,stomerName: '山田太郎',
+    orderDetail: 'りんご 5個',
+    phone: '090-1111-2222',
+    deliveryDate: '2025-06-19',
+    deliveryStatus: '未納品',
+    note: '置き配希望'
+  },
+  {
+    deliveryId: 9,
+    customerId: 'C001',
+    c,stomerName: '山田太郎',
+    orderDetail: 'りんご 5個',
+    phone: '090-1111-2222',
+    deliveryDate: '2025-06-19',
+    deliveryStatus: '未納品',
+    note: '置き配希望'
+  },
+  {
+    deliveryId: 110,
+    customerId: 'C001',
+    c,stomerName: '山田太郎',
+    orderDetail: 'りんご 5個',
+    phone: '090-1111-2222',
+    deliveryDate: '2025-06-19',
+    deliveryStatus: '未納品',
+    note: '置き配希望'
+  },
+  {
+    deliveryId: 11,
+    customerId: 'C001',
+    c,stomerName: '山田太郎',
+    orderDetail: 'りんご 5個',
+    phone: '090-1111-2222',
+    deliveryDate: '2025-06-19',
+    deliveryStatus: '未納品',
+    note: '置き配希望'
+  },
 ];
 
 module.exports = deliveries;
