@@ -26,6 +26,7 @@ SET time_zone = "+00:00";
 --
 -- テーブルの構造 `customers`
 --
+USE mbs;
 
 CREATE TABLE `customers` (
   `customerId` int(5) NOT NULL,
@@ -36,7 +37,7 @@ CREATE TABLE `customers` (
   `phone` varchar(20),
   `deliveryCondition` text,
   `note` text,
-  `registeredAt` varchar(20),
+  `registeredAt` varchar(20)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 --
