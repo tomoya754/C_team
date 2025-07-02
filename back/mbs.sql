@@ -30,13 +30,13 @@ SET time_zone = "+00:00";
 CREATE TABLE `customers` (
   `customerId` int(5) NOT NULL,
   `shopName` varchar(100) NOT NULL,
-  `customerName` varchar(100) NOT NULL,
-  `staffName` varchar(100) NOT NULL,
-  `address` varchar(255) NOT NULL,
-  `phone` varchar(20) NOT NULL,
-  `deliveryCondition` text NOT NULL,
-  `note` text NOT NULL,
-  `registeredAt` date NOT NULL
+  `customerName` varchar(100),
+  `staffName` varchar(100),
+  `address` varchar(255),
+  `phone` varchar(20),
+  `deliveryCondition` text,
+  `note` text,
+  `registeredAt` varchar(20),
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 --
