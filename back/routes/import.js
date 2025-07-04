@@ -27,6 +27,9 @@ router.post('/upload-customers', upload.single('file'), async (req, res) => {
         // MySQLに保存
         const conn = await db.getConnection();
         for (const customer of customers) {
+          if (!customer.customerId || !customer.shopName || !customer.customerName) {
+            continue; // またはエラー処理
+          }
           await conn.query(
             'INSERT INTO customers (customerId, shopName, customerName, staffName, address, phone, deliveryCondition, note, registeredAt) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)',
             [
