@@ -42,21 +42,32 @@ h1 {
 
 .search-toolbar {
     display: flex;
-    justify-content: center; /* 中央寄せ */
+    flex-direction: row;
+    justify-content: center;
     align-items: center;
-    margin-bottom: 30px; /* マージンを増やす */
-    gap: 15px; /* アイテム間のギャップ */
+    gap: 12px;
+    flex-wrap: nowrap; /* ←常に横並び */
+    margin-bottom: 30px;
+    overflow-x: auto; /* 横スクロール許容 */
+    width: 100%;
+    max-width: 1100px;
+    margin-left: auto;
+    margin-right: auto;
+    white-space: nowrap;
+    box-sizing: border-box;
 }
 
 .search-area {
+    flex: 0 1 auto;
+    min-width: 60px;
+    max-width: 500px;
     display: flex;
     align-items: center;
     background: #fff;
     border: 1px solid #ccc; /* 細い境界線 */
     border-radius: 25px; /* 角丸を強調 */
-    padding: 8px 18px; /* パディングを調整 */
+    padding: 8px 8px; /* パディングを調整 */
     width: 100%;
-    max-width: 500px; /* 最大幅を設定 */
     box-shadow: 0 2px 8px rgba(0,0,0,0.05); /* 影 */
 }
 
@@ -93,17 +104,19 @@ h1 {
 }
 
 .orders-table-area {
-    overflow-x: auto; /* テーブルがはみ出る場合にスクロール */
-    margin-bottom: 25px;
-    border: 1px solid #ddd; /* テーブルエリアの境界線 */
-    border-radius: 10px; /* 角丸 */
-    box-shadow: 0 2px 10px rgba(0,0,0,0.05); /* 影 */
+    max-height: 400px;
+    overflow-y: auto;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+    position: relative;
 }
 
 .orders-table {
-    border-collapse: collapse;
+    border-collapse: separate;
+    border-spacing: 0;
     width: 100%;
-    min-width: 800px; /* 小さい画面での最小幅 */
+    min-width: 800px;
     background: #fff;
     margin: 0 auto;
 }
@@ -116,6 +129,9 @@ h1 {
 }
 
 .orders-table th {
+    position: sticky;
+    top: 0;
+    z-index: 2;
     background: #f8f8f8; /* ヘッダーの背景色 */
     font-weight: bold;
     color: #555;
@@ -159,25 +175,20 @@ h1 {
     justify-content: space-between;
     align-items: center;
     width: 600px;
-    max-width: 600px;
-    min-width: 600px;
+    max-width: 96vw;
+    min-width: 320px;
     margin: 40px auto 0 auto;
-    position: static;
-    left: unset;
-    transform: unset;
-    gap: 0;
+    gap: 16px;
 }
 
 .orders-btns-row .btn {
-    width: 260px;
-    min-width: 240px;
+    flex: 1 1 0;
+    min-width: 100px;
     max-width: 260px;
-    font-size: 1.3rem;
-    padding: 18px 0;
+    font-size: clamp(1rem, 2vw, 1.3rem);
+    padding: clamp(10px, 3vw, 18px) 0;
     border-radius: 12px;
     font-weight: bold;
-    box-shadow: 0 4px 12px rgba(0,0,0,0.10);
-    letter-spacing: 0.08em;
     margin: 0;
     text-align: center;
 }
@@ -226,37 +237,63 @@ h1 {
     .main { padding: 20px 20px; }
     .orders-table { font-size: 0.85em; min-width: 600px;}
     .orders-table th, .orders-table td { padding: 8px 4px; }
-    .orders-btns-row { flex-direction: column; gap: 10px; }
-    .btn.create, .btn.delete-btn { width: 90%; margin: 0 auto; }
+    .orders-btns-row {
+        width: 98vw;
+        max-width: 98vw;
+        min-width: 0;
+        gap: 8px;
+    }
+    .orders-btns-row .btn {
+        font-size: clamp(0.9rem, 3vw, 1.1rem);
+        padding: clamp(8px, 2vw, 12px) 0;
+        min-width: 80px;
+        max-width: unset;
+    }
 }
 @media (max-width: 700px) {
     .main { padding: 15px 10px; margin-top: 15px; }
     .orders-title { font-size: 2rem; margin-bottom: 20px; }
-    .search-toolbar { flex-direction: column; gap: 10px; align-items: stretch; }
-    .search-area { width: 100%; max-width: none; padding: 6px 12px; }
+    .search-toolbar { flex-direction: row; gap: 8px; align-items: center; flex-wrap: nowrap; overflow-x: auto; }
+    .search-area { width: 100%; max-width: none; padding: 6px 8px; min-width: 100px; }
     .search-input { width: calc(100% - 60px); }
     .filter-btn { margin-left: 0; margin-top: 5px; }
     .orders-table { font-size: 0.75em; min-width: 500px; }
     .orders-btns-row {
-        width: 100%;
-        min-width: unset;
+        width: 98vw;
+        max-width: 98vw;
+        min-width: 0;
+        gap: 8px;
+    }
+    .orders-btns-row .btn {
+        font-size: clamp(0.9rem, 3vw, 1.1rem);
+        padding: clamp(8px, 2vw, 12px) 0;
+        min-width: 80px;
         max-width: unset;
-        flex-direction: column;
-        gap: 16px;
-        left: 0;
-        transform: none;
+        margin: 0 4px;
     }
 }
 @media (max-width: 600px) {
+    .search-toolbar {
+        gap: 4px;
+        flex-wrap: nowrap;
+        overflow-x: auto;
+    }
+    .search-area {
+        min-width: 40px;
+        max-width: 99vw;
+    }
+    .search-btn.btn, .store-select {
+        min-width: 30px;
+        font-size: clamp(0.75rem, 3vw, 0.95rem);
+    }
     .orders-btns-row {
-        flex-direction: column;
-        gap: 16px;
+        width: 99vw;
+        max-width: 99vw;
+        gap: 4px;
     }
     .orders-btns-row .btn {
-        width: 100%;
-        min-width: 120px;
-        max-width: unset;
-        font-size: 1rem;
-        padding: 12px 0;
+        font-size: clamp(0.85rem, 4vw, 1rem);
+        padding: clamp(6px, 2vw, 10px) 0;
+        min-width: 60px;
     }
 }
