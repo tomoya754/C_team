@@ -38,7 +38,7 @@ CREATE TABLE `customers` (
   `deliveryCondition` text,
   `note` text,
   `registeredAt` varchar(20),
-
+  `isDeleted` tinyint(1) NOT NULL DEFAULT 0
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 --
