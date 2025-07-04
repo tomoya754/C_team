@@ -68,19 +68,25 @@ h1 {
 }
 
 .search-btn {
-    font-size: 1.1em; /* フォントサイズ */
-    padding: 10px 25px; /* パディングを調整 */
-    border: 1px solid #4CAF50; /* 緑色の境界線 */
-    background-color: #4CAF50; /* 緑色の背景 */
-    color: white;
-    border-radius: 25px; /* 角丸を強調 */
-    cursor: pointer;
-    transition: background-color 0.3s ease, transform 0.2s ease;
+    padding: 12px 35px;
+    font-size: 1.1em;
+    border-radius: 8px;
+    border: 2px solid #222;
+    background: #eee;
+    color: #222;
+    font-weight: bold;
+    margin-left: 0;
     box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-decoration: none;
+    display: inline-block;
+    text-align: center;
 }
 
 .search-btn:hover {
-    background-color: #45a049;
+    background: #e0e0e0;
+    color: #111;
     transform: translateY(-1px);
 }
 
