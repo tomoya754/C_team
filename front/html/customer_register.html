@@ -28,8 +28,10 @@
         <form style="margin: 40px auto; max-width: 500px; background: #f9f9f9; padding: 32px; border-radius: 12px; box-shadow: 0 2px 8px #0001;">
             <label style="font-size: 20px; display: block; margin-bottom: 16px;">Excelファイルを選択してください</label>
             <input type="file" accept=".xlsx" style="font-size: 18px; margin-bottom: 32px; width: 100%;"><br>
-            <button type="submit" style="font-size: 20px; padding: 10px 40px; margin-right: 20px;">登録</button>
-            <button type="button" onclick="location.href='/'" style="font-size: 20px; padding: 10px 40px;">キャンセル</button>
+            <div class="register-btns-row">
+                <button type="submit">登録</button>
+                <button type="button" onclick="location.href='/'">キャンセル</button>
+            </div>
         </form>
     </div>
     <script>

@@ -49,8 +49,12 @@ h1 {
     flex-wrap: nowrap; /* ←常に横並び */
     margin-bottom: 30px;
     overflow-x: auto; /* 横スクロール許容 */
-    width: 100vw;
+    width: 100%;
+    max-width: 1100px;
+    margin-left: auto;
+    margin-right: auto;
     white-space: nowrap;
+    box-sizing: border-box;
 }
 
 .search-area {
