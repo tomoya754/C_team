@@ -34,7 +34,6 @@ fetch('http://localhost:3000/api/orders')
                 <td>${order.orderDetail}</td>
                 <td>${order.phone}</td>
                 <td>${order.orderDate}</td>
-                <td>-</td>
                 <td>${order.note || ''}</td>
             `;
             tbody.appendChild(tr);
