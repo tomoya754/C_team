@@ -33,7 +33,7 @@ const deliveries = [
   {
     deliveryId: 4,
     customerId: 'C001',
-    cstomerName: '山田太郎',
+    customerName: '山田太郎',
     orderDetail: 'りんご 5個',
     phone: '090-1111-2222',
     deliveryDate: '2025-06-19',
@@ -43,7 +43,7 @@ const deliveries = [
   {
     deliveryId: 5,
     customerId: 'C001',
-    cstomerName: '山田太郎',
+    customerName: '山田太郎',
     orderDetail: 'りんご 5個',
     phone: '090-1111-2222',
     deliveryDate: '2025-06-19',
@@ -53,7 +53,7 @@ const deliveries = [
   {
     deliveryId: 6,
     customerId: 'C001',
-    cstomerName: '山田太郎',
+    customerName: '山田太郎',
     orderDetail: 'りんご 5個',
     phone: '090-1111-2222',
     deliveryDate: '2025-06-19',
@@ -63,7 +63,7 @@ const deliveries = [
   {
     deliveryId: 7,
     customerId: 'C001',
-    cstomerName: '山田太郎',
+    customerName: '山田太郎',
     orderDetail: 'りんご 5個',
     phone: '090-1111-2222',
     deliveryDate: '2025-06-19',
@@ -73,7 +73,7 @@ const deliveries = [
   {
     deliveryId: 8,
     customerId: 'C001',
-    cstomerName: '山田太郎',
+    customerName: '山田太郎',
     orderDetail: 'りんご 5個',
     phone: '090-1111-2222',
     deliveryDate: '2025-06-19',
@@ -83,7 +83,7 @@ const deliveries = [
   {
     deliveryId: 9,
     customerId: 'C001',
-    cstomerName: '山田太郎',
+    customerName: '山田太郎',
     orderDetail: 'りんご 5個',
     phone: '090-1111-2222',
     deliveryDate: '2025-06-19',
@@ -93,7 +93,7 @@ const deliveries = [
   {
     deliveryId: 110,
     customerId: 'C001',
-    cstomerName: '山田太郎',
+    customerName: '山田太郎',
     orderDetail: 'りんご 5個',
     phone: '090-1111-2222',
     deliveryDate: '2025-06-19',
@@ -103,7 +103,7 @@ const deliveries = [
   {
     deliveryId: 11,
     customerId: 'C001',
-    cstomerName: '山田太郎',
+    customerName: '山田太郎',
     orderDetail: 'りんご 5個',
     phone: '090-1111-2222',
     deliveryDate: '2025-06-19',
