@@ -111,21 +111,21 @@ h1 {
 .sort-order { min-width: 100px; }
 
 .statistics-table-wrap {
-    border: 1px solid #ddd; /* 境界線の色 */
-    border-radius: 10px; /* 角丸 */
-    overflow-x: auto; /* 横スクロール */
-    overflow-y: auto; /* 縦スクロール */
-    max-height: 450px; /* 最大高さを設定 */
-    background: #fff;
-    box-shadow: 0 2px 10px rgba(0,0,0,0.05); /* 影 */
+    max-height: 400px;
+    overflow-y: auto;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+    position: relative;
 }
 
 .statistics-list-table {
+    border-collapse: separate;
+    border-spacing: 0;
     width: 100%;
-    border-collapse: collapse;
-    font-size: 0.95em; /* フォントサイズ */
+    min-width: 800px;
     background: #fff;
-    min-width: 700px; /* 小さい画面での最小幅 */
+    margin: 0 auto;
 }
 
 .statistics-list-table th, .statistics-list-table td {
@@ -136,12 +136,12 @@ h1 {
 }
 
 .statistics-list-table th {
+    position: sticky;
+    top: 0;
+    z-index: 2;
     background: #f8f8f8; /* ヘッダーの背景色 */
     font-weight: bold;
     color: #555;
-    position: sticky; /* ヘッダーを固定 */
-    top: 0;
-    z-index: 1;
 }
 
 .statistics-list-table tbody tr:nth-child(even) {

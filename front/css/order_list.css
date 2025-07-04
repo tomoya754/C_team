@@ -94,17 +94,19 @@ h1 {
 }
 
 .orders-table-area {
-    overflow-x: auto; /* テーブルがはみ出る場合にスクロール */
-    margin-bottom: 25px;
-    border: 1px solid #ddd; /* テーブルエリアの境界線 */
-    border-radius: 10px; /* 角丸 */
-    box-shadow: 0 2px 10px rgba(0,0,0,0.05); /* 影 */
+    max-height: 400px;
+    overflow-y: auto;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+    position: relative;
 }
 
 .orders-table {
-    border-collapse: collapse;
+    border-collapse: separate;
+    border-spacing: 0;
     width: 100%;
-    min-width: 800px; /* 小さい画面での最小幅 */
+    min-width: 800px;
     background: #fff;
     margin: 0 auto;
 }
@@ -117,6 +119,9 @@ h1 {
 }
 
 .orders-table th {
+    position: sticky;
+    top: 0;
+    z-index: 2;
     background: #f8f8f8; /* ヘッダーの背景色 */
     font-weight: bold;
     color: #555;
