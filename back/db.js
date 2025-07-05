@@ -1,14 +1,15 @@
 const mysql = require('mysql2/promise');
 
-// MySQL接続情報（必要に応じて修正してください）
+// MySQL接続情報（MariaDB用、必要に応じて修正してください）
 const pool = mysql.createPool({
   host: 'localhost',
   user: 'root',
   password: '', // パスワードを設定している場合はここに記入
-  database: 'customer_db', // 事前に作成しておく
+  database: 'mbs', // mbsデータベースに変更
   waitForConnections: true,
   connectionLimit: 10,
-  queueLimit: 0
+  queueLimit: 0,
+  charset: 'utf8mb4' // 文字コードを明示
 });
 
 module.exports = pool;
