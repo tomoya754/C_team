@@ -32,7 +32,7 @@ router.get('/', async (req, res) => {
       customerName: row.customerName,
       orderDetail: row.orderDetail,
       phone: row.phone,
-      orderDate: row.orderDate,
+      orderDate: row.orderDate ? row.orderDate.toISOString().slice(0, 10) : '',
       totalAmount: row.totalAmount
     })));
   } catch (err) {
