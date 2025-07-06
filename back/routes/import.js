@@ -24,11 +24,24 @@ router.post('/upload-customers', upload.single('file'), async (req, res) => {
     })
     .on('end', async () => {
       try {
-        // MySQLに保存
         const conn = await db.getConnection();
+        // 既存の顧客ID一覧を取得
+        const [dbCustomers] = await conn.query('SELECT customerId FROM customers');
+        const dbCustomerIds = dbCustomers.map(row => String(row.customerId));
+        const csvCustomerIds = customers.map(c => String(c.customerId));
+        // CSVに存在しない顧客IDはisDeleted=1に
+        for (const dbId of dbCustomerIds) {
+          if (!csvCustomerIds.includes(dbId)) {
+            await conn.query('UPDATE customers SET isDeleted=1 WHERE customerId=?', [dbId]);
+          }
+        }
+        // CSVの各顧客をINSERTまたはUPDATE
         for (const customer of customers) {
           await conn.query(
-            'INSERT INTO customers (customerId, shopName, customerName, staffName, address, phone, deliveryCondition, note, registeredAt) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)',
+            `INSERT INTO customers (customerId, shopName, customerName, staffName, address, phone, deliveryCondition, note, registeredAt, isDeleted)
+             VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, 0)
+             ON DUPLICATE KEY UPDATE
+               shopName=VALUES(shopName), customerName=VALUES(customerName), staffName=VALUES(staffName), address=VALUES(address), phone=VALUES(phone), deliveryCondition=VALUES(deliveryCondition), note=VALUES(note), registeredAt=VALUES(registeredAt), isDeleted=0`,
             [
               customer.customerId || null,
               customer.shopName || null,
