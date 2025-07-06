@@ -30,8 +30,38 @@ document.addEventListener('DOMContentLoaded', function() {
         };
         const headers = json[0].map(h => headerMap[h] || h);
         const dataRows = json.slice(1);
-        const csvArray = [headers, ...dataRows];
-        const csv = csvArray.map(row => row.map(v => v === undefined ? '' : v).join(',')).join('\n');
+        // 日付フォーマット変換関数
+        function formatDate(val) {
+          if (!val) return '';
+          if (typeof val === 'number') {
+            const date = XLSX.SSF.parse_date_code(val);
+            if (date) {
+              const mm = String(date.m).padStart(2, '0');
+              const dd = String(date.d).padStart(2, '0');
+              return `${date.y}-${mm}-${dd}`;
+            }
+          }
+          const d = new Date(val);
+          if (!isNaN(d)) {
+            const yyyy = d.getFullYear();
+            const mm = String(d.getMonth() + 1).padStart(2, '0');
+            const dd = String(d.getDate()).padStart(2, '0');
+            return `${yyyy}-${mm}-${dd}`;
+          }
+          return String(val).trim();
+        }
+        const csvArray = [
+          headers,
+          ...dataRows
+            .filter(row => row.some(cell => cell !== undefined && String(cell).trim() !== ''))
+            .map(row => headers.map((h, i) => {
+              let v = row[i] === undefined ? '' : String(row[i]).trim();
+              if (h === 'customerId') v = v.replace(/[^0-9]/g, '');
+              if (h === 'registeredAt') v = formatDate(row[i]);
+              return v;
+            }))
+        ];
+        const csv = csvArray.map(row => row.join(',')).join('\n');
         // CSVをBlobにしてFormDataで送信
         const csvBlob = new Blob([csv], { type: 'text/csv' });
         const formData = new FormData();
