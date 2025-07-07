@@ -8,16 +8,14 @@
 </head>
 <body>
     <!-- ハンバーガーメニューボタン -->
-    <div class="menu-btn" id="menuBtn">&#9776;</div>
+    <div class="menu-btn" id="menuBtn" style="display:block; position:fixed; top:20px; left:20px; z-index:1001;">&#9776;</div>
     <!-- サイドバー背景（モーダル用） -->
     <div class="sidebar-bg" id="sidebarBg"></div>
     <!-- サイドバー -->
     <nav class="sidebar" id="sidebar">
-        <span class="sidebar-close" id="sidebarClose">&times;</span>
+        <span class="sidebar-close" id="sidebarClose" style="display:none; position:fixed; top:20px; left:20px; z-index:1002; font-size:2em; cursor:pointer;">&times;</span>
         <ul>
-
             <li><a href="/">・<u>HOME</u></a></li>
-
             <li><a href="/html/order_list.html">・注文書一覧</a></li>
             <li><a href="/html/delivery_list.html">・納品書一覧</a></li>
             <li><a href="/html/statistics_list.html">・統計情報一覧</a></li>
@@ -77,7 +75,7 @@
             <table class="order-table">
                 <tr>
                     <th>No.</th>
-                    <th>品目</th>
+                    <th>署名</th>
                     <th>数量</th>
                     <th>単価</th>
                     <th>金額</th>
@@ -184,10 +182,14 @@
     function openSidebar() {
         sidebar.classList.add('open');
         sidebarBg.classList.add('show');
+        menuBtn.style.display = 'none';
+        sidebarClose.style.display = 'block';
     }
     function closeSidebar() {
         sidebar.classList.remove('open');
         sidebarBg.classList.remove('show');
+        menuBtn.style.display = 'block';
+        sidebarClose.style.display = 'none';
     }
     menuBtn.onclick = openSidebar;
     sidebarClose.onclick = closeSidebar;

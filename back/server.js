@@ -32,21 +32,9 @@ app.use('/api/import', importRouter);
 
 // サーバー起動
 app.listen(PORT, () => {
-  console.log(`Server is running on port ${PORT}`);
+  // console.log(`Server is running on port ${PORT}`);
+  console.log(`http://localhost:3000`);
 });
 
 
-/*CSV形式のエクセルデータをデータベースに反映するシステムを作るには、以下のような流れが一般的です。
-
-フロントでCSVファイルをアップロード
-バックエンドでCSVを受け取り、パース
-パースしたデータをデータベースに保存
-
-まずはバックエンド側で「CSVファイルを受け取り、データベース（今回はファイルベースやメモリ配列でも可）に反映するAPI」を実装します。
-Node.js / Expressでよく使うCSVパーサーは csv - parse や papaparse、ファイルアップロードには multer などがあります。
-
-まず必要なパッケージをインストールします。
-
-この後、routes / import.js などにアップロードAPIを実装し、server.js でルーティングします。
-実装を進めてもよろしいですか？
-（データベースは何を想定しますか？なければ一旦メモリ配列やJSONファイル保存で進めます）*/
+/*注文書保存API、納品書保存API、注文書編集API,納品書編集API、注文書削除API、納品書削除API*/

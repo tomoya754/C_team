@@ -5,6 +5,7 @@
     <title>納品書一覧</title>
     <link rel="stylesheet" href="../css/sidebar.css">
     <link rel="stylesheet" href="../css/delivery_list.css">
+    <script src="../js/delivery_list.js" defer></script>
 </head>
 <body>
     <!-- ハンバーガーメニューボタン -->
@@ -48,7 +49,6 @@
                         <th style="width:120px;">電話番号</th>
                         <th style="width:100px;">納品日</th>
                         <th style="width:100px;">納品状態</th>
-                        <th style="width:100px;">リードタイム</th>
                         <th style="width:80px;">備考</th>
                     </tr>
                 </thead>
@@ -60,7 +60,6 @@
                         <td>080-xxxx-xxxx</td>
                         <td>2025/05/21</td>
                         <td>納品済み</td>
-                        <td>6日</td>
                         <td>特になし</td>
                     </tr>
                 </tbody>
@@ -71,55 +70,5 @@
             <button class="btn delete-btn">納品書削除</button>
         </div>
     </div>
-    <script>
-    // サイドバー開閉
-    const menuBtn = document.getElementById('menuBtn');
-    const sidebar = document.getElementById('sidebar');
-    const sidebarBg = document.getElementById('sidebarBg');
-    const sidebarClose = document.getElementById('sidebarClose');
-    function openSidebar() {
-        sidebar.classList.add('open');
-        sidebarBg.classList.add('show');
-        menuBtn.style.display = 'none';
-        sidebarClose.style.display = 'block';
-    }
-    function closeSidebar() {
-        sidebar.classList.remove('open');
-        sidebarBg.classList.remove('show');
-        menuBtn.style.display = 'block';
-        sidebarClose.style.display = 'none';
-    }
-    menuBtn.onclick = openSidebar;
-    sidebarClose.onclick = closeSidebar;
-    sidebarBg.onclick = closeSidebar;
-
-    window.onload = function() {
-      // APIから納品書一覧データを取得
-      fetch('http://localhost:3000/api/deliveries')
-        .then(res => res.json())
-        .then(data => {
-          const tbody = document.querySelector('.orders-table tbody');
-          tbody.innerHTML = ''; // 既存行をクリア
-          data.forEach(delivery => {
-            const tr = document.createElement('tr');
-            tr.innerHTML = `
-              <td>${delivery.deliveryNo}</td>
-              <td>${delivery.customerName}</td>
-              <td><a href="#">${delivery.deliveryDetail}</a></td>
-              <td>${delivery.phone}</td>
-              <td>${delivery.deliveryDate}</td>
-              <td>${delivery.status}</td>
-              <td>${delivery.leadTime}</td>
-              <td>${delivery.note || ''}</td>
-            `;
-            tbody.appendChild(tr);
-          });
-        })
-        .catch(err => {
-          alert('データ取得エラー');
-          console.error(err);
-        });
-    };
-    </script>
 </body>
 </html>

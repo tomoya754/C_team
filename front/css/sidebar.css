@@ -13,7 +13,7 @@
     border-radius: 16px; /* 少し大きめの角丸で柔らかな印象に */
     width: 56px; /* 幅を少し大きく */
     height: 56px; /* 高さを少し大きく */
-    display: none; /* デフォルトでは非表示 */
+    display: flex;
     align-items: center;
     justify-content: center;
     box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1); /* 統一感を意識した柔らかな影 */
@@ -99,7 +99,7 @@
     border-radius: 16px; /* 少し大きめの角丸 */
     width: 56px; /* 幅を少し大きく */
     height: 56px; /* 高さを少し大きく */
-    display: none; /* デフォルトでは非表示 */
+    display: flex;
     align-items: center;
     justify-content: center;
     box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1); /* 統一感を意識した柔らかな影 */
