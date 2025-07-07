@@ -78,5 +78,30 @@ router.post('/', async (req, res) => {
   }
 });
 
+/* // GET /api/orders/:orderId
+router.get('/:orderId', async (req, res) => {
+  const orderId = req.params.orderId;
+  try {
+    // 注文書本体
+    const [orders] = await db.query('SELECT * FROM orders WHERE orderId = ?', [orderId]);
+    if (!orders.length) return res.status(404).json({ error: 'not found' });
+
+    // 注文書明細
+    const [details] = await db.query('SELECT * FROM order_details WHERE orderId = ?', [orderId]);
+
+    // 必要なら顧客情報も取得
+    // const [customer] = await db.query('SELECT * FROM customers WHERE customerId = ?', [orders[0].customerId]);
+
+    res.json({
+      ...orders[0],
+      details
+      // , customer: customer[0] // 必要なら
+    });
+  } catch (err) {
+    res.status(500).json({ error: 'DB error', detail: err.message });
+  }
+});
+*/
+
 // このルーターをエクスポート
 module.exports = router;

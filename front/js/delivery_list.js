@@ -42,8 +42,8 @@ function fetchAndDisplayDeliveries(storeId = 0) {
                 const tr = document.createElement('tr');
                 tr.innerHTML = `
                     <td>${delivery.deliveryId}</td>
-                    <td>${delivery.customerName}</td>
-                    <td><a href="#">${delivery.orderDetail}</a></td>
+                    <td><a href="/html/delivery_form.html?deliveryId=${delivery.deliveryId}" class="customer-link">${delivery.customerName}</a></td>
+                    <td>${delivery.orderDetail}</td>
                     <td>${delivery.phone}</td>
                     <td>${delivery.deliveryDate}</td>
                     <td>${delivery.deliveryStatus}</td>
