@@ -5,6 +5,8 @@
     <title>顧客情報登録</title>
     <link rel="stylesheet" href="../css/sidebar.css">
     <link rel="stylesheet" href="../css/customer_register.css">
+    <script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
+    <script src="../js/customer_register.js" defer></script>
 </head>
 <body>
     <!-- ハンバーガーメニューボタン -->
@@ -25,7 +27,7 @@
     <!-- メインコンテンツ -->
     <div class="main" id="main">
         <h1>顧客情報登録</h1>
-        <form style="margin: 40px auto; max-width: 500px; background: #f9f9f9; padding: 32px; border-radius: 12px; box-shadow: 0 2px 8px #0001;">
+        <form id="excelForm" style="margin: 40px auto; max-width: 500px; background: #f9f9f9; padding: 32px; border-radius: 12px; box-shadow: 0 2px 8px #0001;">
             <label style="font-size: 20px; display: block; margin-bottom: 16px;">Excelファイルを選択してください</label>
             <input type="file" accept=".xlsx" style="font-size: 18px; margin-bottom: 32px; width: 100%;"><br>
             <div class="register-btns-row">
