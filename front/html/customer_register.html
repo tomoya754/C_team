@@ -29,10 +29,44 @@
         <h1>顧客情報登録</h1>
         <form id="excelForm" style="margin: 40px auto; max-width: 500px; background: #f9f9f9; padding: 32px; border-radius: 12px; box-shadow: 0 2px 8px #0001;">
             <label style="font-size: 20px; display: block; margin-bottom: 16px;">Excelファイルを選択してください</label>
+<<<<<<< HEAD
             <input type="file" id="excelFile" accept=".xlsx" style="font-size: 18px; margin-bottom: 32px; width: 100%;"><br>
             <button type="submit" style="font-size: 20px; padding: 10px 40px; margin-right: 20px;">登録</button>
             <button type="button" onclick="location.href='/'" style="font-size: 20px; padding: 10px 40px;">キャンセル</button>
         </form>
     </div>
+=======
+            <input type="file" accept=".xlsx" style="font-size: 18px; margin-bottom: 32px; width: 100%;"><br>
+            <div class="register-btns-row">
+                <button type="submit">登録</button>
+                <button type="button" onclick="location.href='/'">キャンセル</button>
+            </div>
+        </form>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
+    <script src="../js/customer_register.js"></script>
+    <script>
+    // サイドバー開閉
+    const menuBtn = document.getElementById('menuBtn');
+    const sidebar = document.getElementById('sidebar');
+    const sidebarBg = document.getElementById('sidebarBg');
+    const sidebarClose = document.getElementById('sidebarClose');
+    function openSidebar() {
+        sidebar.classList.add('open');
+        sidebarBg.classList.add('show');
+        menuBtn.style.display = 'none';
+        sidebarClose.style.display = 'block';
+    }
+    function closeSidebar() {
+        sidebar.classList.remove('open');
+        sidebarBg.classList.remove('show');
+        menuBtn.style.display = 'block';
+        sidebarClose.style.display = 'none';
+    }
+    menuBtn.onclick = openSidebar;
+    sidebarClose.onclick = closeSidebar;
+    sidebarBg.onclick = closeSidebar;
+    </script>
+>>>>>>> 2ffc499203424921f3d2e40cad7aefd999207ef7
 </body>
 </html>
