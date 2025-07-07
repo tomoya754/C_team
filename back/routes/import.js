@@ -43,12 +43,6 @@ router.post('/upload-customers', upload.single('file'), async (req, res) => {
         });
         // 既存の顧客ID一覧を取得
         const conn = await db.getConnection();
-<<<<<<< HEAD
-        for (const customer of customers) {
-          if (!customer.customerId || !customer.shopName || !customer.customerName) {
-            continue; // またはエラー処理
-          }
-=======
         const [dbCustomers] = await conn.query('SELECT customerId FROM customers');
         const dbCustomerIds = dbCustomers.map(row => String(row.customerId));
         const csvCustomerIds = normalizedCustomers.map(c => String(c.customerId));
@@ -75,7 +69,6 @@ router.post('/upload-customers', upload.single('file'), async (req, res) => {
           const id = customer.customerId;
           // すでに同じIDをこのアップロード内で処理済みならスキップ
           if (normalizedCustomers.filter(c => String(c.customerId) === id).length > 1 && normalizedCustomers.findIndex(c => String(c.customerId) === id) !== normalizedCustomers.indexOf(customer)) continue;
->>>>>>> 2ffc499203424921f3d2e40cad7aefd999207ef7
           await conn.query(
             `INSERT INTO customers (customerId, shopName, customerName, staffName, address, phone, deliveryCondition, note, registeredAt, isDeleted)
              VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, 0)
