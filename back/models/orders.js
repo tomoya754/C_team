@@ -1,4 +1,4 @@
-// 注文データ
+/* 注文データ
 const orders = [
   {
     orderId: 1,
@@ -30,3 +30,4 @@ const orders = [
 ];
 
 module.exports = orders;
+*/

@@ -38,7 +38,7 @@ CREATE TABLE `customers` (
   `deliveryCondition` text,
   `note` text,
   `registeredAt` varchar(20),
-
+  `isDeleted` tinyint(1) NOT NULL DEFAULT 0
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 --
@@ -48,9 +48,6 @@ CREATE TABLE `customers` (
 --
 -- テーブルのインデックス `customers`
 --
-ALTER TABLE `customers`
-  ADD PRIMARY KEY (`customerId`);
-COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
