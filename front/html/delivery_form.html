@@ -33,12 +33,12 @@
                     <div style="margin-bottom:12px;display:flex;align-items:flex-end;gap:8px;">
                         <span style="font-size:1.15em;line-height:1.2;white-space:nowrap;">お客様ID：</span>
                         <div style="position:relative;flex:1;display:flex;align-items:flex-end;">
-                            <input type="text" class="input-meta" style="width:170px;border:none;border-bottom:2px solid #222;font-size:1.15em;vertical-align:bottom;padding:2px 4px 2px 4px;">
+                            <input type="text" class="input-meta" name="customerId" style="width:170px;border:none;border-bottom:2px solid #222;font-size:1.15em;vertical-align:bottom;padding:2px 4px 2px 4px;">
                             <button type="button" style="position:absolute;right:-2px;top:0;padding:2px 18px;font-size:1.1em;border:2px solid #222;background:#f7f7f7;">検索</button>
                         </div>
                     </div>
                     <div style="margin-bottom:8px;">
-                        <input type="text" class="input-meta" style="width:220px;font-size:1.3em;text-align:center;border:none;background:transparent;letter-spacing:0.3em;" placeholder="○○○○○○○○○○"> 様
+                        <input type="text" class="input-meta" name="customerName" style="width:220px;font-size:1.3em;text-align:center;border:none;background:transparent;letter-spacing:0.3em;" placeholder="○○○○○○○○○○"> 様
                     </div>
                     <div style="margin-bottom:8px;color:#666;font-size:0.95em;">（お客様住所）</div>
                     <div style="margin-bottom:32px;">
@@ -53,13 +53,13 @@
                 </div>
                 <!-- 右側：発注情報 -->
                 <div style="flex:1;min-width:320px;max-width:400px;">
-                    <div style="display:flex;justify-content:space-between;margin-bottom:8px;">
+                    <div style="display:flex;justify-content:space-between;margin-bottom:8px;" id="deliveryNoRow">
                         <span style="font-size:1.1em;">納品No.</span>
-                        <input type="text" class="input-meta" style="width:160px;text-align:right;border:none;font-size:1.1em;" placeholder="XXXXXXXXXX">
+                        <input type="text" class="input-meta" id="deliveryNoInput" name="deliveryNo" style="width:160px;text-align:right;border:none;font-size:1.1em;" placeholder="XXXXXXXXXX" readonly>
                     </div>
                     <div style="display:flex;justify-content:space-between;margin-bottom:18px;">
                         <span style="font-size:1.1em;">納品日：</span>
-                        <input type="date" class="input-meta" style="width:160px;text-align:right;border:none;font-size:1.1em;">
+                        <input type="date" class="input-meta" name="deliveryDate" style="width:160px;text-align:right;border:none;font-size:1.1em;">
                     </div>
                     <div style="font-weight:bold;font-size:1.1em;margin-bottom:2px;">緑橋書店</div>
                     <div style="margin-bottom:2px;">〒537-0022</div>
@@ -68,14 +68,13 @@
                     <div style="margin-bottom:2px;">TEL：00-0000-0000</div>
                     <div style="margin-bottom:2px;">FAX：00-0000-0000</div>
                     <div style="margin-bottom:2px;">E-Mail xxxxxxxxxxxxxxxxxxxxxxxx</div>
-                    <div style="margin-bottom:2px;">担当者 ○○○○○</div>
                 </div>
             </div>
             <!-- 納品明細テーブル -->
             <table class="order-table">
                 <tr>
                     <th>No.</th>
-                    <th>署名</th>
+                    <th>書名</th>
                     <th>数量</th>
                     <th>単価</th>
                     <th>金額</th>
@@ -164,7 +163,23 @@
                     <td><input type="number" name="price12"></td>
                     <td><input type="number" name="amount12"></td>
                 </tr>
+                <tr>
+                    <td colspan="4" class="right">小計</td>
+                    <td><input type="number" class="input-total"></td>
+                </tr>
+                <tr>
+                    <td colspan="4" class="right">消費税</td>
+                    <td><input type="number" class="input-total"></td>
+                </tr>
+                <tr>
+                    <td colspan="4" class="right">合計金額</td>
+                    <td><input type="number" class="input-total"></td>
+                </tr>
             </table>
+            <div class="order-remark-row">
+                <div style="font-size:16px;">備考：</div>
+                <textarea class="input-meta" style="width:90%;height:40px;resize:none;"></textarea>
+            </div>
             <!-- ボタンエリア -->
             <div class="btn-area">
                 <button type="submit" class="btn" id="saveBtn">保存</button>
@@ -194,6 +209,15 @@
     menuBtn.onclick = openSidebar;
     sidebarClose.onclick = closeSidebar;
     sidebarBg.onclick = closeSidebar;
+
+    // 納品書No.の表示/非表示制御
+    const urlParams = new URLSearchParams(window.location.search);
+    const deliveryId = urlParams.get('deliveryId');
+    const deliveryNoRow = document.getElementById('deliveryNoRow');
+    const deliveryNoInput = document.getElementById('deliveryNoInput');
+    if (!deliveryId && deliveryNoRow) {
+        deliveryNoRow.style.display = 'none'; // 新規作成時は非表示
+    }
     </script>
 </body>
 </html>

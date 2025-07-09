@@ -26,6 +26,67 @@ document.addEventListener('DOMContentLoaded', function() {
             window.print();
         });
     }
+    // ▼▼▼ 自動計算機能追加 ▼▼▼
+    function calcTotals() {
+        let subtotal = 0;
+        for (let i = 1; i <= 12; i++) {
+            const qty = Number(document.querySelector(`input[name="qty${i}"]`)?.value) || 0;
+            const price = Number(document.querySelector(`input[name="price${i}"]`)?.value) || 0;
+            const amountInput = document.querySelector(`input[name="amount${i}"]`);
+            const amount = qty * price;
+            if (amountInput) amountInput.value = amount ? amount : '';
+            subtotal += amount;
+        }
+        const tax = Math.floor(subtotal * 0.1);
+        const total = subtotal + tax;
+        // テーブル下部
+        const totalInputs = document.querySelectorAll('.input-total');
+        if (totalInputs.length >= 3) {
+            totalInputs[0].value = subtotal;
+            totalInputs[1].value = tax;
+            totalInputs[2].value = total;
+        }
+        // 上部合計金額
+        const totalAmount = document.getElementById('totalAmount');
+        if (totalAmount) totalAmount.textContent = total;
+    }
+    // 数量・単価入力時に自動計算
+    for (let i = 1; i <= 12; i++) {
+        const qtyInput = document.querySelector(`input[name="qty${i}"]`);
+        const priceInput = document.querySelector(`input[name="price${i}"]`);
+        if (qtyInput) qtyInput.addEventListener('input', calcTotals);
+        if (priceInput) priceInput.addEventListener('input', calcTotals);
+    }
+    // 初期化時も計算
+    calcTotals();
+
+    const urlParams = new URLSearchParams(window.location.search);
+    const deliveryId = urlParams.get('deliveryId');
+    if (deliveryId) {
+        // 編集時：APIから納品書データを取得してセット
+        fetch(`http://localhost:3000/api/deliveries/${deliveryId}`)
+            .then(res => res.json())
+            .then(data => {
+                setDeliveryFormData(data);
+                // 納品No.を自動セット
+                const deliveryNoInput = document.getElementById('deliveryNoInput');
+                if (deliveryNoInput && data.deliveryId) deliveryNoInput.value = data.deliveryId;
+                // 編集時はNo.欄表示
+                const deliveryNoRow = document.getElementById('deliveryNoRow');
+                if (deliveryNoRow) deliveryNoRow.style.display = '';
+            })
+            .catch(() => {
+                alert('納品書データの取得に失敗しました');
+            });
+    } else {
+        // 新規作成時：フォームを空に初期化
+        document.querySelectorAll('.a4-sheet input, .a4-sheet textarea').forEach(input => {
+            input.value = '';
+        });
+        // 新規作成時はNo.欄非表示
+        const deliveryNoRow = document.getElementById('deliveryNoRow');
+        if (deliveryNoRow) deliveryNoRow.style.display = 'none';
+    }
 });
 
 function getDeliveryFormData() {
