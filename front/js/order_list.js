@@ -1,3 +1,4 @@
+document.addEventListener('DOMContentLoaded', function() {
 // サイドバー開閉
 const menuBtn = document.getElementById('menuBtn');
 const sidebar = document.getElementById('sidebar');
@@ -37,19 +38,9 @@ fetch('http://localhost:3000/api/orders')
                 <td>${order.note || ''}</td>
             `;
             tbody.appendChild(tr);
-
         });
-}
-
-// ページロード時に全店舗で取得
-fetchAndDisplayOrders(0);
-
-// 店舗選択時のイベント
-const storeSelect = document.querySelector('.store-select');
-if (storeSelect) {
-    storeSelect.addEventListener('change', function() {
-        const selectedName = storeSelect.value;
-        const storeId = storeNameToId[selectedName] || 0;
-        fetchAndDisplayOrders(storeId);
+    })
+    .catch(err => {
+        console.error('注文データ取得エラー:', err);
     });
-}
+});
