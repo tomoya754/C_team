@@ -50,9 +50,9 @@
                 </div>
                 <!-- 右側：発注情報 -->
                 <div style="flex:1;min-width:320px;max-width:400px;">
-                    <div style="display:flex;justify-content:space-between;margin-bottom:8px;">
+                    <div style="display:flex;justify-content:space-between;margin-bottom:8px;" id="orderNoRow">
                         <span style="font-size:1.1em;">注文書No.</span>
-                        <input type="text" class="input-meta" style="width:160px;text-align:right;border:none;font-size:1.1em;" placeholder="XXXXXXXXXX">
+                        <input type="text" class="input-meta" id="orderNoInput" style="width:160px;text-align:right;border:none;font-size:1.1em;" placeholder="XXXXXXXXXX" readonly>
                     </div>
                     <div style="display:flex;justify-content:space-between;margin-bottom:18px;">
                         <span style="font-size:1.1em;">注文日：</span>
@@ -65,13 +65,12 @@
                     <div style="margin-bottom:2px;">TEL：00-0000-0000</div>
                     <div style="margin-bottom:2px;">FAX：00-0000-0000</div>
                     <div style="margin-bottom:2px;">E-Mail xxxxxxxxxxxxxxxxxxxxxxxx</div>
-                    <div style="margin-bottom:2px;">担当者 ○○○○○</div>
                 </div>
             </div>
             <table class="order-table">
                 <tr>
                     <th>No.</th>
-                    <th>署名</th>
+                    <th>書名</th>
                     <th>数量</th>
                     <th>単価</th>
                     <th>金額</th>
