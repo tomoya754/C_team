@@ -29,26 +29,30 @@ document.addEventListener('DOMContentLoaded', function() {
     // ▼▼▼ 自動計算機能追加 ▼▼▼
     function calcTotals() {
         let subtotal = 0;
+        let hasInput = false;
         for (let i = 1; i <= 12; i++) {
-            const qty = Number(document.querySelector(`input[name="qty${i}"]`)?.value) || 0;
-            const price = Number(document.querySelector(`input[name="price${i}"]`)?.value) || 0;
+            const qtyVal = document.querySelector(`input[name="qty${i}"]`)?.value;
+            const priceVal = document.querySelector(`input[name="price${i}"]`)?.value;
+            const qty = Number(qtyVal);
+            const price = Number(priceVal);
             const amountInput = document.querySelector(`input[name="amount${i}"]`);
-            const amount = qty * price;
-            if (amountInput) amountInput.value = amount ? amount : '';
-            subtotal += amount;
+            const amount = (qtyVal !== '' && priceVal !== '') ? qty * price : '';
+            if (amountInput) amountInput.value = amount !== '' ? amount : '';
+            if ((qtyVal && qtyVal !== '0') || (priceVal && priceVal !== '0')) hasInput = true;
+            subtotal += amount !== '' ? amount : 0;
         }
-        const tax = Math.floor(subtotal * 0.1);
-        const total = subtotal + tax;
+        const tax = hasInput ? Math.floor(subtotal * 0.1) : '';
+        const total = hasInput ? subtotal + tax : '';
         // テーブル下部
         const totalInputs = document.querySelectorAll('.input-total');
         if (totalInputs.length >= 3) {
-            totalInputs[0].value = subtotal;
-            totalInputs[1].value = tax;
-            totalInputs[2].value = total;
+            totalInputs[0].value = hasInput ? subtotal : '';
+            totalInputs[1].value = hasInput ? tax : '';
+            totalInputs[2].value = hasInput ? total : '';
         }
         // 上部合計金額
         const totalAmount = document.getElementById('totalAmount');
-        if (totalAmount) totalAmount.textContent = total;
+        if (totalAmount) totalAmount.textContent = hasInput ? total : '';
     }
     // 数量・単価入力時に自動計算
     for (let i = 1; i <= 12; i++) {
