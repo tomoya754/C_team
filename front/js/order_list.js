@@ -20,8 +20,27 @@ menuBtn.onclick = openSidebar;
 sidebarClose.onclick = closeSidebar;
 sidebarBg.onclick = closeSidebar;
 
+<<<<<<< HEAD
 function fetchAndDisplayOrders() {
     fetch('http://localhost:3000/api/orders')
+=======
+<<<<<<< HEAD
+// 店舗名→ID変換用マップ
+const storeNameToId = {
+    '全店舗': 0,
+    '緑橋本店': 1,
+    '深江橋店': 2,
+    '今里店': 3
+};
+
+// 注文データ取得＆表示関数
+function fetchAndDisplayOrders(storeId = 0) {
+    let url = 'http://localhost:3000/api/orders';
+    if (storeId && storeId !== 0) {
+        url += `?storeId=${storeId}`;
+    }
+    fetch(url)
+>>>>>>> f263b5aafd6244bc7ae7839b5517e7b669cb4229
         .then(res => res.json())
         .then(data => {
             const tbody = document.getElementById('orders-tbody');
@@ -29,10 +48,16 @@ function fetchAndDisplayOrders() {
             data.forEach(order => {
                 const tr = document.createElement('tr');
                 tr.innerHTML = `
+<<<<<<< HEAD
                     <td><input type='radio' name='deleteRadio' value='${order.orderId}'></td>
                     <td>${order.orderId}</td>
                     <td>${order.customerId}</td>
                     <td><a href="/html/order_form.html?orderId=${order.orderId}" class="customer-link">${order.customerName}</a></td>
+=======
+                    <td>${order.orderId}</td>
+                    <td>${order.customerId}</td>
+                    <td>${order.customerName}</td>
+>>>>>>> f263b5aafd6244bc7ae7839b5517e7b669cb4229
                     <td>${order.orderDetail}</td>
                     <td>${order.phone}</td>
                     <td>${order.orderDate}</td>
@@ -43,6 +68,30 @@ function fetchAndDisplayOrders() {
         })
         .catch(err => {
             console.error('注文データ取得エラー:', err);
+<<<<<<< HEAD
+=======
+=======
+// 注文書一覧をAPIから取得してテーブルに表示
+fetch('http://localhost:3000/api/orders')
+    .then(res => res.json())
+    .then(data => {
+        const tbody = document.getElementById('orders-tbody');
+        tbody.innerHTML = '';
+        data.forEach(order => {
+            const tr = document.createElement('tr');
+            tr.innerHTML = `
+                <td>${order.orderId}</td>
+                <td>${order.customerId}</td>
+                <td><a href="/html/order_form.html?orderId=${order.orderId}" class="customer-link">${order.customerName}</a></td>
+                <td>${order.orderDetail}</td>
+                <td>${order.phone}</td>
+                <td>${order.orderDate}</td>
+                <td>${order.note || ''}</td>
+            `;
+            tbody.appendChild(tr);
+
+>>>>>>> 5b2085070dd6611a0c9ff09e339f63a079c55929
+>>>>>>> f263b5aafd6244bc7ae7839b5517e7b669cb4229
         });
 }
 
