@@ -19,7 +19,6 @@ menuBtn.onclick = openSidebar;
 sidebarClose.onclick = closeSidebar;
 sidebarBg.onclick = closeSidebar;
 
-<<<<<<< HEAD
 // 店舗名→ID変換用マップ
 const storeNameToId = {
     '全店舗': 0,
@@ -55,27 +54,6 @@ function fetchAndDisplayOrders(storeId = 0) {
         })
         .catch(err => {
             console.error('注文データ取得エラー:', err);
-=======
-// 注文書一覧をAPIから取得してテーブルに表示
-fetch('http://localhost:3000/api/orders')
-    .then(res => res.json())
-    .then(data => {
-        const tbody = document.getElementById('orders-tbody');
-        tbody.innerHTML = '';
-        data.forEach(order => {
-            const tr = document.createElement('tr');
-            tr.innerHTML = `
-                <td>${order.orderId}</td>
-                <td>${order.customerId}</td>
-                <td><a href="/html/order_form.html?orderId=${order.orderId}" class="customer-link">${order.customerName}</a></td>
-                <td>${order.orderDetail}</td>
-                <td>${order.phone}</td>
-                <td>${order.orderDate}</td>
-                <td>${order.note || ''}</td>
-            `;
-            tbody.appendChild(tr);
-
->>>>>>> 5b2085070dd6611a0c9ff09e339f63a079c55929
         });
 }
 
