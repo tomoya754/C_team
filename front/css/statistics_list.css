@@ -113,12 +113,20 @@ h1 {
     border-radius: 25px; /* 角丸を強調 */
     background: #fff;
     appearance: none; /* デフォルトの矢印を非表示 */
-    min-width: 120px; /* 最小幅 */
+    min-width: 130px !important;
+    width: auto !important;
     cursor: pointer;
     background-image: url('data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%20256%20256%22%3E%3Cpath%20fill%3D%22%23666%22%20d%3D%22M128%20192L48%20112h160z%22%2F%3E%3C%2Fsvg%3E'); /* カスタム矢印アイコン */
     background-repeat: no-repeat;
     background-position: right 10px center;
     background-size: 16px;
+    text-align: center;
+    text-align-last: center;
+}
+
+/* option自体も中央寄せ（Chrome/Edge/Opera用） */
+.sort-key option, .sort-order option {
+    text-align: center;
 }
 
 .sort-order { min-width: 100px; }
@@ -163,6 +171,11 @@ h1 {
 
 .statistics-list-table tbody tr:hover {
     background-color: #f0f8ff; /* ホバー時の背景色 */
+}
+
+/* セレクトボックスのオプションフォントサイズ固定 */
+.sort-key option, .sort-order option {
+    font-size: 1.1em;
 }
 
 /* スクロールバー調整 */
@@ -211,4 +224,8 @@ h1 {
 @media (max-width: 700px) {
     .main { padding: 15px 10px; margin-top: 15px; }
     h1 { font-size: 2rem; margin-bottom: 20px; }
+    .sort-key, .sort-order {
+        min-width: 110px !important;
+        width: auto !important;
+    }
 }

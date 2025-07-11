@@ -78,7 +78,7 @@ router.post('/', async (req, res) => {
   }
 });
 
-/* // GET /api/orders/:orderId
+// GET /api/orders/:orderId
 router.get('/:orderId', async (req, res) => {
   const orderId = req.params.orderId;
   try {
@@ -101,7 +101,6 @@ router.get('/:orderId', async (req, res) => {
     res.status(500).json({ error: 'DB error', detail: err.message });
   }
 });
-*/
 
 // このルーターをエクスポート
 module.exports = router;
