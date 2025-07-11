@@ -32,14 +32,14 @@
                 <div style="flex:1;min-width:340px;max-width:420px;">
                     <div style="margin-bottom:12px;">
                         <span style="font-size:1.1em;">顧客ID：</span>
-                        <input type="text" class="input-meta" style="width:220px;border:none;border-bottom:2px solid #222;font-size:1.1em;vertical-align:middle;">
+                        <input type="text" id="customerId" class="input-meta" style="width:220px;border:none;border-bottom:2px solid #222;font-size:1.1em;vertical-align:middle;">
                     </div>
                     <div style="margin-bottom:8px;">
-                        <input type="text" class="input-meta" style="width:220px;font-size:1.3em;text-align:center;border:none;background:transparent;letter-spacing:0.3em;" placeholder="○○○○○○○○○○"> 様
+                        <input type="text" id="customerName" class="input-meta" style="width:220px;font-size:1.3em;text-align:center;border:none;background:transparent;letter-spacing:0.3em;" placeholder="○○○○○○○○○○" readonly> 様
                     </div>
                     <div style="margin-bottom:8px;color:#666;font-size:0.95em;">（お客様住所）</div>
                     <div style="margin-bottom:32px;">
-                        <textarea class="input-meta" style="width:100%;height:38px;resize:none;border:none;border-bottom:1px dotted #888;"></textarea>
+                        <textarea id="customerAddress" class="input-meta" style="width:100%;height:38px;resize:none;border:none;border-bottom:1px dotted #888;" readonly></textarea>
                     </div>
                     <div style="border-bottom:1px dotted #888;height:18px;margin-bottom:32px;"></div>
                     <div style="display:flex;align-items:center;margin-top:32px;">
@@ -205,45 +205,6 @@
     menuBtn.onclick = openSidebar;
     sidebarClose.onclick = closeSidebar;
     sidebarBg.onclick = closeSidebar;
-
-    // 保存ボタンでAPIに注文書を登録
-    document.getElementById('saveBtn').onclick = async function() {
-        // 入力値の取得
-        const customerId = document.querySelector('input[placeholder="宛先名"]').value || '未設定';
-        const customerName = document.querySelector('input[placeholder="会社名"]').value || '未設定';
-        const orderDetail = document.querySelector('input[name^="item"]').value || '未設定';
-        const orderDate = document.querySelector('input[type="date"]').value || '';
-        const phone = document.querySelector('input[placeholder="電話番号"]').value || '';
-        const note = document.querySelector('.note-area textarea').value || '';
-
-        // 必須項目のバリデーション
-        if (!customerId || !customerName || !orderDetail || !orderDate) {
-            alert('必須項目が不足しています');
-            return;
-        }
-
-        // APIへ注文書データをPOST送信
-        const res = await fetch('http://localhost:3000/api/orders', {
-            method: 'POST',
-            headers: {'Content-Type': 'application/json'},
-            body: JSON.stringify({
-                customerId,
-                customerName,
-                orderDetail,
-                orderDate,
-                phone,
-                note
-            })
-        });
-        if (res.ok) {
-            alert('注文書を登録しました');
-            // 登録後、一覧画面へ遷移
-            location.href = 'order_list.html';
-        } else {
-            const err = await res.json();
-            alert('エラー: ' + err.error);
-        }
-    };
     </script>
 </body>
 </html>
