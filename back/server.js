@@ -24,11 +24,13 @@ const statisticsRouter = require('./routes/statistics');
 const deliveriesRouter = require('./routes/deliveries');
 const ordersRouter = require('./routes/orders');
 const importRouter = require('./routes/import');
+const customersRouter = require('./routes/customers');
 
 app.use('/api/statistics', statisticsRouter);
 app.use('/api/deliveries', deliveriesRouter);
 app.use('/api/orders', ordersRouter);
 app.use('/api/import', importRouter);
+app.use('/api/customers', customersRouter);
 
 // サーバー起動
 app.listen(PORT, () => {
