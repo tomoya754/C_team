@@ -80,9 +80,50 @@ document.addEventListener('DOMContentLoaded', function() {
         document.querySelectorAll('.a4-sheet input, .a4-sheet textarea').forEach(input => {
             input.value = '';
         });
-        // 新規作成時はNo.欄非表示
-        const orderNoRow = document.getElementById('orderNoRow');
-        if (orderNoRow) orderNoRow.style.display = 'none';
+        // 注文日を本日にセット
+        const orderDateInput = document.querySelector('.a4-sheet input[type="date"]');
+        if (orderDateInput) {
+            const today = new Date();
+            const yyyy = today.getFullYear();
+            const mm = String(today.getMonth() + 1).padStart(2, '0');
+            const dd = String(today.getDate()).padStart(2, '0');
+            orderDateInput.value = `${yyyy}-${mm}-${dd}`;
+        }
+        // 注文書No.を非表示
+        const orderNoInput = document.querySelector('.a4-sheet input[placeholder="XXXXXXXXXX"]');
+        if (orderNoInput) {
+            orderNoInput.style.display = 'none';
+            const orderNoLabel = orderNoInput.parentElement.querySelector('span');
+            if (orderNoLabel) orderNoLabel.style.display = 'none';
+        }
+    }
+    // 顧客ID入力時に顧客名・住所を自動取得
+    const customerIdInput = document.getElementById('customerId');
+    const customerNameInput = document.getElementById('customerName');
+    const addressInput = document.getElementById('customerAddress');
+    if (customerIdInput) {
+        customerIdInput.addEventListener('change', async function() {
+            const customerId = customerIdInput.value.trim();
+            if (!customerId) {
+                if (customerNameInput) customerNameInput.value = '';
+                if (addressInput) addressInput.value = '';
+                return;
+            }
+            try {
+                const res = await fetch(`http://localhost:3000/api/customers/${customerId}`);
+                if (res.ok) {
+                    const data = await res.json();
+                    if (customerNameInput) customerNameInput.value = data.customerName || '';
+                    if (addressInput) addressInput.value = data.address || '';
+                } else {
+                    if (customerNameInput) customerNameInput.value = '';
+                    if (addressInput) addressInput.value = '';
+                }
+            } catch {
+                if (customerNameInput) customerNameInput.value = '';
+                if (addressInput) addressInput.value = '';
+            }
+        });
     }
     // ▼▼▼ 自動計算機能追加 ▼▼▼
     function calcTotals() {
