@@ -55,7 +55,7 @@ function fetchAndDisplayOrders(storeId = 0) {
         })
         .catch(err => {
             console.error('注文データ取得エラー:', err);
-        });
+=======
 // 注文書一覧をAPIから取得してテーブルに表示
 fetch('http://localhost:3000/api/orders')
     .then(res => res.json())
@@ -75,64 +75,19 @@ fetch('http://localhost:3000/api/orders')
             `;
             tbody.appendChild(tr);
 
+>>>>>>> 5b2085070dd6611a0c9ff09e339f63a079c55929
         });
-    })
 }
 
-// 注文書一覧をAPIから取得してテーブルに表示
-fetchAndDisplayOrders();
+// ページロード時に全店舗で取得
+fetchAndDisplayOrders(0);
 
-    function showDeleteConfirmDialog(onYes, onNo) {
-        document.getElementById('deleteConfirmDialog')?.remove();
-        const dialog = document.createElement('div');
-        dialog.id = 'deleteConfirmDialog';
-        dialog.style.position = 'fixed';
-        dialog.style.left = '0';
-        dialog.style.top = '0';
-        dialog.style.width = '100vw';
-        dialog.style.height = '100vh';
-        dialog.style.background = 'rgba(0,0,0,0.18)';
-        dialog.style.zIndex = '9999';
-        dialog.style.display = 'flex';
-        dialog.style.alignItems = 'center';
-        dialog.style.justifyContent = 'center';
-        dialog.innerHTML = `
-          <div style="background:#fff;padding:28px 32px 20px 32px;border-radius:8px;min-width:260px;max-width:90vw;box-shadow:0 4px 24px #0002;text-align:center;">
-            <div style='font-size:1.1em;margin-bottom:18px;'>ゴミ箱に移動しても<br>よろしいですか？</div>
-            <div style='display:flex;justify-content:center;gap:18px;'>
-              <button id='deleteYesBtn' style='background:#e53935;color:#fff;border:none;padding:7px 28px;font-size:1em;border-radius:4px;'>はい</button>
-              <button id='deleteNoBtn' style='background:#fff;border:1.5px solid #888;color:#444;padding:7px 28px;font-size:1em;border-radius:4px;'>いいえ</button>
-            </div>
-          </div>
-        `;
-        document.body.appendChild(dialog);
-        dialog.querySelector('#deleteYesBtn').onclick = () => { dialog.remove(); onYes(); };
-        dialog.querySelector('#deleteNoBtn').onclick = () => { dialog.remove(); if(onNo) onNo(); };
-    }
-
-    const deleteBtn = document.querySelector('.delete-btn');
-    if (deleteBtn) {
-        deleteBtn.addEventListener('click', function() {
-            const checked = document.querySelector("input[name='deleteRadio']:checked");
-            if (!checked) {
-                alert('削除する注文書を選択してください');
-                return;
-            }
-            const orderId = checked.value;
-            showDeleteConfirmDialog(
-                () => {
-                    fetch(`http://localhost:3000/api/orders/${orderId}`, { method: 'DELETE' })
-                        .then(res => {
-                            if (res.ok) {
-                                alert(`注文書${orderId}削除しました`);
-                                fetchAndDisplayOrders();
-                            } else {
-                                alert('削除に失敗しました');
-                            }
-                        });
-                },
-                null
-            );
-        });
-    }
-});
+// 店舗選択時のイベント
+const storeSelect = document.querySelector('.store-select');
+if (storeSelect) {
+    storeSelect.addEventListener('change', function() {
+        const selectedName = storeSelect.value;
+        const storeId = storeNameToId[selectedName] || 0;
+        fetchAndDisplayOrders(storeId);
+    });
+}
