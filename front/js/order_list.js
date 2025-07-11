@@ -44,7 +44,7 @@ function fetchAndDisplayOrders(storeId = 0) {
                 tr.innerHTML = `
                     <td>${order.orderId}</td>
                     <td>${order.customerId}</td>
-                    <td>${order.customerName}</td>
+                    <td><a href="/html/order_form.html?orderId=${order.orderId}" class="customer-link">${order.customerName}</a></td>
                     <td>${order.orderDetail}</td>
                     <td>${order.phone}</td>
                     <td>${order.orderDate}</td>
