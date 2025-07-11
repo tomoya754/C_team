@@ -7,9 +7,17 @@ const { aggregateStatistics } = require('../controllers/statisticsController');
 
 // 統計情報一覧API
 router.get('/', (req, res) => {
-  // 集計した統計情報データを取得
-  const statistics = aggregateStatistics();
-  // 統計情報をJSON形式で返す
+  const storeId = Number(req.query.storeId || 0);
+  let statistics = aggregateStatistics();
+  if (storeId && storeId !== 0) {
+    // 店舗ID→店舗名変換マップ
+    const storeIdToName = { 1: '緑橋本店', 2: '深江橋店', 3: '今里店' };
+    const shopName = storeIdToName[storeId];
+    if (shopName) {
+      // 顧客名や顧客IDから店舗名を特定できる場合はここでフィルタ
+      statistics = statistics.filter(stat => stat.customerName === shopName);
+    }
+  }
   res.json(statistics);
 });
 
