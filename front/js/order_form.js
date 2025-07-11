@@ -90,12 +90,8 @@ document.addEventListener('DOMContentLoaded', function() {
             orderDateInput.value = `${yyyy}-${mm}-${dd}`;
         }
         // 注文書No.を非表示
-        const orderNoInput = document.querySelector('.a4-sheet input[placeholder="XXXXXXXXXX"]');
-        if (orderNoInput) {
-            orderNoInput.style.display = 'none';
-            const orderNoLabel = orderNoInput.parentElement.querySelector('span');
-            if (orderNoLabel) orderNoLabel.style.display = 'none';
-        }
+        const orderNoRow = document.getElementById('orderNoRow');
+        if (orderNoRow) orderNoRow.style.display = 'none';
     }
     // 顧客ID入力時に顧客名・住所を自動取得
     const customerIdInput = document.getElementById('customerId');
