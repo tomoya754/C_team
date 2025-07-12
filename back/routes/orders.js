@@ -31,13 +31,14 @@ router.get('/', async (req, res) => {
         [order.orderId]
       );
       order.orderDetails = details;
+      console.log('Fetched orderDate:', order.orderDate); // デバッグログ追加
     }
     res.json(orders.map(order => ({
       orderId: order.orderId,
       customerId: order.customerId,
       customerName: order.customerName,
       phone: order.phone,
-      orderDate: order.orderDate ? order.orderDate.toISOString().slice(0, 10) : '',
+      orderDate: order.orderDate ? new Date(order.orderDate.getTime() + (new Date().getTimezoneOffset() * -60000)).toISOString().slice(0, 10) : '',
       totalAmount: order.totalAmount,
       orderDetails: order.orderDetails // 配列で返す
     })));

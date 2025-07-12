@@ -450,7 +450,14 @@ function setOrderFormData(data) {
     // 注文日
     if (data.orderDate !== undefined) {
         const orderDateInput = document.querySelector('input[type="date"]');
-        if (orderDateInput) orderDateInput.value = data.orderDate;
+        if (orderDateInput) {
+            const utcDate = new Date(data.orderDate);
+            const localDate = new Date(utcDate.getTime() + (new Date().getTimezoneOffset() * -60000));
+            const yyyy = localDate.getFullYear();
+            const mm = String(localDate.getMonth() + 1).padStart(2, '0');
+            const dd = String(localDate.getDate()).padStart(2, '0');
+            orderDateInput.value = `${yyyy}-${mm}-${dd}`;
+        }
     }
     // 注文明細セット（itemX, qtyX, priceX, amountX, 単位表示も）
     if (Array.isArray(data.orderDetails)) {
