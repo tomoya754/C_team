@@ -107,6 +107,31 @@ button[type="button"]:hover {
     box-shadow: 0 4px 8px rgba(0,0,0,0.15); /* 影を強調 */
 }
 
+.register-btns-row {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    gap: 48px;
+    width: 100%;
+    margin-top: 40px;
+    margin-bottom: 0;
+}
+
+.register-btns-row button[type="submit"],
+.register-btns-row button[type="button"] {
+    min-width: 180px;
+    max-width: 260px;
+    font-size: clamp(1rem, 2vw, 1.3rem);
+    padding: clamp(10px, 3vw, 18px) 0;
+    border-radius: 12px;
+    font-weight: bold;
+    margin: 0;
+    text-align: center;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    transition: all 0.3s ease;
+}
+
 /* home.cssのサイドバー・ハンバーガーメニュー部分を反映し統一 */
 /* この部分はsidebar.cssに集約されているため、ここでは記述しない */
 
@@ -141,5 +166,58 @@ button[type="button"]:hover {
         margin: 8px 0;
         font-size: 1.1rem;
         padding: 10px 30px;
+    }
+    .register-btns-row {
+        flex-direction: row;
+        gap: 16px;
+        width: 100%;
+        justify-content: center;
+        align-items: center;
+    }
+    .register-btns-row button[type="submit"],
+    .register-btns-row button[type="button"] {
+        width: 100%;
+        min-width: 0;
+        font-size: 1.1rem;
+        padding: 10px 0;
+    }
+}
+
+@media (max-width: 700px) {
+    .main {
+        padding: 20px 10px;
+        margin-top: 15px;
+        border-radius: 0;
+        box-shadow: none;
+    }
+    form {
+        padding: 15px;
+        margin: 10px auto;
+        max-width: 98vw;
+    }
+    label {
+        font-size: 1.1rem;
+        margin-bottom: 15px;
+    }
+    input[type="file"] {
+        font-size: 1rem;
+        padding: 8px;
+        margin-bottom: 25px;
+    }
+    .register-btns-row {
+        flex-direction: row !important;
+        gap: 16px;
+        width: 100%;
+        margin-top: 24px;
+        justify-content: center;
+        align-items: center;
+    }
+    .register-btns-row button[type="submit"],
+    .register-btns-row button[type="button"] {
+        width: auto;
+        min-width: 120px;
+        font-size: 1.1rem;
+        padding: 10px 24px;
+        margin: 0;
     }
 }

@@ -35,7 +35,6 @@ document.addEventListener('DOMContentLoaded', function() {
                     <td>${delivery.phone}</td>
                     <td>${delivery.deliveryDate}</td>
                     <td>${delivery.deliveryStatus}</td>
-                    <td></td>
                     <td>${delivery.note || ''}</td>
                 `;
                 tbody.appendChild(tr);
