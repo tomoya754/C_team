@@ -39,17 +39,34 @@ function fetchAndDisplayOrders(storeId = 0) {
         .then(data => {
             const tbody = document.getElementById('orders-tbody');
             tbody.innerHTML = '';
+            // orderIdで重複排除
+            const uniqueOrders = [];
+            const seenIds = new Set();
             data.forEach(order => {
+                if (!seenIds.has(order.orderId)) {
+                    uniqueOrders.push(order);
+                    seenIds.add(order.orderId);
+                }
+            });
+            uniqueOrders.forEach(order => {
                 const tr = document.createElement('tr');
                 tr.innerHTML = `
+                    <td><input type="radio" name="deleteRadio" value="${order.orderId}"></td>
                     <td>${order.orderId}</td>
                     <td>${order.customerId}</td>
-                    <td><a href="/html/order_form.html?orderId=${order.orderId}" class="customer-link">${order.customerName}</a></td>
+                    <td>${order.customerName}</td>
                     <td>${order.orderDetail}</td>
                     <td>${order.phone}</td>
                     <td>${order.orderDate}</td>
                     <td>${order.note || ''}</td>
                 `;
+                // 行クリックで詳細画面へ遷移
+                tr.style.cursor = 'pointer';
+                tr.addEventListener('click', function(e) {
+                    // ラジオボタンのクリックは除外
+                    if (e.target.tagName.toLowerCase() === 'input') return;
+                    window.location.href = `/html/order_form.html?orderId=${order.orderId}`;
+                });
                 tbody.appendChild(tr);
             });
         })
