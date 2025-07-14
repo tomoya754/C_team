@@ -6,8 +6,8 @@ const storeNameToId = {
     '今里店': 3
 };
 
-// 統計データ取得＆表示関数
-function fetchAndDisplayStatistics(storeId = 0) {
+// 統計データ取得＆表示関数（検索キーワード対応）
+function fetchAndDisplayStatistics(storeId = 0, keyword = '') {
     let url = 'http://localhost:3000/api/statistics';
     if (storeId && storeId !== 0) {
         url += `?storeId=${storeId}`;
@@ -15,6 +15,14 @@ function fetchAndDisplayStatistics(storeId = 0) {
     fetch(url)
         .then(res => res.json())
         .then(data => {
+            // 検索キーワードでフィルタ（顧客IDまたは顧客名に完全一致）
+            if (keyword) {
+                const lower = keyword.toLowerCase();
+                data = data.filter(stat =>
+                    (stat.customerId && stat.customerId.toLowerCase() === lower) ||
+                    (stat.customerName && stat.customerName.toLowerCase() === lower)
+                );
+            }
             // 統計情報テーブルのtbodyを取得
             const tbody = document.querySelector('.statistics-list-table tbody');
             if (!tbody) return;
@@ -47,12 +55,25 @@ function fetchAndDisplayStatistics(storeId = 0) {
 // ページロード時に全店舗で取得
 fetchAndDisplayStatistics(0);
 
+// 検索ボタンのイベント
+const searchBtn = document.querySelector('.search-btn');
+if (searchBtn) {
+    searchBtn.addEventListener('click', function() {
+        const keyword = document.querySelector('.search-input').value.trim();
+        const storeSelect = document.querySelector('.store-select');
+        const selectedName = storeSelect ? storeSelect.value : '全店舗';
+        const storeId = storeNameToId[selectedName] || 0;
+        fetchAndDisplayStatistics(storeId, keyword);
+    });
+}
+
 // 店舗選択時のイベント
 const storeSelect = document.querySelector('.store-select');
 if (storeSelect) {
     storeSelect.addEventListener('change', function() {
         const selectedName = storeSelect.value;
         const storeId = storeNameToId[selectedName] || 0;
-        fetchAndDisplayStatistics(storeId);
+        const keyword = document.querySelector('.search-input').value.trim();
+        fetchAndDisplayStatistics(storeId, keyword);
     });
 }
