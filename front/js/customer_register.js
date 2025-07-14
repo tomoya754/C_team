@@ -8,9 +8,11 @@ document.addEventListener('DOMContentLoaded', function() {
         e.preventDefault();
         const submitBtn = form.querySelector('button[type="submit"]');
         if (submitBtn) submitBtn.disabled = true;
+        let finished = false;
         try {
             if (!fileInput.files.length) {
                 alert('ファイルを選択してください');
+                finished = true;
                 return;
             }
             const file = fileInput.files[0];
