@@ -126,6 +126,28 @@ h1 {
     text-align: right;
     font-weight: bold;
     color: #333;
+    /* ▼ スピンボタン非表示 */
+    -moz-appearance: textfield;
+    appearance: textfield;
+    /* inputの右端に余白を追加 */
+    padding-right: 2.5em;
+}
+.input-total::-webkit-outer-spin-button,
+.input-total::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+.input-total + span {
+    font-size: 1em;
+    color: #666;
+    margin-left: -2.2em;
+    vertical-align: middle;
+    display: inline-block;
+    min-width: 2em;
+    text-align: left;
+    position: relative;
+    right: 0;
+    pointer-events: none;
 }
 
 .order-table {
