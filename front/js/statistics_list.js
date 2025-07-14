@@ -57,13 +57,27 @@ fetchAndDisplayStatistics(0);
 
 // 検索ボタンのイベント
 const searchBtn = document.querySelector('.search-btn');
+const searchInput = document.querySelector('.search-input');
 if (searchBtn) {
     searchBtn.addEventListener('click', function() {
-        const keyword = document.querySelector('.search-input').value.trim();
+        const keyword = searchInput.value.trim();
         const storeSelect = document.querySelector('.store-select');
         const selectedName = storeSelect ? storeSelect.value : '全店舗';
         const storeId = storeNameToId[selectedName] || 0;
         fetchAndDisplayStatistics(storeId, keyword);
+    });
+}
+
+// 検索ボックスでエンターキー押下時も検索
+if (searchInput) {
+    searchInput.addEventListener('keydown', function(e) {
+        if (e.key === 'Enter') {
+            const keyword = searchInput.value.trim();
+            const storeSelect = document.querySelector('.store-select');
+            const selectedName = storeSelect ? storeSelect.value : '全店舗';
+            const storeId = storeNameToId[selectedName] || 0;
+            fetchAndDisplayStatistics(storeId, keyword);
+        }
     });
 }
 
