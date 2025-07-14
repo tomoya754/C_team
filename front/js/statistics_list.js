@@ -15,8 +15,29 @@ function fetchAndDisplayStatistics(storeId = 0) {
     fetch(url)
         .then(res => res.json())
         .then(data => {
-            // ここでテーブル描画処理を実装
-            // 例: console.log(data);
+            // 統計情報テーブルのtbodyを取得
+            const tbody = document.querySelector('.statistics-list-table tbody');
+            if (!tbody) return;
+            tbody.innerHTML = '';
+            if (!data || data.length === 0) {
+                // データがない場合は空行を表示
+                tbody.innerHTML = '<tr><td colspan="8" style="text-align:center;">データがありません</td></tr>';
+                return;
+            }
+            data.forEach(stat => {
+                const tr = document.createElement('tr');
+                tr.innerHTML = `
+                    <td>${stat.customerId || ''}</td>
+                    <td>${stat.customerName || ''}</td>
+                    <td>${stat.address || ''}</td>
+                    <td>￥${stat.totalSales != null ? stat.totalSales.toLocaleString() : ''}</td>
+                    <td>${stat.averageLeadTime || '-'}</td>
+                    <td>${stat.orderCount || ''}回</td>
+                    <td>${stat.lastOrderDate || ''}</td>
+                    <td>${stat.note || ''}</td>
+                `;
+                tbody.appendChild(tr);
+            });
         })
         .catch(err => {
             console.error('統計データ取得エラー:', err);
