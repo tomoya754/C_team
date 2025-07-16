@@ -7,6 +7,28 @@ document.addEventListener('DOMContentLoaded', function() {
     if (saveBtn) {
         saveBtn.addEventListener('click', function(e) {
             e.preventDefault();
+            // バリデーション
+            const customerId = document.querySelector('input[name="customerId"]')?.value.trim();
+            const deliveryDate = document.querySelector('input[type="date"]')?.value.trim();
+            let hasDetail = false;
+            for (let i = 1; i <= 12; i++) {
+                const item = document.querySelector(`input[name="item${i}"]`)?.value.trim();
+                const qty = document.querySelector(`input[name="qty${i}"]`)?.value.trim();
+                const price = document.querySelector(`input[name="price${i}"]`)?.value.trim();
+                if (item && qty && price) {
+                    hasDetail = true;
+                    break;
+                }
+            }
+            if (!customerId) {
+                alert('顧客IDを入力してください');
+                return;
+            }
+            if (!deliveryDate || !hasDetail) {
+                alert('納品日・明細（書名・数量・単価）を入力してください');
+                return;
+            }
+            // 保存処理
             const formData = getDeliveryFormData();
             localStorage.setItem('deliveryFormData', JSON.stringify(formData));
             const name = document.querySelector('.order-to-name input')?.value || '';
@@ -185,48 +207,3 @@ window.addEventListener('DOMContentLoaded', function() {
     }
 });
 
-document.getElementById('saveBtn').onclick = function (e) {
-    e.preventDefault();
-
-    // 入力値の取得
-    const customerId = document.querySelector('input[name="customerId"]')?.value || '';
-    const customerName = document.querySelector('input[name="customerName"]')?.value || '';
-    const deliveryNo = document.querySelector('input[placeholder="XXXXXXXXXX"]')?.value || '';
-    const deliveryDate = document.querySelector('input[type="date"]')?.value || '';
-    // 明細テーブルの取得
-    const items = [];
-    for (let i = 1; i <= 12; i++) {
-        const item = document.querySelector(`input[name="item${i}"]`)?.value || '';
-        const qty = document.querySelector(`input[name="qty${i}"]`)?.value || '';
-        const price = document.querySelector(`input[name="price${i}"]`)?.value || '';
-        const amount = document.querySelector(`input[name="amount${i}"]`)?.value || '';
-        if (item || qty || price || amount) {
-            items.push({ item, qty, price, amount });
-        }
-    }
-
-    // サーバーに送るデータ
-    const data = {
-        customerId,
-        customerName,
-        deliveryNo,
-        deliveryDate,
-        items
-    };
-
-    // fetchでPOST
-    fetch('http://localhost:3000/api/deliveries', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(data)
-    })
-    .then(res => res.json())
-    .then(result => {
-        alert('保存しました');
-        // 必要なら画面遷移やリセット
-    })
-    .catch(err => {
-        alert('保存に失敗しました');
-        console.error(err);
-    });
-};
