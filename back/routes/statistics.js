@@ -6,19 +6,41 @@ const router = express.Router();
 const { aggregateStatistics } = require('../controllers/statisticsController');
 
 // 統計情報一覧API
-router.get('/', (req, res) => {
+const db = require('../db');
+router.get('/', async (req, res) => {
   const storeId = Number(req.query.storeId || 0);
-  let statistics = aggregateStatistics();
+  const sortKey = req.query.sortKey || 'totalSales';
+  const sortOrder = req.query.sortOrder === 'asc' ? 'asc' : 'desc';
+  let where = '';
+  let params = [];
   if (storeId && storeId !== 0) {
-    // 店舗ID→店舗名変換マップ
     const storeIdToName = { 1: '緑橋本店', 2: '深江橋店', 3: '今里店' };
     const shopName = storeIdToName[storeId];
     if (shopName) {
-      // 顧客名や顧客IDから店舗名を特定できる場合はここでフィルタ
-      statistics = statistics.filter(stat => stat.customerName === shopName);
+      where = 'WHERE c.shopName = ?';
+      params.push(shopName);
     }
   }
-  res.json(statistics);
+  // 並び替えキー
+  let orderBy = 'totalSales DESC';
+  if (sortKey === 'totalSales') orderBy = `totalSales ${sortOrder.toUpperCase()}`;
+  else if (sortKey === 'orderCount') orderBy = `orderCount ${sortOrder.toUpperCase()}`;
+  // SQL集計
+  const [rows] = await db.query(`
+    SELECT
+      c.customerId,
+      c.customerName,
+      c.address,
+      IFNULL(SUM(d.totalAmount), 0) AS totalSales,
+      COUNT(DISTINCT o.orderId) AS orderCount
+    FROM customers c
+    LEFT JOIN deliveries d ON c.customerId = d.customerId
+    LEFT JOIN orders o ON c.customerId = o.customerId
+    ${where}
+    GROUP BY c.customerId, c.customerName, c.address
+    ORDER BY ${orderBy}
+  `, params);
+  res.json(rows);
 });
 
 
