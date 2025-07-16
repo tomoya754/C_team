@@ -1,3 +1,50 @@
+// 統計情報テーブルの顧客IDリストを取得し、差分同期APIに送信する関数
+async function syncCustomersFromStatistics() {
+    // テーブルから顧客IDリストを取得
+    const rows = document.querySelectorAll('.statistics-list-table tbody tr');
+    const customerIds = [];
+    rows.forEach(tr => {
+        const idCell = tr.querySelector('td');
+        if (idCell) {
+            const val = idCell.textContent.trim();
+            if (val && !isNaN(val)) customerIds.push(Number(val));
+        }
+    });
+    if (customerIds.length === 0) {
+        alert('同期対象の顧客がありません');
+        return;
+    }
+    // APIに送信
+    try {
+        const res = await fetch('http://localhost:3000/api/customers/sync', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ customerIds })
+        });
+        const result = await res.json();
+        if (result.success) {
+            alert('顧客データの同期が完了しました');
+            fetchAndDisplayStatistics(); // 再取得
+        } else {
+            alert('同期に失敗しました: ' + (result.error || '')); 
+        }
+    } catch (e) {
+        alert('同期エラー: ' + e.message);
+    }
+}
+
+// 同期ボタンを画面に追加
+window.addEventListener('DOMContentLoaded', function() {
+    const btn = document.createElement('button');
+    btn.textContent = '統計一覧の顧客で同期';
+    btn.className = 'sync-customers-btn';
+    btn.style.margin = '10px';
+    btn.addEventListener('click', syncCustomersFromStatistics);
+    const table = document.querySelector('.statistics-list-table');
+    if (table && table.parentNode) {
+        table.parentNode.insertBefore(btn, table);
+    }
+});
 // 店舗名→ID変換マップ
 const storeNameToId = {
     '全店舗': 0,
@@ -8,9 +55,23 @@ const storeNameToId = {
 
 // 統計データ取得＆表示関数（検索キーワード対応）
 function fetchAndDisplayStatistics(storeId = 0, keyword = '') {
-    let url = 'http://localhost:3000/api/statistics';
+    // 並び替え条件取得
+    const sortKeySelect = document.querySelector('.sort-key');
+    const sortOrderSelect = document.querySelector('.sort-order');
+    let sortKey = 'totalSales';
+    let sortOrder = 'desc';
+    if (sortKeySelect) {
+        const keyText = sortKeySelect.value;
+        if (keyText === '累計売上') sortKey = 'totalSales';
+        else if (keyText === 'リードタイム') sortKey = 'averageLeadTime';
+        else if (keyText === '購入回数') sortKey = 'orderCount';
+    }
+    if (sortOrderSelect) {
+        sortOrder = sortOrderSelect.value === '昇順' ? 'asc' : 'desc';
+    }
+    let url = `http://localhost:3000/api/statistics?sortKey=${sortKey}&sortOrder=${sortOrder}`;
     if (storeId && storeId !== 0) {
-        url += `?storeId=${storeId}`;
+        url += `&storeId=${storeId}`;
     }
     fetch(url)
         .then(res => res.json())
@@ -86,6 +147,28 @@ const storeSelect = document.querySelector('.store-select');
 if (storeSelect) {
     storeSelect.addEventListener('change', function() {
         const selectedName = storeSelect.value;
+        const storeId = storeNameToId[selectedName] || 0;
+        const keyword = document.querySelector('.search-input').value.trim();
+        fetchAndDisplayStatistics(storeId, keyword);
+    });
+}
+
+// 並び替え条件変更時のイベント
+const sortKeySelect = document.querySelector('.sort-key');
+const sortOrderSelect = document.querySelector('.sort-order');
+if (sortKeySelect) {
+    sortKeySelect.addEventListener('change', function() {
+        const storeSelect = document.querySelector('.store-select');
+        const selectedName = storeSelect ? storeSelect.value : '全店舗';
+        const storeId = storeNameToId[selectedName] || 0;
+        const keyword = document.querySelector('.search-input').value.trim();
+        fetchAndDisplayStatistics(storeId, keyword);
+    });
+}
+if (sortOrderSelect) {
+    sortOrderSelect.addEventListener('change', function() {
+        const storeSelect = document.querySelector('.store-select');
+        const selectedName = storeSelect ? storeSelect.value : '全店舗';
         const storeId = storeNameToId[selectedName] || 0;
         const keyword = document.querySelector('.search-input').value.trim();
         fetchAndDisplayStatistics(storeId, keyword);
