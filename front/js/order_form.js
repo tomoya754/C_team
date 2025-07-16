@@ -36,6 +36,22 @@ document.addEventListener('DOMContentLoaded', function() {
                 alert('顧客IDは必須です');
                 return;
             }
+            // 顧客ID存在チェック
+            try {
+                const res = await fetch(`http://localhost:3000/api/customers/${customerId}`);
+                if (!res.ok) {
+                    alert('該当の顧客IDの顧客は存在しません');
+                    return;
+                }
+                const data = await res.json();
+                if (!data || !data.customerId) {
+                    alert('該当の顧客IDの顧客は存在しません');
+                    return;
+                }
+            } catch {
+                alert('該当の顧客IDの顧客は存在しません');
+                return;
+            }
             if (orderDetails.length === 0) {
                 alert('注文日・明細（書名・数量・単価）を入力してください');
                 return;
@@ -120,6 +136,9 @@ document.addEventListener('DOMContentLoaded', function() {
                         }
                     } catch {}
                 }
+                // 編集時のみ印刷ボタンを表示
+                const printBtn = document.getElementById('printBtn');
+                if (printBtn) printBtn.style.display = '';
             })
             .catch(() => {
                 alert('注文書データの取得に失敗しました');
@@ -141,6 +160,9 @@ document.addEventListener('DOMContentLoaded', function() {
         // 注文書No.を非表示
         const orderNoRow = document.getElementById('orderNoRow');
         if (orderNoRow) orderNoRow.style.display = 'none';
+        // 新規作成時は印刷ボタンを非表示
+        const printBtn = document.getElementById('printBtn');
+       
     }
     // 顧客ID入力時に顧客名・住所を自動取得
     const customerIdInput = document.getElementById('customerId');

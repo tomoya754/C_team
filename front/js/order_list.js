@@ -113,7 +113,7 @@ function fetchAndDisplayOrders(storeId = 0) {
                     <td>${Array.isArray(order.orderDetails) ? order.orderDetails.map(d => d.bookTitle).join(', ') : ''}</td>
                     <td>${order.phone}</td>
                     <td>${order.orderDate}</td>
-                    <td>${order.note || ''}</td>
+                    <td>${order.note !== undefined ? order.note : ''}</td>
                 `;
                 // 行クリックで詳細画面へ遷移
                 tr.style.cursor = 'pointer';

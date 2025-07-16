@@ -11,7 +11,7 @@ const orders = require('../models/orders');
 // 注文書一覧API（GET）
 router.get('/', async (req, res) => {
   try {
-    // 注文書本体＋顧客情報
+    // 注文書本体＋顧客情報＋備考
     const [orders] = await db.query(`
       SELECT 
         o.orderId,
@@ -19,7 +19,8 @@ router.get('/', async (req, res) => {
         c.customerName,
         c.phone,
         o.orderDate,
-        o.totalAmount
+        o.totalAmount,
+        o.note
       FROM orders o
       JOIN customers c ON o.customerId = c.customerId
       ORDER BY o.orderId DESC
@@ -31,7 +32,6 @@ router.get('/', async (req, res) => {
         [order.orderId]
       );
       order.orderDetails = details;
-      console.log('Fetched orderDate:', order.orderDate); // デバッグログ追加
     }
     res.json(orders.map(order => ({
       orderId: order.orderId,
@@ -40,8 +40,8 @@ router.get('/', async (req, res) => {
       phone: order.phone,
       orderDate: typeof order.orderDate === 'string' ? order.orderDate : (order.orderDate ? order.orderDate.toISOString().slice(0, 10) : ''),
       totalAmount: order.totalAmount,
-      orderDetails: order.orderDetails, // 配列で返す
-      note: order.note || ''
+      orderDetails: order.orderDetails,
+      note: order.note ? order.note : ''
     })));
   } catch (err) {
     console.error(err);
