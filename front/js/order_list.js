@@ -110,7 +110,7 @@ function fetchAndDisplayOrders(storeId = 0) {
                     <td>${order.orderId}</td>
                     <td>${order.customerId}</td>
                     <td>${order.customerName}</td>
-                    <td>${order.orderDetail}</td>
+                    <td>${Array.isArray(order.orderDetails) ? order.orderDetails.map(d => d.bookTitle).join(', ') : ''}</td>
                     <td>${order.phone}</td>
                     <td>${order.orderDate}</td>
                     <td>${order.note || ''}</td>

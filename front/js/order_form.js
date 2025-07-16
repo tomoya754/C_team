@@ -11,6 +11,8 @@ document.addEventListener('DOMContentLoaded', function() {
             // 入力値を取得
             const customerId = document.querySelector('input[type="text"]')?.value.trim();
             const orderDate = document.querySelector('input[type="date"]')?.value;
+            // 備考取得
+            const note = document.querySelector('.order-remark-row textarea')?.value || '';
             // 注文明細を配列で取得
             const orderDetails = [];
             let hasOrderError = false;
@@ -51,7 +53,7 @@ document.addEventListener('DOMContentLoaded', function() {
             const orderId = urlParams.get('orderId');
             let apiUrl = 'http://localhost:3000/api/orders';
             let method = 'POST';
-            let body = { customerId, orderDate, orderDetails };
+            let body = { customerId, orderDate, orderDetails, note };
             if (orderId) {
                 apiUrl = `http://localhost:3000/api/orders/${orderId}`;
                 method = 'PUT';
@@ -97,6 +99,7 @@ document.addEventListener('DOMContentLoaded', function() {
             .then(res => res.json())
             .then(async data => {
                 setOrderFormData(data);
+                if (typeof calcTotals === 'function') calcTotals(); // ←ここで再計算を明示的に呼ぶ
                 // 注文書No.を自動セット
                 const orderNoInput = document.getElementById('orderNoInput');
                 if (orderNoInput && data.orderId) orderNoInput.value = data.orderId;
@@ -451,12 +454,7 @@ function setOrderFormData(data) {
     if (data.orderDate !== undefined) {
         const orderDateInput = document.querySelector('input[type="date"]');
         if (orderDateInput) {
-            const utcDate = new Date(data.orderDate);
-            const localDate = new Date(utcDate.getTime() + (new Date().getTimezoneOffset() * -60000));
-            const yyyy = localDate.getFullYear();
-            const mm = String(localDate.getMonth() + 1).padStart(2, '0');
-            const dd = String(localDate.getDate()).padStart(2, '0');
-            orderDateInput.value = `${yyyy}-${mm}-${dd}`;
+            orderDateInput.value = data.orderDate;
         }
     }
     // 注文明細セット（itemX, qtyX, priceX, amountX, 単位表示も）
