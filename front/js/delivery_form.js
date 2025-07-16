@@ -41,18 +41,18 @@ document.addEventListener('DOMContentLoaded', function() {
             if ((qtyVal && qtyVal !== '0') || (priceVal && priceVal !== '0')) hasInput = true;
             subtotal += amount !== '' ? amount : 0;
         }
-        const tax = hasInput ? Math.floor(subtotal * 0.1) : '';
-        const total = hasInput ? subtotal + tax : '';
+        const tax = hasInput ? Math.floor(subtotal * 0.1) : 0;
+        const total = hasInput ? subtotal + tax : 0;
         // テーブル下部
         const totalInputs = document.querySelectorAll('.input-total');
         if (totalInputs.length >= 3) {
-            totalInputs[0].value = hasInput ? subtotal : '';
-            totalInputs[1].value = hasInput ? tax : '';
-            totalInputs[2].value = hasInput ? total : '';
+            totalInputs[0].value = hasInput ? subtotal : 0;
+            totalInputs[1].value = hasInput ? tax : 0;
+            totalInputs[2].value = hasInput ? total : 0;
         }
         // 上部合計金額
         const totalAmount = document.getElementById('totalAmount');
-        if (totalAmount) totalAmount.textContent = hasInput ? total : '';
+        if (totalAmount) totalAmount.textContent = total;
     }
     // 数量・単価入力時に自動計算
     for (let i = 1; i <= 12; i++) {
