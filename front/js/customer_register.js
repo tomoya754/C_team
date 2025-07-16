@@ -8,11 +8,10 @@ document.addEventListener('DOMContentLoaded', function() {
         e.preventDefault();
         const submitBtn = form.querySelector('button[type="submit"]');
         if (submitBtn) submitBtn.disabled = true;
-        let finished = false;
         try {
             if (!fileInput.files.length) {
                 alert('ファイルを選択してください');
-                finished = true;
+                if (submitBtn) submitBtn.disabled = false;
                 return;
             }
             const file = fileInput.files[0];
@@ -84,7 +83,7 @@ document.addEventListener('DOMContentLoaded', function() {
         } catch (err) {
             alert('通信エラー');
         } finally {
-            if (submitBtn) submitBtn.disabled = false;
+            // 何もしない（submitBtnは上で個別に有効化）
         }
     });
 });
