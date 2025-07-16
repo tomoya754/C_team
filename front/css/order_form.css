@@ -1,3 +1,31 @@
+/* =============================
+   印刷ボタン専用スタイル
+   ============================= */
+/* 印刷ボタン */
+.btn:last-child { /* 最後のボタン（印刷） */
+    background: linear-gradient(145deg, #42a5f5, #2196f3); /* 青系のグラデーション */
+    color: #fff;
+    border-color: #2196f3;
+}
+.btn:last-child:hover {
+    background: linear-gradient(145deg, #2196f3, #1976d2);
+    transform: translateY(-3px); /* 少し上に移動 */
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15); /* 影を強調 */
+}
+/* =============================
+   保存ボタン専用スタイル
+   ============================= */
+/* 保存ボタン */
+.btn:first-child { /* 最初のボタン（保存） */
+    background: linear-gradient(145deg, #66bb6a, #4CAF50); /* 緑系のグラデーション */
+    color: #fff;
+    border-color: #4CAF50;
+}
+.btn:first-child:hover {
+    background: linear-gradient(145deg, #4CAF50, #45a049);
+    transform: translateY(-3px); /* 少し上に移動 */
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15); /* 影を強調 */
+}
 /* order_form.css */
 
 body {
