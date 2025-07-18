@@ -1,4 +1,4 @@
-// 納品データ
+/* 納品データ
 const deliveries = [
   {
     deliveryId: 1,
@@ -113,3 +113,4 @@ const deliveries = [
 ];
 
 module.exports = deliveries;
+*/
