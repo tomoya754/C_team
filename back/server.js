@@ -39,4 +39,4 @@ app.listen(PORT, () => {
 });
 
 
-/*注文書保存API、納品書保存API、注文書編集API,納品書編集API、注文書削除API、納品書削除API*/
+/*,納品書編集API、注文書削除API、納品書削除API*/

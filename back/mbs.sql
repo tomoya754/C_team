@@ -51,6 +51,7 @@ CREATE TABLE `orders` (
   `customerId` int(5) NOT NULL,
   `orderDate` date DEFAULT NULL,
   `totalAmount` int(11) DEFAULT NULL,
+  `note` TEXT DEFAULT NULL,
   PRIMARY KEY (`orderId`),
   KEY `customerId` (`customerId`),
   CONSTRAINT `orders_ibfk_1` FOREIGN KEY (`customerId`) REFERENCES `customers` (`customerId`) ON DELETE CASCADE ON UPDATE CASCADE
