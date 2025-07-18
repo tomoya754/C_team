@@ -75,26 +75,26 @@ menuBtn.onclick = openSidebar;
 sidebarClose.onclick = closeSidebar;
 sidebarBg.onclick = closeSidebar;
 
-// 店舗名→ID変換用マップ
-const storeNameToId = {
-    '全店舗': 0,
-    '緑橋本店': 1,
-    '深江橋店': 2,
-    '今里店': 3
-};
+// 店舗名リスト（セレクトボックスの順番と一致させる）
+const storeNames = ['全店舗', '緑橋本店', '深江橋店', '今里店'];
 
 // 注文データ取得＆表示関数
-function fetchAndDisplayOrders(storeId = 0) {
+function fetchAndDisplayOrders() {
     let url = 'http://localhost:3000/api/orders';
-    if (storeId && storeId !== 0) {
-        url += `?storeId=${storeId}`;
+    const storeSelect = document.getElementById('storeSelect');
+    let storeName = '全店舗';
+    if (storeSelect) {
+        const selectedValue = storeSelect.value;
+        storeName = storeNames[Number(selectedValue)] || '全店舗';
+    }
+    if (storeName !== '全店舗') {
+        url += `?storeName=${encodeURIComponent(storeName)}`;
     }
     fetch(url)
         .then(res => res.json())
         .then(data => {
             const tbody = document.getElementById('orders-tbody');
             tbody.innerHTML = '';
-            // orderIdで重複排除
             const uniqueOrders = [];
             const seenIds = new Set();
             data.forEach(order => {
@@ -115,10 +115,8 @@ function fetchAndDisplayOrders(storeId = 0) {
                     <td>${order.orderDate}</td>
                     <td>${order.note !== undefined ? order.note : ''}</td>
                 `;
-                // 行クリックで詳細画面へ遷移
                 tr.style.cursor = 'pointer';
                 tr.addEventListener('click', function(e) {
-                    // ラジオボタンのクリックは除外
                     if (e.target.tagName.toLowerCase() === 'input') return;
                     window.location.href = `/html/order_form.html?orderId=${order.orderId}`;
                 });
@@ -131,14 +129,13 @@ function fetchAndDisplayOrders(storeId = 0) {
 }
 
 // ページロード時に全店舗で取得
-fetchAndDisplayOrders(0);
-
-// 店舗選択時のイベント
-const storeSelect = document.querySelector('.store-select');
+fetchAndDisplayOrders();
+// 店舗セレクトボックス初期化＆イベント登録
+const storeSelect = document.getElementById('storeSelect');
 if (storeSelect) {
+    storeSelect.value = '0'; // 初期値は全店舗
     storeSelect.addEventListener('change', function() {
-        const selectedName = storeSelect.value;
-        const storeId = storeNameToId[selectedName] || 0;
-        fetchAndDisplayOrders(storeId);
+        fetchAndDisplayOrders();
     });
-}});
+}
+});

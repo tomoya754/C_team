@@ -11,8 +11,8 @@ const orders = require('../models/orders');
 // 注文書一覧API（GET）
 router.get('/', async (req, res) => {
   try {
-    // 注文書本体＋顧客情報＋備考
-    const [orders] = await db.query(`
+    const storeName = req.query.storeName;
+    let sql = `
       SELECT 
         o.orderId,
         c.customerId,
@@ -20,12 +20,18 @@ router.get('/', async (req, res) => {
         c.phone,
         o.orderDate,
         o.totalAmount,
-        o.note
+        o.note,
+        c.shopName
       FROM orders o
       JOIN customers c ON o.customerId = c.customerId
-      ORDER BY o.orderId DESC
-    `);
-    // 各注文の明細を取得
+    `;
+    let params = [];
+    if (storeName) {
+      sql += ' WHERE c.shopName = ?';
+      params.push(storeName);
+    }
+    sql += ' ORDER BY o.orderId DESC';
+    const [orders] = await db.query(sql, params);
     for (const order of orders) {
       const [details] = await db.query(
         'SELECT bookTitle, quantity, unitPrice FROM order_details WHERE orderId = ?',
