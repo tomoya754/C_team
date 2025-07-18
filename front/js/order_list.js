@@ -93,8 +93,10 @@ function fetchAndDisplayOrders() {
     fetch(url)
         .then(res => res.json())
         .then(data => {
-            const tbody = document.getElementById('orders-tbody');
-            tbody.innerHTML = '';
+            // 検索ボックスの値取得
+            const searchInput = document.querySelector('.search-input');
+            const keyword = searchInput ? searchInput.value.trim() : '';
+            // 重複除去
             const uniqueOrders = [];
             const seenIds = new Set();
             data.forEach(order => {
@@ -103,7 +105,19 @@ function fetchAndDisplayOrders() {
                     seenIds.add(order.orderId);
                 }
             });
-            uniqueOrders.forEach(order => {
+            // キーワードで絞り込み
+            let filteredOrders = uniqueOrders;
+            if (keyword) {
+                filteredOrders = uniqueOrders.filter(order => {
+                    // 注文書No.（orderId）または注文内容（orderDetailsのbookTitle）に部分一致
+                    const orderIdStr = String(order.orderId);
+                    const orderDetailsStr = Array.isArray(order.orderDetails) ? order.orderDetails.map(d => d.bookTitle).join(', ') : '';
+                    return orderIdStr.includes(keyword) || orderDetailsStr.includes(keyword);
+                });
+            }
+            const tbody = document.getElementById('orders-tbody');
+            tbody.innerHTML = '';
+            filteredOrders.forEach(order => {
                 const tr = document.createElement('tr');
                 tr.innerHTML = `
                     <td><input type="radio" name="deleteRadio" value="${order.orderId}"></td>
@@ -117,7 +131,9 @@ function fetchAndDisplayOrders() {
                 `;
                 tr.style.cursor = 'pointer';
                 tr.addEventListener('click', function(e) {
-                    if (e.target.tagName.toLowerCase() === 'input') return;
+                    // 1列目（ラジオボタンセル）をクリックした場合は遷移しない
+                    const cellIndex = e.target.closest('td') ? e.target.closest('td').cellIndex : -1;
+                    if (cellIndex === 0) return;
                     window.location.href = `/html/order_form.html?orderId=${order.orderId}`;
                 });
                 tbody.appendChild(tr);
@@ -136,6 +152,22 @@ if (storeSelect) {
     storeSelect.value = '0'; // 初期値は全店舗
     storeSelect.addEventListener('change', function() {
         fetchAndDisplayOrders();
+    });
+}
+// 検索ボタンイベント登録
+const searchBtn = document.querySelector('.search-btn');
+if (searchBtn) {
+    searchBtn.addEventListener('click', function() {
+        fetchAndDisplayOrders();
+    });
+}
+// Enterキーで検索
+const searchInput = document.querySelector('.search-input');
+if (searchInput) {
+    searchInput.addEventListener('keydown', function(e) {
+        if (e.key === 'Enter') {
+            fetchAndDisplayOrders();
+        }
     });
 }
 });
