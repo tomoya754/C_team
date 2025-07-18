@@ -44,7 +44,7 @@ document.addEventListener('DOMContentLoaded', function() {
                     return;
                 }
                 const data = await res.json();
-                if (!data || !data.customerId) {
+                if (!data || !(data.customerId || data.id)) {
                     alert('該当の顧客IDの顧客は存在しません');
                     return;
                 }
@@ -368,7 +368,7 @@ document.addEventListener('DOMContentLoaded', function() {
     }
     // 明細の上詰め処理
     function shiftOrderDetailsUp() {
-        // 下から上に向かって、1つ上が全て空欄、かつ自分が全て入力済みのときだけ上詰め
+        // 下から上に向かって、1つ上が全て空欄、かつ自分が書名・数量・単価いずれか入力済みのとき上詰め
         for (let i = 2; i <= 12; i++) {
             const itemInput = document.querySelector(`input[name="item${i}"]`);
             const qtyInput = document.querySelector(`input[name="qty${i}"]`);
@@ -384,13 +384,13 @@ document.addEventListener('DOMContentLoaded', function() {
             const prevQtyUnit = document.getElementById(`qty${i-1}-unit`);
             const prevPriceUnit = document.getElementById(`price${i-1}-unit`);
             const prevAmountUnit = document.getElementById(`amount${i-1}-unit`);
+            // 1つ上が全て空欄、かつ自分がいずれか入力済みなら上詰め
             if (
                 prevItemInput && prevQtyInput && prevPriceInput &&
                 !prevItemInput.value.trim() && !prevQtyInput.value.trim() && !prevPriceInput.value.trim() &&
                 itemInput && qtyInput && priceInput &&
-                itemInput.value.trim() && qtyInput.value.trim() && priceInput.value.trim()
+                (itemInput.value.trim() || qtyInput.value.trim() || priceInput.value.trim())
             ) {
-                // 上詰め実行
                 prevItemInput.value = itemInput.value;
                 prevQtyInput.value = qtyInput.value;
                 prevPriceInput.value = priceInput.value;
