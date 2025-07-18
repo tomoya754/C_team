@@ -55,7 +55,16 @@ function fetchAndDisplayDeliveries(storeId = 0) {
 
 // 納品書一覧をAPIから取得してテーブルに表示
 document.addEventListener('DOMContentLoaded', function() {
-    fetchAndDisplayDeliveries();
+    // 初期表示（全店舗）
+    fetchAndDisplayDeliveries(0);
+    // 店舗切り替えイベント
+    const storeSelect = document.getElementById('storeSelect');
+    if (storeSelect) {
+        storeSelect.addEventListener('change', function() {
+            const storeId = Number(storeSelect.value) || 0;
+            fetchAndDisplayDeliveries(storeId);
+        });
+    }
 });
 
 // 検索ボタンのクリックイベント
