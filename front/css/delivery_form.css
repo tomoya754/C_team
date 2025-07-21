@@ -1,3 +1,31 @@
+/* =============================
+   印刷ボタン専用スタイル
+   ============================= */
+/* 印刷ボタン */
+.btn:last-child { /* 最後のボタン（印刷） */
+    background: linear-gradient(145deg, #42a5f5, #2196f3); /* 青系のグラデーション */
+    color: #fff;
+    border-color: #2196f3;
+}
+.btn:last-child:hover {
+    background: linear-gradient(145deg, #2196f3, #1976d2);
+    transform: translateY(-3px); /* 少し上に移動 */
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15); /* 影を強調 */
+}
+/* =============================
+   保存ボタン専用スタイル
+   ============================= */
+/* 保存ボタン */
+.btn:first-child { /* 最初のボタン（保存） */
+    background: linear-gradient(145deg, #66bb6a, #4CAF50); /* 緑系のグラデーション */
+    color: #fff;
+    border-color: #4CAF50;
+}
+.btn:first-child:hover {
+    background: linear-gradient(145deg, #4CAF50, #45a049);
+    transform: translateY(-3px); /* 少し上に移動 */
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15); /* 影を強調 */
+}
 /* delivery_form.css */
 
 body {
@@ -195,14 +223,22 @@ h1 {
     color: #333;
 }
 
-.btn-area {
+/* =============================
+   保存・印刷ボタンエリア
+   （.btn-area：ボタンの横並び・中央揃え・間隔調整）
+   ============================= */
+ .btn-area {
     display: flex;
     justify-content: center;
     gap: 40px; /* ボタン間のギャップを調整 */
     margin-top: 40px; /* 上部のマージンを増やす */
 }
 
-.btn {
+/* =============================
+   保存・印刷ボタン本体
+   （.btn：ボタンのデザイン全般）
+   ============================= */
+ .btn {
     font-size: 1.5rem; /* ボタンのフォントサイズ */
     padding: 12px 50px; /* パディングを調整 */
     border-radius: 10px; /* 角丸を調整 */
@@ -214,6 +250,9 @@ h1 {
     box-shadow: 0 4px 8px rgba(0,0,0,0.1); /* ボタンに影 */
 }
 
+/* =============================
+   保存・印刷ボタン ホバー時
+   ============================= */
 .btn:hover {
     background: #333;
     color: #fff;

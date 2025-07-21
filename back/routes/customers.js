@@ -6,7 +6,7 @@ const router = express.Router();
 router.get('/:customerId', async (req, res) => {
   const customerId = req.params.customerId;
   try {
-    const [rows] = await db.query('SELECT customerName, address FROM customers WHERE customerId = ?', [customerId]);
+    const [rows] = await db.query('SELECT customerId, customerName, address FROM customers WHERE customerId = ?', [customerId]);
     if (rows.length === 0) return res.status(404).json({ error: '顧客が見つかりません' });
     res.json(rows[0]);
   } catch (err) {

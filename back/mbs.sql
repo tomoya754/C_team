@@ -52,6 +52,7 @@ CREATE TABLE `orders` (
   `customerId` int(5) NOT NULL,
   `orderDate` date DEFAULT NULL,
   `totalAmount` int(11) DEFAULT NULL,
+  `note` TEXT DEFAULT NULL,
   PRIMARY KEY (`orderId`),
   KEY `customerId` (`customerId`),
   CONSTRAINT `orders_ibfk_1` FOREIGN KEY (`customerId`) REFERENCES `customers` (`customerId`) ON DELETE CASCADE ON UPDATE CASCADE
@@ -105,7 +106,6 @@ CREATE TABLE `delivery_details` (
   CONSTRAINT `delivery_details_ibfk_1` FOREIGN KEY (`deliveryId`) REFERENCES `deliveries` (`deliveryId`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `delivery_details_ibfk_2` FOREIGN KEY (`orderDetailId`) REFERENCES `order_details` (`orderDetailId`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `delivery_details_ibfk_3` FOREIGN KEY (`orderId`) REFERENCES `orders` (`orderId`) ON DELETE CASCADE ON UPDATE CASCADE
->>>>>>> c92bb00d604e48c86e0e4d49995693c2b89189ba
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 --

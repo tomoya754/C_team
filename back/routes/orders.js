@@ -11,36 +11,43 @@ const orders = require('../models/orders');
 // 注文書一覧API（GET）
 router.get('/', async (req, res) => {
   try {
-    // 注文書本体＋顧客情報
-    const [orders] = await db.query(`
+    const storeName = req.query.storeName;
+    let sql = `
       SELECT 
         o.orderId,
         c.customerId,
         c.customerName,
         c.phone,
         o.orderDate,
-        o.totalAmount
+        o.totalAmount,
+        o.note,
+        c.shopName
       FROM orders o
       JOIN customers c ON o.customerId = c.customerId
-      ORDER BY o.orderId DESC
-    `);
-    // 各注文の明細を取得
+    `;
+    let params = [];
+    if (storeName) {
+      sql += ' WHERE c.shopName = ?';
+      params.push(storeName);
+    }
+    sql += ' ORDER BY o.orderId DESC';
+    const [orders] = await db.query(sql, params);
     for (const order of orders) {
       const [details] = await db.query(
         'SELECT bookTitle, quantity, unitPrice FROM order_details WHERE orderId = ?',
         [order.orderId]
       );
       order.orderDetails = details;
-      console.log('Fetched orderDate:', order.orderDate); // デバッグログ追加
     }
     res.json(orders.map(order => ({
       orderId: order.orderId,
       customerId: order.customerId,
       customerName: order.customerName,
       phone: order.phone,
-      orderDate: order.orderDate ? new Date(order.orderDate.getTime() + (new Date().getTimezoneOffset() * -60000)).toISOString().slice(0, 10) : '',
+      orderDate: typeof order.orderDate === 'string' ? order.orderDate : (order.orderDate ? order.orderDate.toISOString().slice(0, 10) : ''),
       totalAmount: order.totalAmount,
-      orderDetails: order.orderDetails // 配列で返す
+      orderDetails: order.orderDetails,
+      note: order.note ? order.note : ''
     })));
   } catch (err) {
     console.error(err);
@@ -50,7 +57,7 @@ router.get('/', async (req, res) => {
 
 // 新しい注文書を作成するAPI（POST）
 router.post('/', async (req, res) => {
-  const { customerId, orderDate, orderDetails } = req.body;
+  const { customerId, orderDate, orderDetails, note } = req.body;
   // orderDetails: [{ bookTitle, quantity, unitPrice }, ...]
   if (!customerId || !orderDate || !Array.isArray(orderDetails) || orderDetails.length === 0) {
     return res.status(400).json({ error: '必須項目が不足しています' });
@@ -61,16 +68,14 @@ router.post('/', async (req, res) => {
     await connection.beginTransaction();
     // 注文書本体を登録
     const [orderResult] = await connection.query(
-      'INSERT INTO orders (customerId, orderDate) VALUES (?, ?)',
-
-      [customerId, orderDate]
+      'INSERT INTO orders (customerId, orderDate, note) VALUES (?, ?, ?)',
+      [customerId, orderDate, note]
     );
     const orderId = orderResult.insertId;
     // 注文明細を登録
     for (const detail of orderDetails) {
       await connection.query(
         'INSERT INTO order_details (orderId, bookTitle, quantity, unitPrice) VALUES (?, ?, ?, ?)',
-
         [orderId, detail.bookTitle, detail.quantity, detail.unitPrice]
       );
     }
@@ -114,7 +119,7 @@ router.get('/:orderId', async (req, res) => {
 // 注文書を更新するAPI（PUT）
 router.put('/:orderId', async (req, res) => {
   const orderId = req.params.orderId;
-  const { customerId, orderDate, orderDetails } = req.body;
+  const { customerId, orderDate, orderDetails, note } = req.body;
   if (!customerId || !orderDate || !Array.isArray(orderDetails) || orderDetails.length === 0) {
     return res.status(400).json({ error: '必須項目が不足しています' });
   }
@@ -124,8 +129,8 @@ router.put('/:orderId', async (req, res) => {
     await connection.beginTransaction();
     // 注文書本体を更新
     await connection.query(
-      'UPDATE orders SET customerId = ?, orderDate = ? WHERE orderId = ?',
-      [customerId, orderDate, orderId]
+      'UPDATE orders SET customerId = ?, orderDate = ?, note = ? WHERE orderId = ?',
+      [customerId, orderDate, note, orderId]
     );
     // 既存明細を削除
     await connection.query('DELETE FROM order_details WHERE orderId = ?', [orderId]);
