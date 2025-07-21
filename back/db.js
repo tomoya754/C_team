@@ -1,6 +1,6 @@
 const mysql = require('mysql2/promise');
 
-// MySQL接続情報（MariaDB用、必要に応じて修正してください）
+// MySQL接続情報
 const pool = mysql.createPool({
   host: 'localhost',
   user: 'root',
