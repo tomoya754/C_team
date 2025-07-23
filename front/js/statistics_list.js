@@ -103,8 +103,47 @@ function fetchAndDisplayStatistics(storeId = 0, keyword = '') {
                     <td>${stat.averageLeadTime || '-'}</td>
                     <td>${stat.orderCount || ''}回</td>
                     <td>${stat.lastOrderDate || ''}</td>
-                    <td>${stat.note || ''}</td>
+                    <td class="note-cell">${stat.note ? stat.note.replace(/</g, '&lt;').replace(/>/g, '&gt;') : ''}</td>
                 `;
+                // 備考欄インライン編集
+                const noteCell = tr.querySelector('.note-cell');
+                noteCell.addEventListener('click', function(e) {
+                    e.stopPropagation();
+                    if (noteCell.querySelector('textarea')) return;
+                    const oldValue = noteCell.textContent;
+                    noteCell.innerHTML = `<textarea style="width:90%;min-height:28px;resize:vertical;">${oldValue}</textarea><button class="note-save-btn" style="margin-left:4px;">保存</button>`;
+                    const textarea = noteCell.querySelector('textarea');
+                    const saveBtn = noteCell.querySelector('.note-save-btn');
+                    textarea.focus();
+                    function saveNote() {
+                        const newNote = textarea.value;
+                        // APIにPATCHリクエスト（仮実装）
+                        fetch(`http://localhost:3000/api/statistics/${stat.customerId}`, {
+                            method: 'PATCH',
+                            headers: { 'Content-Type': 'application/json' },
+                            body: JSON.stringify({ note: newNote })
+                        }).then(res => {
+                            if (res.ok) {
+                                noteCell.innerHTML = newNote.replace(/</g, '&lt;').replace(/>/g, '&gt;');
+                            } else {
+                                alert('備考の保存に失敗しました');
+                                noteCell.innerHTML = oldValue;
+                            }
+                        }).catch(() => {
+                            alert('通信エラー');
+                            noteCell.innerHTML = oldValue;
+                        });
+                    }
+                    saveBtn.addEventListener('click', saveNote);
+                    textarea.addEventListener('keydown', function(ev) {
+                        if (ev.key === 'Enter' && !ev.shiftKey) {
+                            ev.preventDefault();
+                            saveNote();
+                        } else if (ev.key === 'Escape') {
+                            noteCell.innerHTML = oldValue;
+                        }
+                    });
+                });
                 tbody.appendChild(tr);
             });
         })

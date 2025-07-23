@@ -310,6 +310,18 @@ h1 {
     box-shadow: 0 4px 8px rgba(0,0,0,0.15);
 }
 
+/* 備考欄のみホバー・フォーカス時に色付け */
+.orders-table td.note-cell:hover,
+.orders-table td.note-cell:focus-within,
+.orders-table td.note-cell textarea:focus {
+    background-color: #e6f7ff !important;
+    transition: background 0.2s;
+}
+/* 行ホバー時に備考欄がアクティブでなければ色を戻す */
+.orders-table tr:hover td.note-cell:not(:hover):not(:focus-within) {
+    background-color: inherit !important;
+}
+
 /* レスポンシブ対応 */
 @media (max-width: 900px) {
     .main { padding: 20px 20px; }
