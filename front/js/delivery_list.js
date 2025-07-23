@@ -42,8 +42,58 @@ function fetchAndDisplayDeliveries(storeId = 0) {
                     <td>${delivery.phone}</td>
                     <td>${delivery.deliveryDate}</td>
                     <td>${delivery.deliveryStatus}</td>
-                    <td>${delivery.note || ''}</td>
+                    <td class="note-cell">${delivery.note ? delivery.note.replace(/</g, '&lt;').replace(/>/g, '&gt;') : ''}</td>
                 `;
+                // 備考欄インライン編集
+                const noteCell = tr.querySelector('.note-cell');
+                noteCell.addEventListener('click', function(e) {
+                    e.stopPropagation();
+                    if (noteCell.querySelector('textarea')) return;
+                    const oldValue = noteCell.textContent;
+                    noteCell.innerHTML = `<textarea style="width:90%;min-height:28px;resize:vertical;">${oldValue}</textarea><button class="note-save-btn" style="margin-left:4px;">保存</button>`;
+                    const textarea = noteCell.querySelector('textarea');
+                    const saveBtn = noteCell.querySelector('.note-save-btn');
+                    textarea.focus();
+                    function saveNote() {
+                        const newNote = textarea.value;
+                        fetch(`http://localhost:3000/api/deliveries/${delivery.deliveryId}`, {
+                            method: 'PATCH',
+                            headers: { 'Content-Type': 'application/json' },
+                            body: JSON.stringify({ note: newNote })
+                        }).then(res => {
+                            if (res.ok) {
+                                noteCell.innerHTML = newNote.replace(/</g, '&lt;').replace(/>/g, '&gt;');
+                            } else {
+                                alert('備考の保存に失敗しました');
+                                noteCell.innerHTML = oldValue;
+                            }
+                        }).catch(() => {
+                            alert('通信エラー');
+                            noteCell.innerHTML = oldValue;
+                        });
+                        document.removeEventListener('mousedown', outsideClickHandler, true);
+                    }
+                    saveBtn.addEventListener('click', saveNote);
+                    textarea.addEventListener('keydown', function(ev) {
+                        if (ev.key === 'Enter' && !ev.shiftKey) {
+                            ev.preventDefault();
+                            saveNote();
+                        } else if (ev.key === 'Escape') {
+                            noteCell.innerHTML = oldValue;
+                            document.removeEventListener('mousedown', outsideClickHandler, true);
+                        }
+                    });
+                    // 備考欄以外クリックでキャンセル
+                    function outsideClickHandler(ev) {
+                        if (!noteCell.contains(ev.target)) {
+                            noteCell.innerHTML = oldValue;
+                            document.removeEventListener('mousedown', outsideClickHandler, true);
+                        }
+                    }
+                    setTimeout(() => {
+                        document.addEventListener('mousedown', outsideClickHandler, true);
+                    }, 0);
+                });
                 tbody.appendChild(tr);
             });
         })
@@ -55,16 +105,7 @@ function fetchAndDisplayDeliveries(storeId = 0) {
 
 // 納品書一覧をAPIから取得してテーブルに表示
 document.addEventListener('DOMContentLoaded', function() {
-    // 初期表示（全店舗）
-    fetchAndDisplayDeliveries(0);
-    // 店舗切り替えイベント
-    const storeSelect = document.getElementById('storeSelect');
-    if (storeSelect) {
-        storeSelect.addEventListener('change', function() {
-            const storeId = Number(storeSelect.value) || 0;
-            fetchAndDisplayDeliveries(storeId);
-        });
-    }
+    fetchAndDisplayDeliveries();
 });
 
 // 検索ボタンのクリックイベント

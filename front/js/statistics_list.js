@@ -117,7 +117,6 @@ function fetchAndDisplayStatistics(storeId = 0, keyword = '') {
                     textarea.focus();
                     function saveNote() {
                         const newNote = textarea.value;
-                        // APIにPATCHリクエスト（仮実装）
                         fetch(`http://localhost:3000/api/statistics/${stat.customerId}`, {
                             method: 'PATCH',
                             headers: { 'Content-Type': 'application/json' },
@@ -133,6 +132,7 @@ function fetchAndDisplayStatistics(storeId = 0, keyword = '') {
                             alert('通信エラー');
                             noteCell.innerHTML = oldValue;
                         });
+                        document.removeEventListener('mousedown', outsideClickHandler, true);
                     }
                     saveBtn.addEventListener('click', saveNote);
                     textarea.addEventListener('keydown', function(ev) {
@@ -141,8 +141,19 @@ function fetchAndDisplayStatistics(storeId = 0, keyword = '') {
                             saveNote();
                         } else if (ev.key === 'Escape') {
                             noteCell.innerHTML = oldValue;
+                            document.removeEventListener('mousedown', outsideClickHandler, true);
                         }
                     });
+                    // 備考欄以外クリックでキャンセル
+                    function outsideClickHandler(ev) {
+                        if (!noteCell.contains(ev.target)) {
+                            noteCell.innerHTML = oldValue;
+                            document.removeEventListener('mousedown', outsideClickHandler, true);
+                        }
+                    }
+                    setTimeout(() => {
+                        document.addEventListener('mousedown', outsideClickHandler, true);
+                    }, 0);
                 });
                 tbody.appendChild(tr);
             });
