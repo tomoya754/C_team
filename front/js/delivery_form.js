@@ -163,9 +163,21 @@ async function showCustomerSearchDialog() {
                 <span style='width:110px;'>${detail && detail.orderId ? detail.orderId : ''}</span>
                 <span style='width:160px;'>${detail && detail.bookTitle ? detail.bookTitle : ''}</span>
                 <span style='width:80px;'>${detail && detail.undeliveredQuantity ? detail.undeliveredQuantity : ''}</span>
-                <span style='width:120px;'>${detail && detail.orderDate ? detail.orderDate : ''}</span>
+                <span style='width:120px;'>${detail && detail.orderDate ? formatDate(detail.orderDate) : ''}</span>
             </div>
         `).join('');
+        // 日付をYYYY-MM-DD形式に整形する関数
+        function formatDate(dateStr) {
+            if (!dateStr) return '';
+            // すでにYYYY-MM-DDならそのまま返す
+            if (/^\d{4}-\d{2}-\d{2}$/.test(dateStr)) return dateStr;
+            const d = new Date(dateStr);
+            if (isNaN(d.getTime())) return dateStr;
+            const yyyy = d.getFullYear();
+            const mm = String(d.getMonth() + 1).padStart(2, '0');
+            const dd = String(d.getDate()).padStart(2, '0');
+            return `${yyyy}-${mm}-${dd}`;
+        }
     }
     dialog.innerHTML = `
       <div style="background:#fff;padding:24px 32px 16px 32px;border-radius:8px;min-width:700px;max-width:90vw;box-shadow:0 4px 24px #0002;">
