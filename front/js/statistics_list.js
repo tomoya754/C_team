@@ -29,13 +29,14 @@ function fetchAndDisplayStatistics(storeId = 0, keyword = '') {
     fetch(url)
         .then(res => res.json())
         .then(data => {
-            // 検索キーワードでフィルタ（顧客IDまたは顧客名に完全一致）
+            // 検索キーワードでフィルタ（顧客IDまたは顧客名に部分一致）
             if (keyword) {
                 const lower = keyword.toLowerCase();
-                data = data.filter(stat =>
-                    (stat.customerId && stat.customerId.toLowerCase() === lower) ||
-                    (stat.customerName && stat.customerName.toLowerCase() === lower)
-                );
+                data = data.filter(stat => {
+                    const id = stat.customerId ? stat.customerId.toString().trim().toLowerCase() : '';
+                    const name = stat.customerName ? stat.customerName.trim().toLowerCase() : '';
+                    return id.includes(lower) || name.includes(lower);
+                });
             }
             // 統計情報テーブルのtbodyを取得
             const tbody = document.querySelector('.statistics-list-table tbody');
