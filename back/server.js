@@ -25,12 +25,14 @@ const deliveriesRouter = require('./routes/deliveries');
 const ordersRouter = require('./routes/orders');
 const importRouter = require('./routes/import');
 const customersRouter = require('./routes/customers');
+const orderDetailsRouter = require('./routes/order_details');
 
 app.use('/api/statistics', statisticsRouter);
 app.use('/api/deliveries', deliveriesRouter);
 app.use('/api/orders', ordersRouter);
 app.use('/api/import', importRouter);
 app.use('/api/customers', customersRouter);
+app.use('/api/order_details', orderDetailsRouter);
 
 // サーバー起動
 app.listen(PORT, () => {

@@ -109,9 +109,24 @@ function setDeliveryFormData(data) {
 }
 
 // 検索ダイアログUI生成
-function showCustomerSearchDialog() {
-    // 既存ダイアログがあれば削除
+async function showCustomerSearchDialog() {
     document.getElementById('customerSearchDialog')?.remove();
+    // 顧客ID取得
+    const customerId = document.querySelector('input[name="customerId"]')?.value.trim();
+    if (!customerId) {
+        alert('顧客IDを入力してください');
+        return;
+    }
+    // APIから未納品明細取得
+    let undeliveredList = [];
+    try {
+        const res = await fetch(`http://localhost:3000/api/order_details/undelivered?customerId=${encodeURIComponent(customerId)}`);
+        const json = await res.json();
+        undeliveredList = Array.isArray(json) ? json : [];
+    } catch (err) {
+        alert('未納品明細の取得に失敗しました');
+        return;
+    }
     // ダイアログ本体
     const dialog = document.createElement('div');
     dialog.id = 'customerSearchDialog';
@@ -125,38 +140,37 @@ function showCustomerSearchDialog() {
     dialog.style.display = 'flex';
     dialog.style.alignItems = 'center';
     dialog.style.justifyContent = 'center';
-    // ダイアログ内容
+    // 明細リストHTML生成
+    let detailsHtml = '';
+    if (undeliveredList.length === 0) {
+        detailsHtml = `<div style='color:#c00;font-size:1.1em;'>未納品の注文明細はありません</div>`;
+    } else {
+        // ヘッダー
+        detailsHtml = `<div style='display:flex;font-weight:bold;border-bottom:1px solid #ccc;padding-bottom:4px;margin-bottom:8px;'>
+            <span style='width:32px;'></span>
+            <span style='width:110px;'>注文書No.</span>
+            <span style='width:160px;'>書名</span>
+            <span style='width:80px;'>残数</span>
+            <span style='width:120px;'>注文日</span>
+        </div>`;
+        detailsHtml += undeliveredList.map(detail => `
+            <div style='display:flex;align-items:center;margin-bottom:8px;'>
+                <input type='checkbox' style='width:32px;height:20px;margin-right:8px;'
+                    data-detailid='${detail && detail.orderDetailId ? detail.orderDetailId : ''}'
+                    data-title='${detail && detail.bookTitle ? detail.bookTitle : ''}'
+                    data-qty='${detail && detail.undeliveredQuantity ? detail.undeliveredQuantity : ''}'
+                    data-orderid='${detail && detail.orderId ? detail.orderId : ''}'>
+                <span style='width:110px;'>${detail && detail.orderId ? detail.orderId : ''}</span>
+                <span style='width:160px;'>${detail && detail.bookTitle ? detail.bookTitle : ''}</span>
+                <span style='width:80px;'>${detail && detail.undeliveredQuantity ? detail.undeliveredQuantity : ''}</span>
+                <span style='width:120px;'>${detail && detail.orderDate ? detail.orderDate : ''}</span>
+            </div>
+        `).join('');
+    }
     dialog.innerHTML = `
       <div style="background:#fff;padding:24px 32px 16px 32px;border-radius:8px;min-width:700px;max-width:90vw;box-shadow:0 4px 24px #0002;">
-        <div style='font-size:1.1em;margin-bottom:8px;'>250001/大阪情報専門学校</div>
-        <div style='display:flex;align-items:center;gap:8px;margin-bottom:12px;'>
-          <input type='text' value='T：4' style='font-size:1.1em;width:120px;padding:4px 8px;'>
-          <button style='padding:2px 8px;'>↻</button>
-          <input type='text' placeholder='' style='flex:1;font-size:1.1em;padding:4px 8px;'>
-        </div>
-        <div style='margin-bottom:16px;'>
-          <div style='display:flex;align-items:center;margin-bottom:8px;'>
-            <input type='checkbox' checked style='width:20px;height:20px;margin-right:8px;'>
-            <span style='flex:1;'>T4/セキュリティエンジニアの知識地図/上野 宣/技術評論社</span>
-            <select style='font-size:1em;margin-left:8px;'>
-              <option>1冊</option><option>2冊</option><option>3冊</option>
-            </select>
-          </div>
-          <div style='display:flex;align-items:center;margin-bottom:8px;'>
-            <input type='checkbox' style='width:20px;height:20px;margin-right:8px;'>
-            <span style='flex:1;'>T4/スッキリわかるPythonによる機械学習入門 第2版/黒澤 秋良/インプレス</span>
-            <select style='font-size:1em;margin-left:8px;'>
-              <option>1冊</option><option>2冊</option><option>3冊</option>
-            </select>
-          </div>
-          <div style='display:flex;align-items:center;margin-bottom:8px;'>
-            <input type='checkbox' style='width:20px;height:20px;margin-right:8px;'>
-            <span style='flex:1;'>T5/生成AIアプリ開発大全──Difyの探求と実践活用/小野 哲/技術評論社</span>
-            <select style='font-size:1em;margin-left:8px;'>
-              <option>1冊</option><option>2冊</option><option>3冊</option>
-            </select>
-          </div>
-        </div>
+        <div style='font-size:1.1em;margin-bottom:8px;'>顧客ID: ${customerId}</div>
+        <div style='margin-bottom:16px;'>${detailsHtml}</div>
         <div style='display:flex;justify-content:flex-end;gap:12px;margin-top:16px;'>
           <button id='selectAllBtn' style='background:#fff2e0;border:1px solid #e0a060;color:#a06000;padding:6px 18px;font-size:1em;'>すべて選択</button>
           <button id='decideBtn' style='background:#e0f0ff;border:1px solid #3399cc;color:#006699;padding:6px 18px;font-size:1em;'>決定</button>
@@ -167,7 +181,7 @@ function showCustomerSearchDialog() {
     document.body.appendChild(dialog);
     // 閉じる
     dialog.querySelector('#cancelBtn').onclick = () => dialog.remove();
-    // 決定ボタン（例：選択内容を反映する処理をここに追加可）
+    // 決定ボタン（選択内容を反映する処理をここに追加可）
     dialog.querySelector('#decideBtn').onclick = () => {
         // 必要ならここで値を反映
         dialog.remove();
