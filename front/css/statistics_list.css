@@ -1,3 +1,59 @@
+/* --- 備考欄インライン編集用スタイル --- */
+.note-cell {
+    position: relative;
+    padding: 6px 4px;
+    min-width: 80px;
+    max-width: 200px;
+    word-break: break-all;
+    box-sizing: border-box;
+    font-family: 'Inter', sans-serif;
+    color: #333;
+}
+.note-cell textarea {
+    width: 100%;
+    min-height: 40px;
+    font-size: 0.95em;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    padding: 6px 8px;
+    resize: vertical;
+    box-sizing: border-box;
+    background: #fdfdfd;
+    color: #333;
+    outline: none;
+    margin: 0;
+    box-shadow: inset 0 1px 3px rgba(0,0,0,0.05);
+    transition: all 0.3s ease;
+}
+.note-cell textarea:focus {
+    border-color: #667eea;
+    background: #fff;
+    box-shadow: inset 0 1px 3px rgba(0,0,0,0.08), 0 0 0 3px rgba(102, 126, 234, 0.1);
+}
+.note-save-btn {
+    display: inline-block;
+    margin-left: 8px;
+    padding: 6px 15px;
+    font-size: 0.9em;
+    border: 1px solid #4CAF50;
+    background: #4CAF50;
+    color: #fff;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    vertical-align: middle;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+.note-save-btn:hover {
+    background: #45a049;
+    border-color: #45a049;
+    transform: translateY(-1px);
+    box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+}
+.statistics-list-table td.note-cell:hover, .statistics-list-table td.note-cell:focus-within {
+    background-color: #e6f7ff !important;
+    transition: background 0.2s;
+}
 /* statistics_list.css */
 
 body {
