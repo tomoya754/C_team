@@ -75,8 +75,8 @@ router.post('/', async (req, res) => {
     // 注文明細を登録
     for (const detail of orderDetails) {
       await connection.query(
-        'INSERT INTO order_details (orderId, bookTitle, quantity, unitPrice) VALUES (?, ?, ?, ?)',
-        [orderId, detail.bookTitle, detail.quantity, detail.unitPrice]
+        'INSERT INTO order_details (orderId, bookTitle, quantity, unitPrice, undeliveredQuantity) VALUES (?, ?, ?, ?, ?)',
+        [orderId, detail.bookTitle, detail.quantity, detail.unitPrice, detail.quantity]
       );
     }
     await connection.commit();
