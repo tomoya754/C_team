@@ -1,3 +1,80 @@
+/* --- 備考欄インライン編集用スタイル --- */
+.note-cell {
+    position: relative;
+    padding: 6px 4px; /* パディングを少し増やす */
+    min-width: 80px; /* 最小幅を調整 */
+    max-width: 200px; /* 最大幅を調整 */
+    word-break: break-all;
+    box-sizing: border-box; /* パディングを幅に含める */
+    font-family: 'Inter', sans-serif; /* フォントを統一 */
+    color: #333; /* テキスト色を統一 */
+}
+.note-cell textarea {
+    width: 100%; /* 親要素の幅いっぱいに */
+    min-height: 40px; /* 最小高さを調整 */
+    font-size: 0.95em; /* フォントサイズを調整 */
+    border: 1px solid #ccc; /* 細いボーダー */
+    border-radius: 8px; /* 角丸を統一 */
+    padding: 6px 8px; /* パディングを調整 */
+    resize: vertical;
+    box-sizing: border-box;
+    background: #fdfdfd; /* 少し明るい背景色 */
+    color: #333;
+    outline: none;
+    margin: 0;
+    box-shadow: inset 0 1px 3px rgba(0,0,0,0.05); /* 内部の影 */
+    transition: all 0.3s ease; /* スムーズなトランジション */
+}
+.note-cell textarea:focus {
+    border-color: #667eea; /* フォーカス時のアクセントカラー */
+    background: #fff;
+    box-shadow: inset 0 1px 3px rgba(0,0,0,0.08), 0 0 0 3px rgba(102, 126, 234, 0.1); /* フォーカス時の影とリング */
+}
+.note-save-btn {
+    display: inline-block;
+    margin-left: 8px; /* マージンを調整 */
+    padding: 6px 15px; /* パディングを調整 */
+    font-size: 0.9em; /* フォントサイズを調整 */
+    border: 1px solid #4CAF50; /* 緑系のボーダー */
+    background: #4CAF50; /* 緑系の背景 */
+    color: #fff;
+    border-radius: 6px; /* 角丸を統一 */
+    cursor: pointer;
+    transition: all 0.3s ease; /* スムーズなトランジション */
+    vertical-align: middle;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1); /* 影を追加 */
+}
+.note-save-btn:hover {
+    background: #45a049; /* ホバーで少し暗く */
+    border-color: #45a049;
+    transform: translateY(-1px); /* 少し上に移動 */
+    box-shadow: 0 4px 8px rgba(0,0,0,0.15); /* ホバーで影を強調 */
+}
+
+/* レスポンシブ対応 */
+@media (max-width: 768px) {
+    .note-cell {
+        padding: 4px 2px;
+        min-width: unset;
+        max-width: 100%;
+    }
+    .note-cell textarea {
+        min-height: 30px;
+        font-size: 0.9em;
+        padding: 5px 6px;
+    }
+    .note-save-btn {
+        margin-left: 0;
+        margin-top: 5px; /* ボタンを下に移動 */
+        padding: 5px 10px;
+        font-size: 0.85em;
+        display: block; /* ブロック要素にして幅いっぱいに */
+        width: 100%;
+        box-sizing: border-box;
+    }
+}
+
+
 /* order_list.css */
 
 body {
@@ -231,6 +308,18 @@ h1 {
     border-color: #c82333;
     transform: translateY(-2px);
     box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+}
+
+/* 備考欄のみホバー・フォーカス時に色付け */
+.orders-table td.note-cell:hover,
+.orders-table td.note-cell:focus-within,
+.orders-table td.note-cell textarea:focus {
+    background-color: #e6f7ff !important;
+    transition: background 0.2s;
+}
+/* 行ホバー時に備考欄がアクティブでなければ色を戻す */
+.orders-table tr:hover td.note-cell:not(:hover):not(:focus-within) {
+    background-color: inherit !important;
 }
 
 /* レスポンシブ対応 */

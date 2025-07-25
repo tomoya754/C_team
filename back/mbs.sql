@@ -42,6 +42,7 @@ CREATE TABLE `customers` (
   PRIMARY KEY (`customerId`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
+
 --
 -- テーブルの構造 `orders`
 --

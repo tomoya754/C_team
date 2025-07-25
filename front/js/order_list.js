@@ -75,28 +75,26 @@ menuBtn.onclick = openSidebar;
 sidebarClose.onclick = closeSidebar;
 sidebarBg.onclick = closeSidebar;
 
-// 店舗名リスト（セレクトボックスの順番と一致させる）
-const storeNames = ['全店舗', '緑橋本店', '深江橋店', '今里店'];
+// 店舗名→ID変換用マップ
+const storeNameToId = {
+    '全店舗': 0,
+    '緑橋本店': 1,
+    '深江橋店': 2,
+    '今里店': 3
+};
 
 // 注文データ取得＆表示関数
-function fetchAndDisplayOrders() {
+function fetchAndDisplayOrders(storeId = 0) {
     let url = 'http://localhost:3000/api/orders';
-    const storeSelect = document.getElementById('storeSelect');
-    let storeName = '全店舗';
-    if (storeSelect) {
-        const selectedValue = storeSelect.value;
-        storeName = storeNames[Number(selectedValue)] || '全店舗';
-    }
-    if (storeName !== '全店舗') {
-        url += `?storeName=${encodeURIComponent(storeName)}`;
+    if (storeId && storeId !== 0) {
+        url += `?storeId=${storeId}`;
     }
     fetch(url)
         .then(res => res.json())
         .then(data => {
-            // 検索ボックスの値取得
-            const searchInput = document.querySelector('.search-input');
-            const keyword = searchInput ? searchInput.value.trim() : '';
-            // 重複除去
+            const tbody = document.getElementById('orders-tbody');
+            tbody.innerHTML = '';
+            // orderIdで重複排除
             const uniqueOrders = [];
             const seenIds = new Set();
             data.forEach(order => {
@@ -105,35 +103,76 @@ function fetchAndDisplayOrders() {
                     seenIds.add(order.orderId);
                 }
             });
-            // キーワードで絞り込み
-            let filteredOrders = uniqueOrders;
-            if (keyword) {
-                filteredOrders = uniqueOrders.filter(order => {
-                    // 注文書No.（orderId）または注文内容（orderDetailsのbookTitle）に部分一致
-                    const orderIdStr = String(order.orderId);
-                    const orderDetailsStr = Array.isArray(order.orderDetails) ? order.orderDetails.map(d => d.bookTitle).join(', ') : '';
-                    return orderIdStr.includes(keyword) || orderDetailsStr.includes(keyword);
-                });
-            }
-            const tbody = document.getElementById('orders-tbody');
-            tbody.innerHTML = '';
-            filteredOrders.forEach(order => {
+            uniqueOrders.forEach(order => {
                 const tr = document.createElement('tr');
                 tr.innerHTML = `
                     <td><input type="radio" name="deleteRadio" value="${order.orderId}"></td>
                     <td>${order.orderId}</td>
                     <td>${order.customerId}</td>
                     <td>${order.customerName}</td>
-                    <td>${Array.isArray(order.orderDetails) ? order.orderDetails.map(d => d.bookTitle).join(', ') : ''}</td>
+                    <td>${order.orderDetail}</td>
                     <td>${order.phone}</td>
                     <td>${order.orderDate}</td>
-                    <td>${order.note !== undefined ? order.note : ''}</td>
+                    <td class="note-cell">${order.note ? order.note.replace(/</g, '&lt;').replace(/>/g, '&gt;') : ''}</td>
                 `;
+                // 備考欄セル取得
+                const noteCell = tr.querySelector('.note-cell');
+                // インライン編集機能
+                noteCell.addEventListener('click', function(e) {
+                    e.stopPropagation();
+                    // すでに編集中なら何もしない
+                    if (noteCell.querySelector('textarea')) return;
+                    const oldValue = noteCell.textContent;
+                    noteCell.innerHTML = `<textarea style="width:90%;min-height:28px;resize:vertical;">${oldValue}</textarea><button class="note-save-btn" style="margin-left:4px;">保存</button>`;
+                    const textarea = noteCell.querySelector('textarea');
+                    const saveBtn = noteCell.querySelector('.note-save-btn');
+                    textarea.focus();
+                    // 保存処理
+                    function saveNote() {
+                        const newNote = textarea.value;
+                        fetch(`http://localhost:3000/api/orders/${order.orderId}`, {
+                            method: 'PATCH',
+                            headers: { 'Content-Type': 'application/json' },
+                            body: JSON.stringify({ note: newNote })
+                        }).then(res => {
+                            if (res.ok) {
+                                noteCell.innerHTML = newNote.replace(/</g, '&lt;').replace(/>/g, '&gt;');
+                            } else {
+                                alert('備考の保存に失敗しました');
+                                noteCell.innerHTML = oldValue;
+                            }
+                        }).catch(() => {
+                            alert('通信エラー');
+                            noteCell.innerHTML = oldValue;
+                        });
+                        document.removeEventListener('mousedown', outsideClickHandler, true);
+                    }
+                    saveBtn.addEventListener('click', saveNote);
+                    textarea.addEventListener('keydown', function(ev) {
+                        if (ev.key === 'Enter' && !ev.shiftKey) {
+                            ev.preventDefault();
+                            saveNote();
+                        } else if (ev.key === 'Escape') {
+                            noteCell.innerHTML = oldValue;
+                            document.removeEventListener('mousedown', outsideClickHandler, true);
+                        }
+                    });
+                    // 備考欄以外クリックでキャンセル
+                    function outsideClickHandler(ev) {
+                        if (!noteCell.contains(ev.target)) {
+                            noteCell.innerHTML = oldValue;
+                            document.removeEventListener('mousedown', outsideClickHandler, true);
+                        }
+                    }
+                    setTimeout(() => {
+                        document.addEventListener('mousedown', outsideClickHandler, true);
+                    }, 0);
+                });
+                // 行クリックで詳細画面へ遷移（備考欄セル以外）
                 tr.style.cursor = 'pointer';
                 tr.addEventListener('click', function(e) {
-                    // 1列目（ラジオボタンセル）をクリックした場合は遷移しない
-                    const cellIndex = e.target.closest('td') ? e.target.closest('td').cellIndex : -1;
-                    if (cellIndex === 0) return;
+                    // ラジオボタンや備考欄のクリックは除外
+                    if (e.target.tagName.toLowerCase() === 'input' || e.target.classList.contains('note-save-btn') || e.target.tagName.toLowerCase() === 'textarea') return;
                     window.location.href = `/html/order_form.html?orderId=${order.orderId}`;
                 });
                 tbody.appendChild(tr);
@@ -145,29 +184,14 @@ function fetchAndDisplayOrders() {
 }
 
 // ページロード時に全店舗で取得
-fetchAndDisplayOrders();
-// 店舗セレクトボックス初期化＆イベント登録
-const storeSelect = document.getElementById('storeSelect');
+fetchAndDisplayOrders(0);
+
+// 店舗選択時のイベント
+const storeSelect = document.querySelector('.store-select');
 if (storeSelect) {
-    storeSelect.value = '0'; // 初期値は全店舗
     storeSelect.addEventListener('change', function() {
-        fetchAndDisplayOrders();
+        const selectedName = storeSelect.value;
+        const storeId = storeNameToId[selectedName] || 0;
+        fetchAndDisplayOrders(storeId);
     });
-}
-// 検索ボタンイベント登録
-const searchBtn = document.querySelector('.search-btn');
-if (searchBtn) {
-    searchBtn.addEventListener('click', function() {
-        fetchAndDisplayOrders();
-    });
-}
-// Enterキーで検索
-const searchInput = document.querySelector('.search-input');
-if (searchInput) {
-    searchInput.addEventListener('keydown', function(e) {
-        if (e.key === 'Enter') {
-            fetchAndDisplayOrders();
-        }
-    });
-}
-});
+}});
