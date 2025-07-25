@@ -6,11 +6,16 @@ const storeNameToId = {
     '今里店': 3
 };
 
-// 統計データ取得＆表示関数（検索キーワード対応）
-function fetchAndDisplayStatistics(storeId = 0, keyword = '') {
-    // 並び替え条件取得
+// 統計データ取得＆表示関数（検索・ソート・店舗対応）
+function fetchAndDisplayStatistics() {
+    // 各条件を取得
+    const storeSelect = document.querySelector('.store-select');
+    const searchInput = document.querySelector('.search-input');
     const sortKeySelect = document.querySelector('.sort-key');
     const sortOrderSelect = document.querySelector('.sort-order');
+    const selectedName = storeSelect ? storeSelect.value : '全店舗';
+    const storeId = storeNameToId[selectedName] || 0;
+    const keyword = searchInput ? searchInput.value.trim() : '';
     let sortKey = 'totalSales';
     let sortOrder = 'desc';
     if (sortKeySelect) {
@@ -67,64 +72,32 @@ function fetchAndDisplayStatistics(storeId = 0, keyword = '') {
         });
 }
 
-// ページロード時に全店舗で取得
-fetchAndDisplayStatistics(0);
+// ページロード時に全条件で取得
+fetchAndDisplayStatistics();
 
-// 検索ボタンのイベント
-const searchBtn = document.querySelector('.search-btn');
-const searchInput = document.querySelector('.search-input');
-if (searchBtn) {
-    searchBtn.addEventListener('click', function() {
-        const keyword = searchInput.value.trim();
-        const storeSelect = document.querySelector('.store-select');
-        const selectedName = storeSelect ? storeSelect.value : '全店舗';
-        const storeId = storeNameToId[selectedName] || 0;
-        fetchAndDisplayStatistics(storeId, keyword);
-    });
+// 共通で再取得するイベントハンドラ
+function setStatisticsListEventHandlers() {
+    const searchBtn = document.querySelector('.search-btn');
+    const searchInput = document.querySelector('.search-input');
+    const storeSelect = document.querySelector('.store-select');
+    const sortKeySelect = document.querySelector('.sort-key');
+    const sortOrderSelect = document.querySelector('.sort-order');
+    if (searchBtn) {
+        searchBtn.addEventListener('click', fetchAndDisplayStatistics);
+    }
+    if (searchInput) {
+        searchInput.addEventListener('keydown', function(e) {
+            if (e.key === 'Enter') fetchAndDisplayStatistics();
+        });
+    }
+    if (storeSelect) {
+        storeSelect.addEventListener('change', fetchAndDisplayStatistics);
+    }
+    if (sortKeySelect) {
+        sortKeySelect.addEventListener('change', fetchAndDisplayStatistics);
+    }
+    if (sortOrderSelect) {
+        sortOrderSelect.addEventListener('change', fetchAndDisplayStatistics);
+    }
 }
-
-// 検索ボックスでエンターキー押下時も検索
-if (searchInput) {
-    searchInput.addEventListener('keydown', function(e) {
-        if (e.key === 'Enter') {
-            const keyword = searchInput.value.trim();
-            const storeSelect = document.querySelector('.store-select');
-            const selectedName = storeSelect ? storeSelect.value : '全店舗';
-            const storeId = storeNameToId[selectedName] || 0;
-            fetchAndDisplayStatistics(storeId, keyword);
-        }
-    });
-}
-
-// 店舗選択時のイベント
-const storeSelect = document.querySelector('.store-select');
-if (storeSelect) {
-    storeSelect.addEventListener('change', function() {
-        const selectedName = storeSelect.value;
-        const storeId = storeNameToId[selectedName] || 0;
-        const keyword = document.querySelector('.search-input').value.trim();
-        fetchAndDisplayStatistics(storeId, keyword);
-    });
-}
-
-// 並び替え条件変更時のイベント
-const sortKeySelect = document.querySelector('.sort-key');
-const sortOrderSelect = document.querySelector('.sort-order');
-if (sortKeySelect) {
-    sortKeySelect.addEventListener('change', function() {
-        const storeSelect = document.querySelector('.store-select');
-        const selectedName = storeSelect ? storeSelect.value : '全店舗';
-        const storeId = storeNameToId[selectedName] || 0;
-        const keyword = document.querySelector('.search-input').value.trim();
-        fetchAndDisplayStatistics(storeId, keyword);
-    });
-}
-if (sortOrderSelect) {
-    sortOrderSelect.addEventListener('change', function() {
-        const storeSelect = document.querySelector('.store-select');
-        const selectedName = storeSelect ? storeSelect.value : '全店舗';
-        const storeId = storeNameToId[selectedName] || 0;
-        const keyword = document.querySelector('.search-input').value.trim();
-        fetchAndDisplayStatistics(storeId, keyword);
-    });
-}
+setStatisticsListEventHandlers();
