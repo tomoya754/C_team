@@ -21,4 +21,37 @@ router.get('/undelivered', async (req, res) => {
     }
 });
 
+// PUT /api/order_details/update_quantity
+router.put('/update_quantity', async (req, res) => {
+    const updates = req.body; // [{ orderDetailId, quantity }]
+    if (!Array.isArray(updates) || updates.length === 0) {
+        return res.status(400).json({ error: 'Invalid request body' });
+    }
+
+    const sql = `
+        UPDATE order_details
+        SET undeliveredQuantity = undeliveredQuantity - ?
+        WHERE orderDetailId = ? AND undeliveredQuantity >= ?
+    `;
+
+    const connection = await db.getConnection();
+    try {
+        await connection.beginTransaction();
+        for (const update of updates) {
+            const { orderDetailId, quantity } = update;
+            if (!orderDetailId || !quantity || quantity <= 0) {
+                throw new Error('Invalid update data');
+            }
+            await connection.query(sql, [quantity, orderDetailId, quantity]);
+        }
+        await connection.commit();
+        res.json({ success: true });
+    } catch (err) {
+        await connection.rollback();
+        res.status(500).json({ error: 'DB error', details: err.message });
+    } finally {
+        connection.release();
+    }
+});
+
 module.exports = router;
