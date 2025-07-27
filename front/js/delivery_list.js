@@ -28,7 +28,12 @@ function fetchAndDisplayDeliveries(storeId = 0) {
         url += `?storeId=${storeId}`;
     }
     fetch(url)
-        .then(res => res.json())
+        .then(res => {
+            if (!res.ok) {
+                throw new Error('納品書データの取得に失敗しました');
+            }
+            return res.json();
+        })
         .then(data => {
             const tbody = document.querySelector('.orders-table tbody');
             tbody.innerHTML = '';
@@ -38,17 +43,43 @@ function fetchAndDisplayDeliveries(storeId = 0) {
                     <td><input type='radio' name='deleteRadio' value='${delivery.deliveryId}'></td>
                     <td>${delivery.deliveryId}</td>
                     <td><a href="/html/delivery_form.html?deliveryId=${delivery.deliveryId}" class="customer-link">${delivery.customerName}</a></td>
-                    <td>${delivery.orderDetail}</td>
+                    <td>${delivery.deliveryContents || ''}</td>
                     <td>${delivery.phone}</td>
                     <td>${delivery.deliveryDate}</td>
-                    <td>${delivery.deliveryStatus}</td>
+                    <td>
+                    <select name='deliveryStatus'>
+                        <option value='納品済み' selected>納品済み</option>
+                        <option value='未納品'>未納品</option>
+                    </select>
+                    </td>
                     <td>${delivery.note || ''}</td>
                 `;
                 tbody.appendChild(tr);
+
+                const statusSelect = tr.querySelector("select[name='deliveryStatus']");
+                statusSelect.addEventListener('change', () => {
+                    const newStatus = statusSelect.value;
+                    fetch(`http://localhost:3000/api/deliveries/${delivery.deliveryId}/status`, {
+                        method: 'PUT',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({ deliveryStatus: newStatus })
+                    })
+                    .then(res => {
+                        if (res.ok) {
+                            alert('納品状態を更新しました');
+                        } else {
+                            alert('納品状態の更新に失敗しました');
+                        }
+                    })
+                    .catch(err => {
+                        console.error(err);
+                        alert('エラーが発生しました');
+                    });
+                });
             });
         })
         .catch(err => {
-            alert('データ取得エラー');
+            alert(err.message);
             console.error(err);
         });
 }

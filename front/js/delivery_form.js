@@ -64,32 +64,94 @@ document.addEventListener('DOMContentLoaded', function() {
     // 初期化時も計算
     calcTotals();
 
+    // 新規作成・編集判定
     const urlParams = new URLSearchParams(window.location.search);
     const deliveryId = urlParams.get('deliveryId');
     if (deliveryId) {
         // 編集時：APIから納品書データを取得してセット
         fetch(`http://localhost:3000/api/deliveries/${deliveryId}`)
-            .then(res => res.json())
-            .then(data => {
+            .then(res => {
+                if (!res.ok) {
+                    throw new Error(`HTTPエラー: ${res.status}`);
+                }
+                return res.json();
+            })
+            .then(async data => {
                 setDeliveryFormData(data);
-                // 納品No.を自動セット
+                // 納品書No.を自動セット
                 const deliveryNoInput = document.getElementById('deliveryNoInput');
-                if (deliveryNoInput && data.deliveryId) deliveryNoInput.value = data.deliveryId;
+                if (deliveryNoInput && data.deliveryId) {
+                    deliveryNoInput.value = data.deliveryId;
+                }
                 // 編集時はNo.欄表示
                 const deliveryNoRow = document.getElementById('deliveryNoRow');
                 if (deliveryNoRow) deliveryNoRow.style.display = '';
+                // 顧客IDをreadonlyに
+                const customerIdInput = document.getElementById('customerId');
+                if (customerIdInput) customerIdInput.readOnly = true;
+                // 顧客名をAPIから取得して表示
+                if (data.customerId) {
+                    try {
+                        const res = await fetch(`http://localhost:3000/api/customers/${data.customerId}`);
+                        if (res.ok) {
+                            const customer = await res.json();
+                            const customerNameInput = document.getElementById('customerName');
+                            const addressInput = document.getElementById('customerAddress');
+                            if (customerNameInput && data.customerName) {
+                                customerNameInput.value = data.customerName;
+                            }
+                            if (addressInput && data.address) {
+                                addressInput.value = data.address;
+                            }
+                        }
+                    } catch {}
+                }
             })
-            .catch(() => {
-                alert('納品書データの取得に失敗しました');
-            });
     } else {
         // 新規作成時：フォームを空に初期化
         document.querySelectorAll('.a4-sheet input, .a4-sheet textarea').forEach(input => {
             input.value = '';
         });
-        // 新規作成時はNo.欄非表示
+        // 納品日を本日にセット
+        const deliveryDateInput = document.querySelector('.a4-sheet input[type="date"]');
+        if (deliveryDateInput) {
+            const today = new Date();
+            const yyyy = today.getFullYear();
+            const mm = String(today.getMonth() + 1).padStart(2, '0');
+            const dd = String(today.getDate()).padStart(2, '0');
+            deliveryDateInput.value = `${yyyy}-${mm}-${dd}`;
+        }
+        // 納品書No.を非表示
         const deliveryNoRow = document.getElementById('deliveryNoRow');
         if (deliveryNoRow) deliveryNoRow.style.display = 'none';
+    }
+    // 顧客ID入力時に顧客名・住所を自動取得
+    const customerIdInput = document.getElementById('customerId');
+    const customerNameInput = document.getElementById('customerName');
+    const addressInput = document.getElementById('customerAddress');
+    if (customerIdInput) {
+        customerIdInput.addEventListener('change', async function() {
+            const customerId = customerIdInput.value.trim();
+            if (!customerId) {
+                if (customerNameInput) customerNameInput.value = '';
+                if (addressInput) addressInput.value = '';
+                return;
+            }
+            try {
+                const res = await fetch(`http://localhost:3000/api/customers/${customerId}`);
+                if (res.ok) {
+                    const data = await res.json();
+                    if (customerNameInput) customerNameInput.value = data.customerName || '';
+                    if (addressInput) addressInput.value = data.address || '';
+                } else {
+                    if (customerNameInput) customerNameInput.value = '';
+                    if (addressInput) addressInput.value = '';
+                }
+            } catch {
+                if (customerNameInput) customerNameInput.value = '';
+                if (addressInput) addressInput.value = '';
+            }
+        });
     }
 });
 
@@ -149,8 +211,10 @@ async function showCustomerSearchDialog() {
         detailsHtml = `<div style='display:flex;font-weight:bold;border-bottom:1px solid #ccc;padding-bottom:4px;margin-bottom:8px;'>
             <span style='width:32px;'></span>
             <span style='width:110px;'>注文書No.</span>
+            <span style='width:110px;'>注文明細No.</span>
             <span style='width:160px;'>書名</span>
             <span style='width:80px;'>残数</span>
+            <span style='width:80px;'>単価</span>
             <span style='width:120px;'>注文日</span>
         </div>`;
         detailsHtml += undeliveredList.map(detail => `
@@ -159,10 +223,13 @@ async function showCustomerSearchDialog() {
                     data-detailid='${detail && detail.orderDetailId ? detail.orderDetailId : ''}'
                     data-title='${detail && detail.bookTitle ? detail.bookTitle : ''}'
                     data-qty='${detail && detail.undeliveredQuantity ? detail.undeliveredQuantity : ''}'
+                    data-price='${detail && detail.unitPrice ? detail.unitPrice : ''}'
                     data-orderid='${detail && detail.orderId ? detail.orderId : ''}'>
                 <span style='width:110px;'>${detail && detail.orderId ? detail.orderId : ''}</span>
+                <span style='width:110px;'>${detail && detail.orderDetailId ? detail.orderDetailId : ''}</span>
                 <span style='width:160px;'>${detail && detail.bookTitle ? detail.bookTitle : ''}</span>
                 <span style='width:80px;'>${detail && detail.undeliveredQuantity ? detail.undeliveredQuantity : ''}</span>
+                <span style='width:80px;'>${detail && detail.unitPrice ? detail.unitPrice : ''}</span>
                 <span style='width:120px;'>${detail && detail.orderDate ? formatDate(detail.orderDate) : ''}</span>
             </div>
         `).join('');
@@ -193,15 +260,67 @@ async function showCustomerSearchDialog() {
     document.body.appendChild(dialog);
     // 閉じる
     dialog.querySelector('#cancelBtn').onclick = () => dialog.remove();
-    // 決定ボタン（選択内容を反映する処理をここに追加可）
+    // ダイアログの決定ボタン処理を拡張
     dialog.querySelector('#decideBtn').onclick = () => {
-        // 必要ならここで値を反映
+        const selectedDetails = [];
+        let subtotal = 0;
+        dialog.querySelectorAll("input[type='checkbox']:checked").forEach(cb => {
+            const qty = cb.nextElementSibling?.value || '1';
+            const price = cb.dataset.price || '0';
+            const amount = qty * price;
+            const detail = {
+                title: cb.dataset.title || '',
+                qty,
+                price,
+                amount
+            };
+            selectedDetails.push(detail);
+            subtotal += amount; // 小計を計算
+        });
+
+        // 納品書の明細テーブルに反映
+        selectedDetails.forEach((detail, index) => {
+            if (index < 12) { // 最大12行まで
+                const itemInput = document.querySelector(`input[name='item${index + 1}']`);
+                const qtyInput = document.querySelector(`input[name='qty${index + 1}']`);
+                const priceInput = document.querySelector(`input[name='price${index + 1}']`);
+                const amountInput = document.querySelector(`input[name='amount${index + 1}']`);
+
+                if (itemInput) itemInput.value = detail.title;
+                if (qtyInput) qtyInput.value = detail.qty;
+                if (priceInput) priceInput.value = detail.price;
+                if (amountInput) amountInput.value = detail.amount;
+            }
+        });
+
+        // 小計、消費税、合計金額を計算して表示
+        const tax = Math.floor(subtotal * 0.1); // 消費税10%
+        const total = subtotal + tax;
+        const totalInputs = document.querySelectorAll('.input-total');
+        if (totalInputs.length >= 3) {
+            totalInputs[0].value = subtotal;
+            totalInputs[1].value = tax;
+            totalInputs[2].value = total;
+        }
+        const totalAmount = document.getElementById('totalAmount');
+        if (totalAmount) totalAmount.textContent = total;
+
         dialog.remove();
     };
     // すべて選択
     dialog.querySelector('#selectAllBtn').onclick = () => {
         dialog.querySelectorAll("input[type='checkbox']").forEach(cb => cb.checked = true);
     };
+    dialog.querySelectorAll("input[type='checkbox']").forEach(cb => {
+        const qtyInput = document.createElement('input');
+        qtyInput.type = 'number';
+        qtyInput.min = '1';
+        qtyInput.max = cb.dataset.qty || '1';
+        qtyInput.value = '1';
+        qtyInput.style.width = '60px';
+        qtyInput.style.marginLeft = '8px';
+        cb.parentElement.appendChild(qtyInput);
+    });
 }
 // 検索ボタンにイベント付与
 window.addEventListener('DOMContentLoaded', function() {
@@ -211,24 +330,44 @@ window.addEventListener('DOMContentLoaded', function() {
     }
 });
 
+// 保存ボタンの処理に条件を満たさない場合の挙動を修正
 document.getElementById('saveBtn').onclick = function (e) {
     e.preventDefault();
 
     // 入力値の取得
-    const customerId = document.querySelector('input[name="customerId"]')?.value || '';
-    const customerName = document.querySelector('input[name="customerName"]')?.value || '';
-    const deliveryNo = document.querySelector('input[placeholder="XXXXXXXXXX"]')?.value || '';
-    const deliveryDate = document.querySelector('input[type="date"]')?.value || '';
+    const customerId = document.querySelector('input[name="customerId"]')?.value.trim();
+    const customerName = document.querySelector('input[name="customerName"]')?.value.trim();
+    const deliveryNo = document.querySelector('input[placeholder="XXXXXXXXXX"]')?.value.trim();
+    const deliveryDate = document.querySelector('input[type="date"]')?.value.trim();
     // 明細テーブルの取得
     const items = [];
     for (let i = 1; i <= 12; i++) {
-        const item = document.querySelector(`input[name="item${i}"]`)?.value || '';
-        const qty = document.querySelector(`input[name="qty${i}"]`)?.value || '';
-        const price = document.querySelector(`input[name="price${i}"]`)?.value || '';
-        const amount = document.querySelector(`input[name="amount${i}"]`)?.value || '';
+        const item = document.querySelector(`input[name="item${i}"]`)?.value.trim();
+        const qty = document.querySelector(`input[name="qty${i}"]`)?.value.trim();
+        const price = document.querySelector(`input[name="price${i}"]`)?.value.trim();
+        const amount = document.querySelector(`input[name="amount${i}"]`)?.value.trim();
+        const orderDetailId = document.querySelector(`input[name="orderDetailId${i}"]`)?.value.trim();
+        const orderId = document.querySelector(`input[name="orderId${i}"]`)?.value.trim();
         if (item || qty || price || amount) {
-            items.push({ item, qty, price, amount });
+            items.push({
+                bookTitle: item,
+                quantity: qty,
+                unitPrice: price,
+                amount,
+                orderDetailId,
+                orderId
+            });
         }
+    }
+
+    // バリデーション
+    if (!customerId) {
+        alert('顧客IDを入力してください');
+        return;
+    }
+    if (items.length === 0) {
+        alert('明細を1つ以上追加してください');
+        return;
     }
 
     // サーバーに送るデータ
@@ -239,7 +378,7 @@ document.getElementById('saveBtn').onclick = function (e) {
         deliveryDate,
         items
     };
-
+    console.log('送信データ:', data);
     // fetchでPOST
     fetch('http://localhost:3000/api/deliveries', {
         method: 'POST',
@@ -249,7 +388,6 @@ document.getElementById('saveBtn').onclick = function (e) {
     .then(res => res.json())
     .then(result => {
         alert('保存しました');
-        // 必要なら画面遷移やリセット
     })
     .catch(err => {
         alert('保存に失敗しました');

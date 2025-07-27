@@ -70,7 +70,7 @@ h1 {
     border-radius: 8px; /* A4シートにも角丸 */
 }
 
-.order-title {
+.delivery-title {
     text-align: center;
     font-size: 2.2rem; /* タイトルを少し大きく */
     letter-spacing: 0.1em;
@@ -80,14 +80,14 @@ h1 {
     padding-bottom: 10px;
 }
 
-.order-info-row {
+.delivery-info-row {
     display: flex;
     justify-content: space-between;
     margin-bottom: 15px; /* マージンを調整 */
     flex-wrap: wrap; /* レスポンシブ対応 */
 }
 
-.order-to, .order-meta {
+.delivery-to, .delivery-meta {
     display: flex;
     flex-direction: column;
     gap: 8px; /* ギャップを増やす */
@@ -115,29 +115,29 @@ h1 {
     color: #333;
 }
 
-.order-message {
+.delivery-message {
     margin: 15px 0 25px 0; /* マージンを調整 */
     font-size: 1.05rem;
     color: #555;
 }
 
-.order-address-row {
+.delivery-address-row {
     display: flex;
     justify-content: space-between;
     margin-bottom: 18px;
     flex-wrap: wrap; /* レスポンシブ対応 */
 }
 
-.order-address {
+.delivery-address {
     font-size: 0.95rem;
     line-height: 1.7;
     color: #555;
 }
-.order-address div {
+.delivery-address div {
     margin-bottom: 5px; /* アドレス行間のマージン */
 }
 
-.order-total {
+.delivery-total {
     font-size: 1.2rem; /* 合計金額のフォントサイズ */
     text-align: right;
     font-weight: bold;
@@ -154,9 +154,31 @@ h1 {
     text-align: right;
     font-weight: bold;
     color: #333;
+    /* ▼ スピンボタン非表示 */
+    -moz-appearance: textfield;
+    appearance: textfield;
+    /* inputの右端に余白を追加 */
+    padding-right: 2.5em;
+}
+.input-total::-webkit-outer-spin-button,
+.input-total::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+.input-total + span {
+    font-size: 1em;
+    color: #666;
+    margin-left: -2.2em;
+    vertical-align: middle;
+    display: inline-block;
+    min-width: 2em;
+    text-align: left;
+    position: relative;
+    right: 0;
+    pointer-events: none;
 }
 
-.order-table {
+.delivery-table {
     width: 100%;
     max-width: 100%;
     border-collapse: collapse;
@@ -165,7 +187,7 @@ h1 {
     table-layout: fixed;
 }
 
-.order-table th, .order-table td {
+.delivery-table th, .delivery-table td {
     border: 1px solid #ccc; /* 薄い境界線 */
     padding: 6px 4px; /* パディングを調整 */
     text-align: center;
@@ -175,21 +197,22 @@ h1 {
     vertical-align: middle;
 }
 
-.order-table th {
+.delivery-table th {
     background: #f0f0f0; /* ヘッダーの背景色 */
     font-weight: bold;
     color: #444;
 }
 
 /* テーブルヘッダーの幅をCSSで指定 */
-.order-table th:nth-child(1), .order-table td:nth-child(1) { width: 24px; }
-.order-table th:nth-child(2), .order-table td:nth-child(2) { width: 80px; }
-.order-table th:nth-child(3), .order-table td:nth-child(3) { width: 48px; }
-.order-table th:nth-child(4), .order-table td:nth-child(4) { width: 60px; }
-.order-table th:nth-child(5), .order-table td:nth-child(5) { width: 70px; }
-.order-table th:nth-child(6), .order-table td:nth-child(6) { width: 90px; }
+.delivery-table th:nth-child(1), .delivery-table td:nth-child(1) { width: 24px; }
+.delivery-table th:nth-child(2), .delivery-table td:nth-child(2) { width: 80px; }
+.delivery-table th:nth-child(3), .delivery-table td:nth-child(3) { width: 48px; }
+.delivery-table th:nth-child(4), .delivery-table td:nth-child(4) { width: 60px; }
+.delivery-table th:nth-child(5), .delivery-table td:nth-child(5) { width: 70px; }
+.delivery-table th:nth-child(6), .delivery-table td:nth-child(6) { width: 90px; }
 
-.order-table input[type="text"], .order-table input[type="number"] {
+
+.delivery-table input[type="text"], .delivery-table input[type="number"] {
     width: 90%; /* 入力欄の幅を調整 */
     font-size: 0.95em;
     box-sizing: border-box;
@@ -198,6 +221,13 @@ h1 {
     outline: none;
     text-align: center; /* テーブル内の入力も中央寄せ */
     color: #333;
+}
+
+.delivery-table .right {
+    text-align: right;
+    background: #f8f8f8;
+    font-weight: bold;
+    color: #444;
 }
 
 .note-area {
@@ -223,22 +253,14 @@ h1 {
     color: #333;
 }
 
-/* =============================
-   保存・印刷ボタンエリア
-   （.btn-area：ボタンの横並び・中央揃え・間隔調整）
-   ============================= */
- .btn-area {
+.btn-area {
     display: flex;
     justify-content: center;
     gap: 40px; /* ボタン間のギャップを調整 */
     margin-top: 40px; /* 上部のマージンを増やす */
 }
 
-/* =============================
-   保存・印刷ボタン本体
-   （.btn：ボタンのデザイン全般）
-   ============================= */
- .btn {
+.btn {
     font-size: 1.5rem; /* ボタンのフォントサイズ */
     padding: 12px 50px; /* パディングを調整 */
     border-radius: 10px; /* 角丸を調整 */
@@ -250,9 +272,6 @@ h1 {
     box-shadow: 0 4px 8px rgba(0,0,0,0.1); /* ボタンに影 */
 }
 
-/* =============================
-   保存・印刷ボタン ホバー時
-   ============================= */
 .btn:hover {
     background: #333;
     color: #fff;
@@ -291,24 +310,34 @@ h1 {
         font-size: 2rem;
         margin-bottom: 25px;
     }
-    .order-info-row, .order-address-row {
+    .a4-sheet {
+        width: 100%;
+        min-height: auto;
+        padding: 10mm;
+        box-shadow: none;
+    }
+    .delivery-title {
+        font-size: 1.8rem;
+        margin-bottom: 15px;
+    }
+    .delivery-info-row, .delivery-address-row {
         flex-direction: column;
         gap: 10px;
     }
-    .order-to, .order-meta, .order-address, .order-total {
+    .delivery-to, .delivery-meta, .delivery-address, .delivery-total {
         width: 100%;
     }
     .input-line, .input-meta {
         width: 100%;
         font-size: 0.95rem;
     }
-    .order-table {
+    .delivery-table {
         font-size: 0.8rem;
     }
-    .order-table th, .order-table td {
+    .delivery-table th, .delivery-table td {
         padding: 4px 2px;
     }
-    .order-table input {
+    .delivery-table input {
         font-size: 0.85em;
     }
     .btn-area {

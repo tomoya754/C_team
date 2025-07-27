@@ -26,23 +26,23 @@
     <div class="main" id="main">
         <!-- A4納品書本体 -->
         <div class="a4-sheet">
-            <h1 class="order-title" style="text-align:center;letter-spacing:0.3em;font-size:2.1em;margin-bottom:32px;">納品書</h1>
+            <h1 class="delivery_form_title" style="text-align:center;letter-spacing:0.3em;font-size:2.1em;margin-bottom:32px;">のうひんしょ</h1>
             <div style="display:flex;flex-direction:row;justify-content:space-between;align-items:flex-start;gap:40px;">
                 <!-- 左側：顧客情報 -->
                 <div style="flex:1;min-width:340px;max-width:420px;">
                     <div style="margin-bottom:12px;display:flex;align-items:flex-end;gap:8px;">
                         <span style="font-size:1.15em;line-height:1.2;white-space:nowrap;">お客様ID：</span>
                         <div style="position:relative;flex:1;display:flex;align-items:flex-end;">
-                            <input type="text" class="input-meta" name="customerId" style="width:170px;border:none;border-bottom:2px solid #222;font-size:1.15em;vertical-align:bottom;padding:2px 4px 2px 4px;">
+                            <input type="text" id="customerId" class="input-meta" name="customerId" style="width:170px;border:none;border-bottom:2px solid #222;font-size:1.15em;vertical-align:bottom;padding:2px 4px 2px 4px;">
                             <button type="button" style="position:absolute;right:-2px;top:0;padding:2px 18px;font-size:1.1em;border:2px solid #222;background:#f7f7f7;">検索</button>
                         </div>
                     </div>
                     <div style="margin-bottom:8px;">
-                        <input type="text" class="input-meta" name="customerName" style="width:220px;font-size:1.3em;text-align:center;border:none;background:transparent;letter-spacing:0.3em;" placeholder="○○○○○○○○○○"> 様
+                        <input type="text" id="customerName" class="input-meta" style="width:220px;font-size:1.3em;text-align:center;border:none;background:transparent;letter-spacing:0.3em;" placeholder="○○○○○○○○○○" readonly> 様
                     </div>
                     <div style="margin-bottom:8px;color:#666;font-size:0.95em;">（お客様住所）</div>
                     <div style="margin-bottom:32px;">
-                        <textarea class="input-meta" style="width:100%;height:38px;resize:none;border:none;border-bottom:1px dotted #888;"></textarea>
+                        <textarea id="customerAddress" class="input-meta" style="width:100%;height:38px;resize:none;border:none;border-bottom:1px dotted #888;" readonly></textarea>
                     </div>
                     <div style="border-bottom:1px dotted #888;height:18px;margin-bottom:32px;"></div>
                     <div style="display:flex;align-items:center;margin-top:32px;">
@@ -54,12 +54,12 @@
                 <!-- 右側：発注情報 -->
                 <div style="flex:1;min-width:320px;max-width:400px;">
                     <div style="display:flex;justify-content:space-between;margin-bottom:8px;" id="deliveryNoRow">
-                        <span style="font-size:1.1em;">納品No.</span>
-                        <input type="text" class="input-meta" id="deliveryNoInput" name="deliveryNo" style="width:160px;text-align:right;border:none;font-size:1.1em;" placeholder="XXXXXXXXXX" readonly>
+                        <span style="font-size:1.1em;">納品書No.</span>
+                        <input type="text" class="input-meta" id="deliveryNoInput" style="width:160px;text-align:right;border:none;font-size:1.1em;" placeholder="XXXXXXXXXX" readonly>
                     </div>
                     <div style="display:flex;justify-content:space-between;margin-bottom:18px;">
                         <span style="font-size:1.1em;">納品日：</span>
-                        <input type="date" class="input-meta" name="deliveryDate" style="width:160px;text-align:right;border:none;font-size:1.1em;">
+                        <input type="date" class="input-meta" style="width:160px;text-align:right;border:none;font-size:1.1em;">
                     </div>
                     <div style="font-weight:bold;font-size:1.1em;margin-bottom:2px;">緑橋書店</div>
                     <div style="margin-bottom:2px;">〒537-0022</div>
@@ -70,8 +70,7 @@
                     <div style="margin-bottom:2px;">E-Mail xxxxxxxxxxxxxxxxxxxxxxxx</div>
                 </div>
             </div>
-            <!-- 納品明細テーブル -->
-            <table class="order-table">
+            <table class="delivery-table">
                 <tr>
                     <th>No.</th>
                     <th>書名</th>
@@ -81,109 +80,117 @@
                 </tr>
                 <tr>
                     <td>1</td>
-                    <td><input type="text" name="item1"></td>
-                    <td><input type="number" name="qty1"></td>
-                    <td><input type="number" name="price1"></td>
-                    <td><input type="number" name="amount1"></td>
+                    <td><input type="text" name="item1" readonly></td>
+                    <td><input type="text" name="qty1" readonly></td>
+                    <td><input type="text" name="price1" readonly></td>
+                    <td><input type="text" name="amount1" readonly></td>
                 </tr>
                 <tr>
                     <td>2</td>
-                    <td><input type="text" name="item2"></td>
-                    <td><input type="number" name="qty2"></td>
-                    <td><input type="number" name="price2"></td>
-                    <td><input type="number" name="amount2"></td>
+                    <td><input type="text" name="item2" readonly></td>
+                    <td><input type="text" name="qty2" readonly></td>
+                    <td><input type="text" name="price2" readonly></td>
+                    <td><input type="text" name="amount2" readonly></td>
                 </tr>
                 <tr>
                     <td>3</td>
-                    <td><input type="text" name="item3"></td>
-                    <td><input type="number" name="qty3"></td>
-                    <td><input type="number" name="price3"></td>
-                    <td><input type="number" name="amount3"></td>
+                    <td><input type="text" name="item3" readonly></td>
+                    <td><input type="text" name="qty3" readonly></td>
+                    <td><input type="text" name="price3" readonly></td>
+                    <td><input type="text" name="amount3" readonly></td>
                 </tr>
                 <tr>
                     <td>4</td>
-                    <td><input type="text" name="item4"></td>
-                    <td><input type="number" name="qty4"></td>
-                    <td><input type="number" name="price4"></td>
-                    <td><input type="number" name="amount4"></td>
+                    <td><input type="text" name="item4" readonly></td>
+                    <td><input type="text" name="qty4" readonly></td>
+                    <td><input type="text" name="price4" readonly></td>
+                    <td><input type="text" name="amount4" readonly></td>
                 </tr>
                 <tr>
                     <td>5</td>
-                    <td><input type="text" name="item5"></td>
-                    <td><input type="number" name="qty5"></td>
-                    <td><input type="number" name="price5"></td>
-                    <td><input type="number" name="amount5"></td>
+                    <td><input type="text" name="item5" readonly></td>
+                    <td><input type="text" name="qty5" readonly></td>
+                    <td><input type="text" name="price5" readonly></td>
+                    <td><input type="text" name="amount5" readonly></td>
                 </tr>
                 <tr>
                     <td>6</td>
-                    <td><input type="text" name="item6"></td>
-                    <td><input type="number" name="qty6"></td>
-                    <td><input type="number" name="price6"></td>
-                    <td><input type="number" name="amount6"></td>
+                    <td><input type="text" name="item6" readonly></td>
+                    <td><input type="text" name="qty6" readonly></td>
+                    <td><input type="text" name="price6" readonly></td>
+                    <td><input type="text" name="amount6" readonly></td>
                 </tr>
                 <tr>
                     <td>7</td>
-                    <td><input type="text" name="item7"></td>
-                    <td><input type="number" name="qty7"></td>
-                    <td><input type="number" name="price7"></td>
-                    <td><input type="number" name="amount7"></td>
+                    <td><input type="text" name="item7" readonly></td>
+                    <td><input type="text" name="qty7" readonly></td>
+                    <td><input type="text" name="price7" readonly></td>
+                    <td><input type="text" name="amount7" readonly></td>
                 </tr>
                 <tr>
                     <td>8</td>
-                    <td><input type="text" name="item8"></td>
-                    <td><input type="number" name="qty8"></td>
-                    <td><input type="number" name="price8"></td>
-                    <td><input type="number" name="amount8"></td>
+                    <td><input type="text" name="item8" readonly></td>
+                    <td><input type="text" name="qty8" readonly></td>
+                    <td><input type="text" name="price8" readonly></td>
+                    <td><input type="text" name="amount8" readonly></td>
                 </tr>
                 <tr>
                     <td>9</td>
-                    <td><input type="text" name="item9"></td>
-                    <td><input type="number" name="qty9"></td>
-                    <td><input type="number" name="price9"></td>
-                    <td><input type="number" name="amount9"></td>
+                    <td><input type="text" name="item9" readonly></td>
+                    <td><input type="text" name="qty9" readonly></td>
+                    <td><input type="text" name="price9" readonly></td>
+                    <td><input type="text" name="amount9" readonly></td>
                 </tr>
                 <tr>
                     <td>10</td>
-                    <td><input type="text" name="item10"></td>
-                    <td><input type="number" name="qty10"></td>
-                    <td><input type="number" name="price10"></td>
-                    <td><input type="number" name="amount10"></td>
+                    <td><input type="text" name="item10" readonly></td>
+                    <td><input type="text" name="qty10" readonly></td>
+                    <td><input type="text" name="price10" readonly></td>
+                    <td><input type="text" name="amount10" readonly></td>
                 </tr>
                 <tr>
                     <td>11</td>
-                    <td><input type="text" name="item11"></td>
-                    <td><input type="number" name="qty11"></td>
-                    <td><input type="number" name="price11"></td>
-                    <td><input type="number" name="amount11"></td>
+                    <td><input type="text" name="item11" readonly></td>
+                    <td><input type="text" name="qty11" readonly></td>
+                    <td><input type="text" name="price11" readonly></td>
+                    <td><input type="text" name="amount11" readonly></td>
                 </tr>
                 <tr>
                     <td>12</td>
-                    <td><input type="text" name="item12"></td>
-                    <td><input type="number" name="qty12"></td>
-                    <td><input type="number" name="price12"></td>
-                    <td><input type="number" name="amount12"></td>
+                    <td><input type="text" name="item12" readonly></td>
+                    <td><input type="text" name="qty12" readonly></td>
+                    <td><input type="text" name="price12" readonly></td>
+                    <td><input type="text" name="amount12" readonly></td>
                 </tr>
                 <tr>
                     <td colspan="4" class="right">小計</td>
-                    <td><input type="number" class="input-total"></td>
+                    <td>
+                        <input type="text" class="input-total" readonly>
+                        <span id="subtotal-unit" style="font-size:0.95em;display:none;">円</span>
+                    </td>
                 </tr>
                 <tr>
                     <td colspan="4" class="right">消費税</td>
-                    <td><input type="number" class="input-total"></td>
+                    <td>
+                        <input type="text" class="input-total" readonly>
+                        <span id="tax-unit" style="font-size:0.95em;display:none;">円</span>
+                    </td>
                 </tr>
                 <tr>
                     <td colspan="4" class="right">合計金額</td>
-                    <td><input type="number" class="input-total"></td>
+                    <td>
+                        <input type="text" class="input-total" readonly>
+                        <span id="total-unit" style="font-size:0.95em;display:none;">円</span>
+                    </td>
                 </tr>
             </table>
-            <div class="order-remark-row">
-                <div style="font-size:16px;">備考：</div>
-                <textarea class="input-meta" style="width:90%;height:40px;resize:none;"></textarea>
+            <div class="delivery-remark-row" style="display:flex;align-items:flex-start;gap:8px;">
+                <div style="font-size:16px;min-width:48px;text-align:left;">備考：</div>
+                <textarea class="input-meta" style="width:90%;height:40px;resize:none;text-align:left;"></textarea>
             </div>
-            <!-- ボタンエリア -->
             <div class="btn-area">
-                <button type="submit" class="btn" id="saveBtn">保存</button>
-                <button type="button" class="btn" id="printBtn">印刷</button>
+                <button type="button" class="btn" id="saveBtn">保存</button>
+                <button type="button" class="btn" id="printBtn" style="display:none;" onclick="window.print()">印刷</button>
             </div>
         </div>
     </div>
@@ -210,13 +217,14 @@
     sidebarClose.onclick = closeSidebar;
     sidebarBg.onclick = closeSidebar;
 
-    // 納品書No.の表示/非表示制御
-    const urlParams = new URLSearchParams(window.location.search);
-    const deliveryId = urlParams.get('deliveryId');
-    const deliveryNoRow = document.getElementById('deliveryNoRow');
-    const deliveryNoInput = document.getElementById('deliveryNoInput');
-    if (!deliveryId && deliveryNoRow) {
-        deliveryNoRow.style.display = 'none'; // 新規作成時は非表示
+    function toggleUnit(input, unitId) {
+        const unitSpan = document.getElementById(unitId);
+        if (!unitSpan) return;
+        if (input.value && input.value.trim() !== '' && input.value !== '0') {
+            unitSpan.style.display = '';
+        } else {
+            unitSpan.style.display = 'none';
+        }
     }
     </script>
 </body>

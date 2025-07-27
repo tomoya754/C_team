@@ -82,6 +82,8 @@ CREATE TABLE `deliveries` (
   `customerId` int(5) NOT NULL,
   `deliveryDate` date DEFAULT NULL,
   `totalAmount` int(11) DEFAULT NULL,
+  `note` TEXT DEFAULT NULL,
+  `deliveryStatus` VARCHAR(20) DEFAULT '納品済み',
   PRIMARY KEY (`deliveryId`),
   KEY `customerId` (`customerId`),
   CONSTRAINT `deliveries_ibfk_1` FOREIGN KEY (`customerId`) REFERENCES `customers` (`customerId`) ON DELETE CASCADE ON UPDATE CASCADE
