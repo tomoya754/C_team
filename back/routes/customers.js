@@ -14,4 +14,14 @@ router.get('/:customerId', async (req, res) => {
   }
 });
 
+// 顧客テーブルの内容を確認するデバッグ用エンドポイント
+router.get('/debug/all', async (req, res) => {
+  try {
+    const [rows] = await db.query('SELECT * FROM customers');
+    res.json(rows);
+  } catch (err) {
+    res.status(500).json({ error: 'DBエラー' });
+  }
+});
+
 module.exports = router;
